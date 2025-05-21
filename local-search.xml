@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>Commit靶机复盘</title>
+    <link href="/2025/05/20/Commit%E9%9D%B6%E6%9C%BA%E5%A4%8D%E7%9B%98/"/>
+    <url>/2025/05/20/Commit%E9%9D%B6%E6%9C%BA%E5%A4%8D%E7%9B%98/</url>
+    
+    <content type="html"><![CDATA[<h2 id="一-信息收集"><a href="#一-信息收集" class="headerlink" title="一.信息收集"></a>一.信息收集</h2><h5 id="1-1端口扫描："><a href="#1-1端口扫描：" class="headerlink" title="1.1端口扫描："></a>1.1端口扫描：</h5><blockquote><p>┌──(root㉿kali)-[~]<br>└─# nmap -sV -sS -A -p- 192.168.215.111<br>Starting Nmap 7.95 ( <a href="https://nmap.org/">https://nmap.org</a> ) at 2025-05-20 03:44 EDT<br>Nmap scan report for 192.168.215.111<br>Host is up (0.00066s latency).<br>Not shown: 65533 closed tcp ports (reset)<br>PORT     STATE SERVICE VERSION<br>80&#x2F;tcp   open  http    Apache httpd 2.4.62 ((Debian))<br>|_http-server-header: Apache&#x2F;2.4.62 (Debian)<br>|<em>http-title: DevSecOps Platform v3.0<br>2222&#x2F;tcp open  ssh     OpenSSH 8.4p1 Debian 5+deb11u3 (protocol 2.0)<br>| ssh-hostkey:<br>|   3072 f6:a3:b6:78:c4:62:af:44:bb:1a:a0:0c:08:6b:98:f7 (RSA)<br>|   256 bb:e8:a2:31:d4:05:a9:c9:31:ff:62:f6:32:84:21:9d (ECDSA)<br>|</em>  256 3b:ae:34:64:4f:a5:75:b9:4a:b9:81:f9:89:76:99:eb (ED25519)<br>MAC Address: 08:00:27:34:3B:D1 (PCS Systemtechnik&#x2F;Oracle VirtualBox virtual NIC)<br>Device type: general purpose|router<br>Running: Linux 4.X|5.X, MikroTik RouterOS 7.X<br>OS CPE: cpe:&#x2F;o:linux:linux_kernel:4 cpe:&#x2F;o:linux:linux_kernel:5 cpe:&#x2F;o:mikrotik:routeros:7 cpe:&#x2F;o:linux:linux_kernel:5.6.3<br>OS details: Linux 4.15 - 5.19, OpenWrt 21.02 (Linux 5.4), MikroTik RouterOS 7.2 - 7.5 (Linux 5.6.3)<br>Network Distance: 1 hop<br>Service Info: OS: Linux; CPE: cpe:&#x2F;o:linux:linux_kernel</p><p>TRACEROUTE<br>HOP RTT     ADDRESS<br>1   0.66 ms 192.168.215.111</p><p>OS and Service detection performed. Please report any incorrect results at <a href="https://nmap.org/submit/">https://nmap.org/submit/</a> .<br>Nmap done: 1 IP address (1 host up) scanned in 36.10 seconds</p></blockquote><h5 id="1-2-目录扫描："><a href="#1-2-目录扫描：" class="headerlink" title="1.2 目录扫描："></a>1.2 目录扫描：</h5><p><img src="/./images/Snipaste_2025-05-20_16-50-09.png" class="lazyload" data-srcset="/./images/Snipaste_2025-05-20_16-50-09.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Snipaste_2025-05-20_16-50-09"></p><p><img src="http://kcide.asia/bejing.jpg" class="lazyload" data-srcset="http://kcide.asia/bejing.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>我的第一篇文章</title>
+    <link href="/2025/05/19/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"/>
+    <url>/2025/05/19/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>分类1</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>标签1</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>my-first-blog</title>
+    <link href="/2025/05/18/my-first-blog/"/>
+    <url>/2025/05/18/my-first-blog/</url>
+    
+    <content type="html"><![CDATA[<p>dsadsdsdsclass SimpleWAF {<br>    &#x2F;&#x2F; 跳转目标URLs奥瑟<br>    private $blockPage &#x3D; ‘<a href="http://127.0.0.1/blocked.php">http://127.0.0.1/blocked.php</a>‘;</p><pre><code>// 恶意特征匹配规则   private $rules = array(// 规则1：检测包含#符号，且其后有SELECT和and的模式&#39;/([#]).*?\bSELECT\b.*?\band\b/!&#39;,// 规则2：检测包含SELECT和#的模式&#39;/\bSELECT\b.*?[#]/!&#39;,// 规则3：检测包含#和AND的模式&#39;/[#].*?\band\b/i&#39;,// 规则4：检测单独的SELECT关键字&#39;/\bSELECT\b/i&#39;,// 规则5：检测单独的AND关键字&#39;/\band\b/i&#39;,// 规则6：检测#符号&#39;/[#]/&#39;</code></pre><p>);</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>标签1</tag>
+      
+      <tag>标签2</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="/2025/05/18/hello-world/"/>
+    <url>/2025/05/18/hello-world/</url>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  
+</search>
