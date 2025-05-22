@@ -19,15 +19,15 @@
   <meta name="author" content="XCDH">
   <meta name="keywords" content="">
   
-    <meta name="description" content="sudo apt install gobuster    &#x2F;&#x2F;kali安装 gobuster dir -u http:&#x2F;&#x2F;exmple.com –wordlist&#x3D;&#x2F;usr&#x2F;share&#x2F;dirbuster&#x2F;wordlists&#x2F;directory-list-2.3-medium.txt    dir 爆破模式（目录爆破）">
+    <meta name="description" content="kali安装命令：  sudo apt install gobuster    模式选择:   dir 经典目录暴力破解模式    dns DNS子域暴力破解模式   s3 枚举打开的 S3 存储桶并查找是否存在和存储桶列表   gcs 枚举打开的谷歌云存储桶   vhost 虚拟主机暴力破解模式（与DNS不同！）   fuzz 使用模糊测试模式。替换URL、Headers和请求体中的关键词FUZ">
 <meta property="og:type" content="article">
 <meta property="og:title" content="gobuster工具的使用">
 <meta property="og:url" content="http://example.com/2025/05/22/gobuster%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name" content="XCDH">
-<meta property="og:description" content="sudo apt install gobuster    &#x2F;&#x2F;kali安装 gobuster dir -u http:&#x2F;&#x2F;exmple.com –wordlist&#x3D;&#x2F;usr&#x2F;share&#x2F;dirbuster&#x2F;wordlists&#x2F;directory-list-2.3-medium.txt    dir 爆破模式（目录爆破）">
+<meta property="og:description" content="kali安装命令：  sudo apt install gobuster    模式选择:   dir 经典目录暴力破解模式    dns DNS子域暴力破解模式   s3 枚举打开的 S3 存储桶并查找是否存在和存储桶列表   gcs 枚举打开的谷歌云存储桶   vhost 虚拟主机暴力破解模式（与DNS不同！）   fuzz 使用模糊测试模式。替换URL、Headers和请求体中的关键词FUZ">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-05-22T02:05:18.000Z">
-<meta property="article:modified_time" content="2025-05-22T02:05:58.388Z">
+<meta property="article:modified_time" content="2025-05-22T04:02:37.824Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="工具使用kali">
 <meta name="twitter:card" content="summary_large_image">
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          37 字
+          507 字
         
       </span>
     
@@ -234,7 +234,7 @@
         
         
         
-          1 分钟
+          5 分钟
         
       </span>
     
@@ -280,8 +280,174 @@
             
               <div class="markdown-body">
                 
-                <p>sudo apt install gobuster    &#x2F;&#x2F;kali安装</p>
-<p>gobuster dir -u <a target="_blank" rel="noopener" href="http://exmple.com/">http://exmple.com</a> –wordlist&#x3D;&#x2F;usr&#x2F;share&#x2F;dirbuster&#x2F;wordlists&#x2F;directory-list-2.3-medium.txt<br>    dir 爆破模式（目录爆破）<br>    -u 指定url</p>
+                <p>kali安装命令：</p>
+<blockquote>
+<p>sudo apt install gobuster  </p>
+</blockquote>
+<h3 id="模式选择"><a href="#模式选择" class="headerlink" title="模式选择:"></a>模式选择:</h3><table>
+<thead>
+<tr>
+<th>dir</th>
+<th>经典目录暴力破解模式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>dns</td>
+<td>DNS子域暴力破解模式</td>
+</tr>
+<tr>
+<td>s3</td>
+<td>枚举打开的 S3 存储桶并查找是否存在和存储桶列表</td>
+</tr>
+<tr>
+<td>gcs</td>
+<td>枚举打开的谷歌云存储桶</td>
+</tr>
+<tr>
+<td>vhost</td>
+<td>虚拟主机暴力破解模式（与DNS不同！）</td>
+</tr>
+<tr>
+<td>fuzz</td>
+<td>使用模糊测试模式。替换URL、Headers和请求体中的关键词FUZZ</td>
+</tr>
+<tr>
+<td>tftp</td>
+<td>暴力破解 tftp 文件</td>
+</tr>
+</tbody></table>
+<h2 id="基础参数："><a href="#基础参数：" class="headerlink" title="基础参数："></a>基础参数：</h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>详细</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-t</td>
+<td>–thread</td>
+<td>设置线程（默认10）</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>–verbose</td>
+<td>详细输出</td>
+</tr>
+<tr>
+<td>-z</td>
+<td>–no-progress</td>
+<td>不显示进度</td>
+</tr>
+<tr>
+<td>-q</td>
+<td>–quiet</td>
+<td>不要打印横幅，安静模式</td>
+</tr>
+<tr>
+<td>-o</td>
+<td>–output</td>
+<td>将结果写入的输出文件</td>
+</tr>
+</tbody></table>
+<h2 id="目录扫描："><a href="#目录扫描：" class="headerlink" title="目录扫描："></a>目录扫描：</h2><p>需要使用dir模式（不需要加-），在接一些参数比如：-u（url） -w(wordlist) </p>
+<p>例子：gobuster dir -u <a target="_blank" rel="noopener" href="http://exmple.com/">http://exmple.com</a> –wordlist&#x3D;&#x2F;usr&#x2F;share&#x2F;dirbuster&#x2F;wordlists&#x2F;directory-list-2.3-medium.txt<br>    dir 	爆破模式（目录爆破）<br>    -u 指定url</p>
+<p>例子：gobuster dir -u <a target="_blank" rel="noopener" href="http://exmple.com/">http://exmple.com</a> -w &#x2F;usr&#x2F;share&#x2F;dirbuster&#x2F;wordlists&#x2F;directory-list-2.3-medium.txt</p>
+<p>-s <status>：显示特定状态码（如 <code>200,204,301</code>）。</p>
+<p>还可以使用<code>-x</code>指定需要爆破的扩展名为-x php,html,css</p>
+<p>例子：gobuster dir -u <a target="_blank" rel="noopener" href="http://exmple.com/">http://exmple.com</a> -w &#x2F;usr&#x2F;share&#x2F;dirbuster&#x2F;wordlists&#x2F;directory-list-2.3-medium.txt -x php,zip,txt -s 200,301</p>
+<blockquote>
+<p>还有一个重要的是使用<code>-k</code>可以跳过一些网站启用了证书<code>ssl</code>加密，但是浏览器认为是<code>无效证书</code>，需要点击<code>继续访问</code>，使用<code>-k</code>参数即可跳过该验证</p>
+</blockquote>
+<p>常用参数：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>参数</td>
+<td>详细</td>
+<td>描述</td>
+</tr>
+<tr>
+<td>-C</td>
+<td>–cookie</td>
+<td>请求中使用的cookie</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>–extensions</td>
+<td>指定枚举的扩展名</td>
+</tr>
+<tr>
+<td>-H</td>
+<td>–headers</td>
+<td>指定请求头</td>
+</tr>
+<tr>
+<td>-k</td>
+<td>–no-tls-validation</td>
+<td>跳过TLS证书验证</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>–no-status</td>
+<td>不打印状态码</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>–status-codes</td>
+<td>肯定的状态码</td>
+</tr>
+<tr>
+<td>-b</td>
+<td>–status-codes-blacklist</td>
+<td>负面的状态码</td>
+</tr>
+<tr>
+<td>-U</td>
+<td>–username</td>
+<td>Basic验证用户名</td>
+</tr>
+<tr>
+<td>-P</td>
+<td>–password</td>
+<td>Basic验证密码</td>
+</tr>
+</tbody></table>
+<p>子域名爆破：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">gobuster dns -d example.com -w /usr/share/wordlists/amass/subdomains-top1mil-20000.txt<br></code></pre></td></tr></table></figure>
+
+<p>​	-d(域名)</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>详细</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-c</td>
+<td>–show-cname</td>
+<td>显示CNAME记录，不能和-i一起使用</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>–show-ip</td>
+<td>显示IP地址</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>–resolver</td>
+<td>自定义DNS服务器</td>
+</tr>
+</tbody></table>
+<h2 id="FUZZ："><a href="#FUZZ：" class="headerlink" title="FUZZ："></a>FUZZ：</h2><p>还是用wfuzz吧</p>
 
                 
               </div>
