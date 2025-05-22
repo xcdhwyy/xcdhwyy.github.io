@@ -19,15 +19,15 @@
   <meta name="author" content="XCDH">
   <meta name="keywords" content="">
   
-    <meta name="description" content="只能分析常用的流量（USB等特殊协议分析不了）    查看不了请求信息，把流量包拆成文件组和日志指令：    count() by &#x2F;&#x2F;计数    count() by http,status_code,id.orig_h | status_code&#x3D;&#x3D;404  &#x2F;&#x2F; !&#x3D;(不等于)    |还可以跟筛选条件……">
+    <meta name="description" content="只能分析常用的流量（USB等特殊协议分析不了）    查看不了请求信息，把流量包拆成文件组和日志 常用指令：​    count() by &#x2F;&#x2F;计数​    count() by http,status_code,id.orig_h | status_code&#x3D;&#x3D;404  &#x2F;&#x2F; !&#x3D;(不等于)    |还可以跟筛选条件…… 12">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Zui工具的使用">
 <meta property="og:url" content="http://example.com/2025/05/22/Zui%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name" content="XCDH">
-<meta property="og:description" content="只能分析常用的流量（USB等特殊协议分析不了）    查看不了请求信息，把流量包拆成文件组和日志指令：    count() by &#x2F;&#x2F;计数    count() by http,status_code,id.orig_h | status_code&#x3D;&#x3D;404  &#x2F;&#x2F; !&#x3D;(不等于)    |还可以跟筛选条件……">
+<meta property="og:description" content="只能分析常用的流量（USB等特殊协议分析不了）    查看不了请求信息，把流量包拆成文件组和日志 常用指令：​    count() by &#x2F;&#x2F;计数​    count() by http,status_code,id.orig_h | status_code&#x3D;&#x3D;404  &#x2F;&#x2F; !&#x3D;(不等于)    |还可以跟筛选条件…… 12">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-05-22T02:15:12.000Z">
-<meta property="article:modified_time" content="2025-05-22T02:15:38.974Z">
+<meta property="article:modified_time" content="2025-05-22T04:12:59.567Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="应急响应工具">
 <meta name="twitter:card" content="summary_large_image">
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          147 字
+          149 字
         
       </span>
     
@@ -280,7 +280,10 @@
             
               <div class="markdown-body">
                 
-                <p>只能分析常用的流量（USB等特殊协议分析不了）<br>    查看不了请求信息，把流量包拆成文件组和日志<br>指令：<br>    count() by &#x2F;&#x2F;计数<br>    count() by http,status_code,id.orig_h | status_code&#x3D;&#x3D;404  &#x2F;&#x2F; !&#x3D;(不等于)    |还可以跟筛选条件……<br>        计数    协议    状态码       源IP         状态码是404<br>    计数的协议或想看的内容                       筛选的条件</p>
+                <p>只能分析常用的流量（USB等特殊协议分析不了）<br>    查看不了请求信息，把流量包拆成文件组和日志</p>
+<h2 id="常用指令："><a href="#常用指令：" class="headerlink" title="常用指令："></a>常用指令：</h2><p>​    count() by &#x2F;&#x2F;计数<br>​    count() by http,status_code,id.orig_h | status_code&#x3D;&#x3D;404  &#x2F;&#x2F; !&#x3D;(不等于)    |还可以跟筛选条件……</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs armasm">计数    协议    状态码       源<span class="hljs-built_in">IP</span>         状态码是<span class="hljs-number">404</span><br>   计数的协议或想看的内容                       筛选的条件<br></code></pre></td></tr></table></figure>
+
 <pre><code class="hljs">其他的内容：
     uri：uri==&quot;/longin.php&quot;
     method==&quot;POST&quot; 请求方式
