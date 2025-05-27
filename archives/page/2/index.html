@@ -223,13 +223,31 @@
                 
 
 <div class="list-group">
-  <p class="h4">共计 18 篇文章</p>
+  <p class="h4">共计 21 篇文章</p>
   <hr>
   
   
     
       
       <p class="h5">2025</p>
+    
+    <a href="/2025/05/22/shell%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87/" class="list-group-item list-group-item-action">
+      <time>05-22</time>
+      <div class="list-group-item-title">shell权限提升</div>
+    </a>
+  
+    
+    <a href="/2025/05/22/wfuzz%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" class="list-group-item list-group-item-action">
+      <time>05-22</time>
+      <div class="list-group-item-title">wfuzz工具的使用</div>
+    </a>
+  
+    
+    <a href="/2025/05/22/gobuster%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" class="list-group-item list-group-item-action">
+      <time>05-22</time>
+      <div class="list-group-item-title">gobuster工具的使用</div>
+    </a>
+  
     
     <a href="/2025/05/22/hydra%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" class="list-group-item list-group-item-action">
       <time>05-22</time>
@@ -272,18 +290,12 @@
       <div class="list-group-item-title">Awk靶机复盘</div>
     </a>
   
-    
-    <a href="/2025/05/20/Wudi%E9%9D%B6%E6%9C%BA%E5%A4%8D%E7%9B%98/" class="list-group-item list-group-item-action">
-      <time>05-20</time>
-      <div class="list-group-item-title">Wudi靶机复盘</div>
-    </a>
-  
 </div>
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/archives/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
+      <a class="extend prev" rel="prev" href="/archives/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/#board">3</a><a class="extend next" rel="next" href="/archives/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
@@ -399,23 +411,7 @@
 <script  src="/js/boot.js" ></script>
 
 
-   {% if config.cursor.click == "showText" %}
-        <div id="click-show-text"
-            data-mobile = {{ theme.ClickShowText.mobile }}
-            data-text = {{ theme.ClickShowText.text.join(",") }}
-            data-fontsize = {{ theme.ClickShowText.fontSize }}
-            data-random= {{ theme.ClickShowText.random }}>
-        </div>
-      {% endif %} 
-
-      {% if config.cursor.click_ena %}
-        <script async src=https://cdn.jsdelivr.net/npm/hexo-next-mouse-effect@latest/click/fireWorks.js></script>
-      {% endif %}
-
-      {% if config.cursor.move_ena %}s
-        <script async src=https://cdn.jsdelivr.net/npm/hexo-next-mouse-effect@latest/move/fairyDustCursor.js></script>
-      {% endif %}
-    
+  
 
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
