@@ -1,0 +1,809 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="https://kcide.asia/PicGo/20250521164813069.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCDH">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一.容器只是进程 从操作系统的角度来看，容器是进程，就像其他在系统上运行的程序一样。 使用 docker 部署一个 nginx 容器  docker run -d nginx:1.23.1  12345678910┌──(root㉿kali)-[~]└─# docker run -d nginx:1.23.1Unable to find image &#x27;nginx:1.23.1&#x27;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="容器只是进程">
+<meta property="og:url" content="http://example.com/2025/05/31/%E5%AE%B9%E5%99%A8%E5%8F%AA%E6%98%AF%E8%BF%9B%E7%A8%8B/index.html">
+<meta property="og:site_name" content="XCDH">
+<meta property="og:description" content="一.容器只是进程 从操作系统的角度来看，容器是进程，就像其他在系统上运行的程序一样。 使用 docker 部署一个 nginx 容器  docker run -d nginx:1.23.1  12345678910┌──(root㉿kali)-[~]└─# docker run -d nginx:1.23.1Unable to find image &#x27;nginx:1.23.1&#x27;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-31_19-30-53.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-31_19-37-50.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-31_19-59-59.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-31_19-44-09.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-31_19-46-07.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-31_21-33-32.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-31_21-41-53.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-31_21-44-04.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-31_21-57-44.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-01_12-29-15.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-01_12-52-11.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-01_12-56-07.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-01_13-04-42.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-01_13-07-59.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-01_13-12-49.png">
+<meta property="article:published_time" content="2025-05-31T10:34:35.000Z">
+<meta property="article:modified_time" content="2025-06-01T08:09:06.453Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="笔记">
+<meta property="article:tag" content="云安全">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/Snipaste_2025-05-31_19-30-53.png">
+  
+  
+  
+  <title>容器只是进程 - XCDH</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCDH</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://kcide.asia/PicGo/20250521153237608.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="容器只是进程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-31 18:34" pubdate>
+          2025年5月31日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          36 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">容器只是进程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一-容器只是进程"><a href="#一-容器只是进程" class="headerlink" title="一.容器只是进程"></a>一.容器只是进程</h2><p> 从操作系统的角度来看，容器是进程，就像其他在系统上运行的程序一样。</p>
+<p>使用 docker 部署一个 nginx 容器</p>
+<blockquote>
+<p>docker run -d nginx:1.23.1</p>
+</blockquote>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs makefile">┌──(root㉿kali)-[~]<br>└─<span class="hljs-comment"># docker run -d nginx:1.23.1</span><br>Unable to find image &#x27;nginx:1.23.1&#x27; locally<br><span class="hljs-section">1.23.1: Pulling from library/nginx</span><br><span class="hljs-section">6ab6a6301bde: Pull complete </span><br><span class="hljs-section">f5d8edcd47b1: Pull complete </span><br><span class="hljs-section">fe24ce36f968: Pull complete </span><br><span class="hljs-section">Digest: sha256:2f770d2fe27bc85f68fd7fe6a63900ef7076bc703022fe8</span><br><span class="hljs-section">Status: Downloaded newer image for nginx:1.23.1</span><br>96111ff7f15b23aa346176ffd4b98a2010633b46<br></code></pre></td></tr></table></figure>
+
+<p>查看进程中有没有 nginx 进程</p>
+<blockquote>
+<p>ps -fC nginx<br>	-f：显示进程的完整格式信息。<br>	-C：根据给定的进程名称筛选进程</p>
+</blockquote>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs tap">┌──(root㉿kali)-[~]<br>└─<span class="hljs-comment"># ps -fC nginx</span><br>UID          PID    PPID  C STIME TTY          TIME CMD<br>root       <span class="hljs-number"> 2763 </span>  <span class="hljs-number"> 2739 </span><span class="hljs-number"> 0 </span>06:43 ?        00:00:00 nginx: master p<br>message+   <span class="hljs-number"> 2812 </span>  <span class="hljs-number"> 2763 </span><span class="hljs-number"> 0 </span>06:43 ?        00:00:00 nginx: worker p<br>message+   <span class="hljs-number"> 2813 </span>  <span class="hljs-number"> 2763 </span><span class="hljs-number"> 0 </span>06:43 ?        00:00:00 nginx: worker p<br></code></pre></td></tr></table></figure>
+
+<p>可以看见展示了 nginx 进程现在正在机器上运行，那如何区分这个 nginx 是从 Docker 中启动的容器还是安装在机器上的 nginx 服务呢？方法一：检查正在运行的容器</p>
+<blockquote>
+<p>docker ps</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css">┌──(root㉿kali)-<span class="hljs-selector-attr">[~]</span><br>└─# docker ps<br><span class="hljs-attribute">CONTAINER</span> ID   <span class="hljs-selector-tag">IMAGE</span>          COMMAND                   CREATED         STATUS         PORTS     <br><span class="hljs-number">96111</span>ff7f15b   nginx:<span class="hljs-number">1.23</span>.<span class="hljs-number">1</span>   <span class="hljs-string">&quot;/docker-entrypoint.…&quot;</span>   <span class="hljs-number">3</span> minutes ago   Up <span class="hljs-number">3</span> minutes   <span class="hljs-number">80</span>/tcp    intelligent_proskuriakova<br><br></code></pre></td></tr></table></figure>
+
+<p>方法二：使用 Linux 进程工具来确定 Web 服务器是否作为容器运行，在主机上运行的容器都有一个称为 **shim **进程的存在，这个 shim 进程是 containerd 的一部分，由 Docker 用来管理容器内的进程。</p>
+<blockquote>
+<p>ps -ef –forest –forest 选项显示进程的树状结构</p>
+</blockquote>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">root</span>        <span class="hljs-number">2598</span>    <span class="hljs-number">2565</span>  <span class="hljs-number">0</span> <span class="hljs-number">06</span>:<span class="hljs-number">37</span> ?        <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span>  \_ /usr/bin/dbus-daemon --session --address=systemd: --nofork --nopidfile --systemd-activation --syslo<br><span class="hljs-attribute">root</span>        <span class="hljs-number">2739</span>       <span class="hljs-number">1</span>  <span class="hljs-number">0</span> <span class="hljs-number">06</span>:<span class="hljs-number">43</span> ?        <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span> /usr/bin/containerd-shim-runc-v2 -namespace moby -id <span class="hljs-number">96111</span>ff7f15b23aa346176ffd4b98a2010633b466c679e3dbc<br><span class="hljs-attribute">root</span>        <span class="hljs-number">2763</span>    <span class="hljs-number">2739</span>  <span class="hljs-number">0</span> <span class="hljs-number">06</span>:<span class="hljs-number">43</span> ?        <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span>  \_ nginx: master process nginx -g daemon <span class="hljs-literal">off</span>;<br><span class="hljs-attribute">message</span>+    <span class="hljs-number">2812</span>    <span class="hljs-number">2763</span>  <span class="hljs-number">0</span> <span class="hljs-number">06</span>:<span class="hljs-number">43</span> ?        <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span>      \_ nginx: worker process<br><span class="hljs-attribute">message</span>+    <span class="hljs-number">2813</span>    <span class="hljs-number">2763</span>  <span class="hljs-number">0</span> <span class="hljs-number">06</span>:<span class="hljs-number">43</span> ?        <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span>      \_ nginx: worker process<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="二-作为进程与容器交互"><a href="#二-作为进程与容器交互" class="headerlink" title="二. 作为进程与容器交互"></a>二. 作为进程与容器交互</h2><p>Linux 中的文件系统填充了有关正在运行的系统信息，只要用户在运行 Docker 的主机上具有适当的权限，就 以访问有关主机上运行的任何容器的信息。</p>
+<p>查看进程可得 nginx 容器的 PID 是 2763，这个数字是主机上每个进程的编号目录</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs tap">┌──(root㉿kali)-[~]<br>└─<span class="hljs-comment"># ps -fC nginx</span><br>UID          PID    PPID  C STIME TTY          TIME CMD<br>root       <span class="hljs-number"> 2763 </span>  <span class="hljs-number"> 2739 </span><span class="hljs-number"> 0 </span>06:43 ?        00:00:00 nginx: master process nginx -g daemon off;<br>message+   <span class="hljs-number"> 2812 </span>  <span class="hljs-number"> 2763 </span><span class="hljs-number"> 0 </span>06:43 ?        00:00:00 nginx: worker process<br>message+   <span class="hljs-number"> 2813 </span>  <span class="hljs-number"> 2763 </span><span class="hljs-number"> 0 </span>06:43 ?        00:00:00 nginx: worker process<br></code></pre></td></tr></table></figure>
+
+<p>&#x2F;proc 目录下保存着当前运行中的系统和进程的信息，这些信息以文件的形式呈现，我们可以根据 nginx 容器的 PID 定位到该进程的目录，该目录下有关所包含进程的更多信息</p>
+<p><img src="/./img/Snipaste_2025-05-31_19-30-53.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们可以通过下面命令查看 nginx 容器(进程)的根文件系统</p>
+<blockquote>
+<p>ls &#x2F;proc&#x2F;2763</p>
+</blockquote>
+<figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs tcl">┌──(root㉿kali)-[~]<br>└─# ls /<span class="hljs-keyword">proc</span>/2763<span class="hljs-title"></span><br><span class="hljs-title">arch_status</span> <span class="hljs-title"> cmdline</span> <span class="hljs-title">            environ</span> <span class="hljs-title"> ksm_merging_pages</span> <span class="hljs-title"> mem</span> <span class="hljs-title">        numa_maps</span> <span class="hljs-title">     personality</span> <span class="hljs-title"> setgroups</span> <span class="hljs-title">    status</span> <span class="hljs-title">         uid_map</span><br>attr<span class="hljs-title">         comm</span> <span class="hljs-title">               exe</span> <span class="hljs-title">     ksm_stat</span> <span class="hljs-title">          mountinfo</span> <span class="hljs-title">  oom_adj</span> <span class="hljs-title">       projid_map</span> <span class="hljs-title">  smaps</span> <span class="hljs-title">        syscall</span> <span class="hljs-title">        wchan</span><br>autogroup<span class="hljs-title">    coredump_filter</span> <span class="hljs-title">    fd</span> <span class="hljs-title">      limits</span> <span class="hljs-title">            mounts</span> <span class="hljs-title">     oom_score</span> <span class="hljs-title">     root</span> <span class="hljs-title">        smaps_rollup</span> <span class="hljs-title"> task</span><br>auxv<span class="hljs-title">         cpu_resctrl_groups</span> <span class="hljs-title"> fdinfo</span> <span class="hljs-title">  loginuid</span> <span class="hljs-title">          mountstats</span> <span class="hljs-title"> oom_score_adj</span> <span class="hljs-title"> sched</span> <span class="hljs-title">       stack</span> <span class="hljs-title">        timens_offsets</span><br>cgroup<span class="hljs-title">       cpuset</span> <span class="hljs-title">             gid_map</span> <span class="hljs-title"> map_files</span> <span class="hljs-title">         net</span> <span class="hljs-title">        pagemap</span> <span class="hljs-title">       schedstat</span> <span class="hljs-title">   stat</span> <span class="hljs-title">         timers</span><br>clear_refs<span class="hljs-title">   cwd</span> <span class="hljs-title">                io</span> <span class="hljs-title">      maps</span> <span class="hljs-title">              ns</span> <span class="hljs-title">         patch_state</span> <span class="hljs-title">   sessionid</span> <span class="hljs-title">   statm</span> <span class="hljs-title">        timerslack_ns</span><br><br>┌──(root㉿kali)-[~]<br>└─#<span class="hljs-title"> ls</span> /<span class="hljs-keyword">proc</span>/2763/root<span class="hljs-title"></span><br><span class="hljs-title">bin</span> <span class="hljs-title"> boot</span> <span class="hljs-title"> dev</span> <span class="hljs-title"> docker-entrypoint.d</span> <span class="hljs-title"> docker-entrypoint.sh</span> <span class="hljs-title"> etc</span> <span class="hljs-title"> home</span> <span class="hljs-title"> lib</span> <span class="hljs-title"> lib64</span> <span class="hljs-title"> media</span> <span class="hljs-title"> mnt</span> <span class="hljs-title"> opt</span> <span class="hljs-title"> proc</span> <span class="hljs-title"> root</span> <span class="hljs-title"> run</span> <span class="hljs-title"> sbin</span> <span class="hljs-title"> srv</span> <span class="hljs-title"> sys</span> <span class="hljs-title"> tmp</span> <span class="hljs-title"> usr</span> <span class="hljs-title"> var</span><br></code></pre></td></tr></table></figure>
+
+<p>还可以向 nginx 容器(进程)的根文件系统中添加文件：</p>
+<blockquote>
+<p>touch  &#x2F;proc&#x2F;2763&#x2F;root&#x2F;demo.txt</p>
+</blockquote>
+<p>然后用 docker 命令列出容器上的文件来确认它已添加： </p>
+<blockquote>
+<p>docker exec bold_panini ls &#x2F; </p>
+</blockquote>
+<p><img src="/./img/Snipaste_2025-05-31_19-37-50.png" srcset="/img/loading.gif" lazyload></p>
+<p>容器是进程，也就是说可以使用主机工具来终止这些进程，而无需使用容器工具:</p>
+<p>容器角度：</p>
+<blockquote>
+<p>docker ps</p>
+<p>docker stop XXID</p>
+<p>docker rm XXID</p>
+</blockquote>
+<p>进程角度：</p>
+<blockquote>
+<p>sudo kill 2763</p>
+</blockquote>
+<p><img src="/./img/Snipaste_2025-05-31_19-59-59.png" srcset="/img/loading.gif" lazyload></p>
+<p>容器是进程从安全性来说，任何有权访问底层主机的人都可以使用进程列表来查看有关正在运行的容器的信息，即使他们不能使用 docker 工具，对于入侵者而言，它们可以使用 Linux 工具访问容器的环境变量，这些变量通常存储敏感信息，有权访问主机的用户可以读取进程区域内的文件内容以查看敏感信息。</p>
+<h2 id="隔离和命名空间"><a href="#隔离和命名空间" class="headerlink" title="隔离和命名空间"></a>隔离和命名空间</h2><p>容器中也会运行着很多进程，那到底是如何确保在一个容器中运行的进程不会轻易干扰到另一个容器和底层主机？</p>
+<p>下面会重点介绍命名空间的作用。</p>
+<h3 id="Namespace-命名空间："><a href="#Namespace-命名空间：" class="headerlink" title="Namespace  命名空间："></a>Namespace  命名空间：</h3><p>也就是 Namespaces，Linux namespaces 是 Linux 内核提供的一种机制，用于隔离系统资源，让进程拥有自己独立的资源视图，从而提供更高层次的隔离和安全性。</p>
+<p>Linux 目前支持八种类型的命名空间，每种类型负责隔离特定类型的系统资源，包括：</p>
+<blockquote>
+<p>Mount Namespace ：</p>
+<p>隔离了文件系统挂载点，允许在不同的 mount namespace 中拥有独立的挂载点，这样进程就可以拥有独立的文件系统视图。</p>
+<p>PID Namespace：</p>
+<p>隔离了进程 ID(PID)，在不同的 PID namespace 中，相同的进程可能会有不同的 PID。</p>
+<p>Network Namespace ：</p>
+<p>隔离了网络资源，包括网络设备、IP 地址、路由表等，每个 Network namespace 拥有自己独立的网络栈。</p>
+<p>Cgroup Namespace：</p>
+<p>隔离了控制组（cgroup），允许不同的 cgroup namespace 拥有不同的资源控制。</p>
+<p>IPC Namespace ：</p>
+<p>允许不同的 IPC namespace 拥有不同的进程间通信资源。</p>
+<p>Time Namespace： </p>
+<p>用于隔离时间命名空间，允许不同的 namespace 中有不同的系统时间。</p>
+<p>UTS Namespace ：</p>
+<p>隔离了主机名，允许不同的 UTS namespace 拥有不同的系统标识。</p>
+<p>User Namespace ：</p>
+<p>隔离了用户和用户组 ID，允许在不同的 user namespace 中有不同的用户标识， 使得非特权用户可以在其 namespace 中拥有 root 权限。</p>
+</blockquote>
+<p><img src="/./img/Snipaste_2025-05-31_19-44-09.png" srcset="/img/loading.gif" lazyload></p>
+<p>使用 sudo lsns 查看主机上的命名空间，NPROCS 字段指的是有 132 个进程正在使用此主机上的第一组命名空间</p>
+<p><img src="/./img/Snipaste_2025-05-31_19-46-07.png" srcset="/img/loading.gif" lazyload></p>
+<p>当我们创建一个容器时 docker run -d nginx ，默认会使用 mnt uts ipc pid net 命名空间</p>
+<p><img src="/./img/Snipaste_2025-05-31_21-33-32.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="Mount-挂载命名空间"><a href="#Mount-挂载命名空间" class="headerlink" title="Mount  挂载命名空间"></a>Mount  挂载命名空间</h5><p>​		–隔离文件系统挂载点，每个容器可以有独立的文件系统视图</p>
+<p>mount (mnt) 命名空间为进程提供了文件系统的隔离视图，它可用于确保进程不会干扰属于主机上其他进程的文件，使用 mnt 命名空间时，会为进程提供一组新的文件系统挂载，以代替默认情况下的挂载。通过查看主机的文件系统我们可以获取容器挂载信息：</p>
+<blockquote>
+<p>cat  &#x2F;proc&#x2F;3390&#x2F;mountinfo</p>
+</blockquote>
+<figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs tcl">└─# ps -fC nginx<br>UID          PID    PPID  C STIME TTY          TIME CMD<br>root        <span class="hljs-number">3390</span>    <span class="hljs-number">3369</span>  <span class="hljs-number">0</span> <span class="hljs-number">09</span>:<span class="hljs-number">32</span> ?        <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span> nginx: master process nginx -g daemon off;<br>message+    <span class="hljs-number">3439</span>    <span class="hljs-number">3390</span>  <span class="hljs-number">0</span> <span class="hljs-number">09</span>:<span class="hljs-number">32</span> ?        <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span> nginx: worker process<br>message+    <span class="hljs-number">3440</span>    <span class="hljs-number">3390</span>  <span class="hljs-number">0</span> <span class="hljs-number">09</span>:<span class="hljs-number">32</span> ?        <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span> nginx: worker process<br><br>┌──(root㉿kali)-[~]<br>└─# cat /<span class="hljs-keyword">proc</span>/3390/mountinfo<br>367 235 0:49 / /<span class="hljs-title"> rw,relatime</span> -<span class="hljs-title"> overlay</span> overlay<span class="hljs-title"> rw,lowerdir=/var/lib/docker/overlay2/l/Q4PVJNUTMM2HCUO5D7SZGG4PUZ:/var/lib/docker/overlay2/l/O4JLYV2Y5SDQMIGN5SLBIGDMQE:/var/lib/docker/overlay2/l/BHHVRLH3NTJ</span><br>402 367 0:56 / /<span class="hljs-keyword">proc</span><span class="hljs-title"> rw,nosuid,nodev,noexec,relatime</span> -<span class="hljs-title"> proc</span> <span class="hljs-keyword">proc</span><span class="hljs-title"> rw</span><br>430 367 0:57 / /dev<span class="hljs-title"> rw,nosuid</span> -<span class="hljs-title"> tmpfs</span> tmpfs<span class="hljs-title"> rw,size=65536k,mode=755,inode64</span><br>431 430 0:58 / /dev/pts<span class="hljs-title"> rw,nosuid,noexec,relatime</span> -<span class="hljs-title"> devpts</span> devpts<span class="hljs-title"> rw,gid=5,mode=620,ptmxmode=666</span><br>432 367 0:59 / /sys<span class="hljs-title"> ro,nosuid,nodev,noexec,relatime</span> -<span class="hljs-title"> sysfs</span> sysfs<span class="hljs-title"> ro</span><br>433 432 0:27 /system.slice/docker-d58fb88d8170d9dea9512b0b2e6499bb43f60ec51b8b5d33d8179ee4a1871886.scope /sys/fs/cgroup<span class="hljs-title"> ro,nosuid,nodev,noexec,relatime</span> -<span class="hljs-title"> cgroup2</span> cgroup<span class="hljs-title"> rw,nsdelegate,memory_recursiveprot</span><br>434 430 0:55 / /dev/mqueue<span class="hljs-title"> rw,nosuid,nodev,noexec,relatime</span> -<span class="hljs-title"> mqueue</span> mqueue<span class="hljs-title"> rw</span><br>435 430 0:60 / /dev/shm<span class="hljs-title"> rw,nosuid,nodev,noexec,relatime</span> -<span class="hljs-title"> tmpfs</span> shm<span class="hljs-title"> rw,size=65536k,inode64</span><br>436 367 8:1 /var/lib/docker/containers/d58fb88d8170d9dea9512b0b2e6499bb43f60ec51b8b5d33d8179ee4a1871886/resolv.conf /etc/resolv.conf<span class="hljs-title"> rw,relatime</span> -<span class="hljs-title"> ext4</span> /dev/sda1<span class="hljs-title"> rw,errors=remount-ro</span><br>437 367 8:1 /var/lib/docker/containers/d58fb88d8170d9dea9512b0b2e6499bb43f60ec51b8b5d33d8179ee4a1871886/hostname /etc/hostname<span class="hljs-title"> rw,relatime</span> -<span class="hljs-title"> ext4</span> /dev/sda1<span class="hljs-title"> rw,errors=remount-ro</span><br>438 367 8:1 /var/lib/docker/containers/d58fb88d8170d9dea9512b0b2e6499bb43f60ec51b8b5d33d8179ee4a1871886/hosts /etc/hosts<span class="hljs-title"> rw,relatime</span> -<span class="hljs-title"> ext4</span> /dev/sda1<span class="hljs-title"> rw,errors=remount-ro</span><br>236 402 0:56 /bus /<span class="hljs-keyword">proc</span>/bus<span class="hljs-title"> ro,nosuid,nodev,noexec,relatime</span> -<span class="hljs-title"> proc</span> <span class="hljs-keyword">proc</span><span class="hljs-title"> rw</span><br></code></pre></td></tr></table></figure>
+
+<p>还可以使用 findmnt -N [PID] 命令获取易看的数据视图</p>
+<p><img src="/./img/Snipaste_2025-05-31_21-41-53.png" srcset="/img/loading.gif" lazyload></p>
+<p>容器在主机的 &#x2F;var&#x2F;lib&#x2F;docker 目录下有一个根文件系统挂载点，在这里 Docker 存储所有的镜像和容器文件系统层，所以需要确保该目录上有安全的文件系统权限设置，否则可能导致容器中敏感数据的泄露或未授权的容器操作。</p>
+<p>我们还可以使用 nsenter 命令与 Docker 创建的命名空间进行交互，他可以进入到另一个进程的命名空间中执行命令，而无需安装或使用 Docker CLI，比如访问容器的根文件： </p>
+<blockquote>
+<p>sudo nsenter –target 3390 –mount ls -al &#x2F;</p>
+</blockquote>
+<p><img src="/./img/Snipaste_2025-05-31_21-44-04.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="PID-进程命名空间"><a href="#PID-进程命名空间" class="headerlink" title="PID  进程命名空间"></a>PID  进程命名空间</h5><p>​		–  隔离进程 ID，容器内的进程 ID 与宿主机不同</p>
+<p>PID 命名空间允许进程具有主机上运行的其他进程的隔离视图，容器使用 PID 命名空间来确保它们只能查看和影响属于所包含应用程序的进程。多个容器也可以共享同一个 PID 命名空间。</p>
+<p>运行命令 sudo unshare –pid –fork –mount-proc &#x2F;bin&#x2F;bash 将为我们提供一个新的 PID 命名，空间中的 bash shell，当我们进入到新的shell中时会发现进程非常少，因为这是一个新的 PID 命名空间，与原来的相互隔离，互不影响，昀后用 exit 命令退回到原命名空间。</p>
+<p><img src="/./img/Snipaste_2025-05-31_21-57-44.png" srcset="/img/loading.gif" lazyload></p>
+<p>?</p>
+<h5 id="Network-网络命名空间"><a href="#Network-网络命名空间" class="headerlink" title="Network  网络命名空间"></a>Network  网络命名空间</h5><p>​		–  隔离网络栈，容器可以拥有独立的 IP、端口等</p>
+<p>Network (net) 命名空间负责提供进程的网络环境，我们可以使用 nsenter 命令获取容器的网络信息，比如获取容器的 IP 信息： sudo nsenter –target 1097551 -n ip addr ，有趣的是， ip addr 命令来自主机，不必存在于容器中，用于解决 没有安装常用程序的容器中 相关问题排查。</p>
+<p>?</p>
+<h5 id="UTS-命名空间"><a href="#UTS-命名空间" class="headerlink" title="UTS  命名空间"></a>UTS  命名空间</h5><p>​		–  隔离主机名和域名</p>
+<p>通过 UTS 命名空间，每个命名空间内的进程可以拥有独立的主机名和域名标识，即使在同一台物理机上运行的进程也可以拥有不同的标识。下图，在第一个容器中，我们得到一个随机分配的主机名，在第二个容器中，我们的主机名与底层主机的主机名一样。</p>
+<p><img src="/./img/Snipaste_2025-06-01_12-29-15.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="User-用户命名空间"><a href="#User-用户命名空间" class="headerlink" title="User  用户命名空间"></a>User  用户命名空间</h5><p>​		–  隔离用户和用户组 ID</p>
+<p>User 命名空间允许隔离运行进程的用户帐户等内容，最重要的是，从安全角度来看，它允许进程在命名空间内是 root 用户，而不是在主机上是 root 用户，这在容器化中特别有用，因为某些应用程序需要root 才能运行，可以使用用户命名空间来启用这些应用程序，而不会引入以主机的 root 用户身份运行包含的进程的风险。</p>
+<p>如果我们尝试以非 root 用户身份启动新的用户命名空间，但该名称空间不起作用，则此功能可能在主机级别被阻止，因为这个功能并不安全，会导致一些安全漏洞。在Ubuntu&#x2F;Debain系统中使用命令sysctl kernel.unprivileged_userns_clone 查看是否开启该功能，设置为1表示启动了该功能，设置为0表示非特权用户将无法在不使用 sudo 等工具的情况下创建新的用户命名空间。</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs nix">┌──(root㉿kali)-[~]<br>└─<span class="hljs-comment"># sysctl kernel.unprivileged_userns_clone</span><br>k<span class="hljs-attr">ernel.unprivileged_userns_clone</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="Cgroup-namespace"><a href="#Cgroup-namespace" class="headerlink" title="Cgroup namespace"></a>Cgroup namespace</h5><p>Control groups (cgroups) 命名空间用于控制进程在 Linux 系统上的资源使用情况，在容器化中，防止容器之间性能的相互干扰</p>
+<h5 id="IPC-namespace"><a href="#IPC-namespace" class="headerlink" title="IPC namespace"></a>IPC namespace</h5><p>IPC 命名空间是 Linux 的一种隔离机制，用于隔离进程间通信（IPC）资源，包括消息队列、信号量和共享内存等。通过 IPC 命名空间，不同的进程组能够有自己独立的 IPC 资源，彼此之间不会相互干扰或者共享这些资源。</p>
+<h5 id="Time-namespace"><a href="#Time-namespace" class="headerlink" title="Time namespace"></a>Time namespace</h5><p>用于隔离时间命名空间，允许不同的 namespace 中有不同的系统时间</p>
+<h2 id="三-最小化容器的功能集"><a href="#三-最小化容器的功能集" class="headerlink" title="三 . 最小化容器的功能集"></a>三 . 最小化容器的功能集</h2><p>我们创建一个乌班图容器： docker run -it ubuntu:22.04 &#x2F;bin&#x2F;bash ，可以看见我们在容器中是root 用户，然后尝试修改系统时间： date +%T -s “01:01:01” ，结果被拦截了，我们不是有容器的root 权限吗，为什么还会提示不允许操作？因此一定有其它功能阻止了这个操作：Linux功能。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(root㉿kali)-[/tmp]<br>└─# docker run -it ubuntu:22.04 /bin/bash<br>root@e1b37c4a525f:/# <span class="hljs-built_in">date</span> +%T -s <span class="hljs-string">&quot;01:01:01&quot;</span><br><span class="hljs-built_in">date</span>: cannot <span class="hljs-built_in">set</span> <span class="hljs-built_in">date</span>: Operation not permitted<br>01:01:01<br>root@e1b37c4a525f:/# <br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="Linux-功能："><a href="#Linux-功能：" class="headerlink" title="Linux 功能："></a>Linux 功能：</h3><p>在传统的 Linux 系统中，通常存在着强大的 root 用户和普通非特权用户之间的差别。如果一个进程需要执行只有 root 用户才能完成的操作，它必须以 sudo 运行或者需要将二进制文件设置为 “setuid root”，这意味着它可以像 root 一样执行任何操作。从安全角度来看，这很危险，因为这种方式权限设置并不精细，当发现设置为 “setuid root” 的程序存在漏洞时，会让入侵者利用该程序的漏洞直接获取系统的 root 权限。</p>
+<h3 id="功能和容器："><a href="#功能和容器：" class="headerlink" title="功能和容器："></a>功能和容器：</h3><p>我们看看 nginx 容器(进程)有哪些功能， pscap | grep nginx ，下图中可以看见我们的 nginx 进程已经被赋予了一组功能，其中显示了 Docker 默认授予容器的功能集。此集旨在使大多数工作负载能够在容器内成功运行，同时限制可能导致权限升级攻击的任何功能。</p>
+<h2 id="四-Cgroups-控制组"><a href="#四-Cgroups-控制组" class="headerlink" title="四. Cgroups (控制组)"></a>四. Cgroups (控制组)</h2><p>在主机上一个行为不正常的程序可能会消耗所有可用的资源，导致整个系统崩溃。为了解决这个问题，Linux 使用控制组 (cgroups) 来管理每个进程对资源 (如 CPU 和内存) 的访问。Docker 和其他容器化工具利用 cgroups 来限制容器可以使用的资源，这在使用 Kubernetes 时特别有帮助，因为来自多个应用程序的工作负载经常在同一主机上共享资源。</p>
+<h3 id="cgroups-v1-v2"><a href="#cgroups-v1-v2" class="headerlink" title="cgroups v1 &amp; v2"></a>cgroups v1 &amp; v2</h3><p>cgroups v2 提供了管理优势，Linux 内核 4.5 版中引入，直到昀近才成为某些发行版的默认版本，命令mount | grep cgroup 能查看当前主机上的 cgroups 版本，下面是 Ubuntu 20.04，v1 和 v2 版本都安装了，但是 Ubuntu 22.04 系统上只有 cgroups v2。</p>
+<p><img src="/./img/Snipaste_2025-06-01_12-52-11.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="基础知识："><a href="#基础知识：" class="headerlink" title="基础知识："></a>基础知识：</h3><p>我们可以使用文件系统来查看用于特定进程的 cgroup，以 bash 进程为例，先获取 bash 进程的ID： ps -fC bash ，再通过进程ID获取它的 cgroup： cat &#x2F;proc&#x2F;1037572&#x2F;cgroup ，输出显示了进该程所属的各个控制组及其相应的子系统，每个条目都提供了控制组的信息以及相关的路径。这些控制组允许对不同类型资源进行限制和管理，比如 memory 是管理内存资源的使用，pids 是管理进程数目的限制。</p>
+<p><img src="/./img/Snipaste_2025-06-01_12-56-07.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="使用-cgroups-限制资源"><a href="#使用-cgroups-限制资源" class="headerlink" title="使用 cgroups  限制资源"></a><strong>使用</strong> <strong>cgroups</strong>  限制资源</h3><p>主机开两个 shell 窗口，一个窗口A先启动一个乌班图容器并进入容器shell中：</p>
+<blockquote>
+<p> docker run -it ubuntu:22.04 &#x2F;bin&#x2F;bash </p>
+</blockquote>
+<p>另一个窗口B安装压力测试工具 stress：</p>
+<blockquote>
+<p> sudo apt update &amp;&amp; sudo apt install stress</p>
+</blockquote>
+<p>然后将安装好的 stress 从主机复制到容器中： </p>
+<blockquote>
+<p>docker cp &#x2F;usr&#x2F;bin&#x2F;stressstoic_chaplygin:&#x2F;usr&#x2F;bin&#x2F;</p>
+</blockquote>
+<p><img src="/./img/Snipaste_2025-06-01_13-04-42.png" srcset="/img/loading.gif" lazyload></p>
+<p>成功传入容器</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs elixir">┌──(root㉿kali)-[/tmp]<br>└─<span class="hljs-comment"># docker run -it ubuntu:22.04 /bin/bash</span><br>root<span class="hljs-variable">@a2c28dad59ae</span><span class="hljs-symbol">:/</span><span class="hljs-comment"># sudo apt update &amp;&amp; sudo apt install stress</span><br><span class="hljs-symbol">bash:</span> <span class="hljs-symbol">sudo:</span> command <span class="hljs-keyword">not</span> found<br>root<span class="hljs-variable">@a2c28dad59ae</span><span class="hljs-symbol">:/</span><span class="hljs-comment"># ls /usr/bin |grep stress</span><br>stress<br>root<span class="hljs-variable">@a2c28dad59ae</span><span class="hljs-symbol">:/</span><span class="hljs-comment"># </span><br></code></pre></td></tr></table></figure>
+
+<p>在容器中执行命令开始进行压力测试： stress -c 2 ，会启动两个占用了 2 个 CPU 核心的进程，然后通过在窗口B中执行 top 命令，可以验证对主机 CPU 的影响。下图可以看见，用于容器内部进行压力测试导致宿主机的 CPU 被容器占用完了，这是十分危险的，如果入侵者获取了容器的权限，他们就可以使用主机上所有 CPU 资源来挖矿。</p>
+<p><img src="/./img/Snipaste_2025-06-01_13-07-59.png" srcset="/img/loading.gif" lazyload></p>
+<p>Docker 提供了多种选项来限制容器可利用的 CPU 量，其中昀简单的是 –cpus 标志，允许指定可以使用的 CPU 核心数量，再次重复上方的压力测试实验，只不过这次启动乌班图容器需要限制容器使用 0.5 个CPU： docker run –cpus 0.5 -it ubuntu:22.04 &#x2F;bin&#x2F;bash ，下图可以看见，容器中 stress 进程,最多占有一半的 CPU(本主机配置1核1G)。</p>
+<p><img src="/./img/Snipaste_2025-06-01_13-12-49.png" srcset="/img/loading.gif" lazyload></p>
+<p>Linux 系统上常见的拒绝服务攻击称为分叉炸弹，当攻击者生成大量进程，昀终耗尽系统资源时，就会发生这种攻击。默认情况下，容器 (和其他 Linux 进程) 在它们可以生成多少个新进程方面不受限制，这意味着任何进程都可以创建分叉炸弹。Cgroup 能够限制可以生成的进程数量，从而有效地保护主机免受分叉炸弹攻击。</p>
+<h2 id="AppArmor-SELinux"><a href="#AppArmor-SELinux" class="headerlink" title="AppArmor &amp; SELinux"></a>AppArmor &amp; SELinux</h2><p>AppArmor 和 SELinux 是强制访问控制(Mandatory Access Control MAC)系统的示例，强制访问控制系统与其他安全控制(Discretionary Access Control DAC)系统不同之处在于，前者用户通常无法更改其操作。</p>
+<p>文件权限是 DAC 系统的一个示例。文件的所有者可以修改其权限，以允许主机上的任何人修改它。使用MAC 系统时，用户可能无法修改资源的约束，这些限制甚至可以应用于 root 用户，尽管系统上的 root 用户只需禁用整个 MAC 系统即可绕过此限制。Linux 中的 MAC 系统允许用户限制对各种系统资源的访问，以便即使是其他特权进程也无法访问它们。默认情况下，Debian 衍生系统使用 AppArmor，而基于 Red Hat 的系统使用 SELinux</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="seccomp"><a href="#seccomp" class="headerlink" title="seccomp"></a>seccomp</h2><p>上文中讨论了各种安全层，这些安全层不仅可以将容器与主机上的其他进程隔离开来，还可以将容器与其底层主机隔离开来，接下来是容器运行时下一道防线 seccomp 过滤器。</p>
+<p>Seccomp 过滤器是一种限制 Linux 进程可以执行的系统调用的方式。系统调用是用户空间程序与 Linux内核之间的接口。每当程序需要访问主机内核提供的服务 (例如打开文件或创建新进程)，它都会使用系统调用来实现。</p>
+<p>Seccomp 过滤器是由 Berkeley Packet Filter (BPF) 程序编写的，用于限制进程可以进行的系统调用，允许实现非常精细的限制。昀常见的用例是在容器环境中，用户通常以 root 身份运行，因此需要阻止可能导致容器逃逸的危险系统调用。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BA%91%E5%AE%89%E5%85%A8/" class="category-chain-item">云安全</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%AC%94%E8%AE%B0/" class="print-no-link">#笔记</a>
+      
+        <a href="/tags/%E4%BA%91%E5%AE%89%E5%85%A8/" class="print-no-link">#云安全</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>容器只是进程</div>
+      <div>http://example.com/2025/05/31/容器只是进程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCDH</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年5月31日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>XCDH</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

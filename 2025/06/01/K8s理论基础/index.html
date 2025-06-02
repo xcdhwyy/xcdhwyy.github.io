@@ -19,28 +19,26 @@
   <meta name="author" content="XCDH">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Kubernetes(k8s)介绍：​		Kubernetes是一个谷歌开源的，通俗来讲就是用来管理多台主机上的docker容器的一个开源平台应用。 1231.Master节点（控制端）2.Node节点 （主机）3.Pod （容器）  https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_34101364&#x2F;article&#x2F;details&#x2F;122506768   如何判断在K8s里面：扫目标端口来判断">
+    <meta name="description" content="Kubernetes 介绍：Kubernetes 是一个容器编排工具，自动地执行容器化应用程序的管理，主要用于自动部署、扩展和管理容器。 Pod：Pod 是包含一个或多个容器的容器组，是 Kubernetes 中创建和管理的最小对象。 特点：  Pod 是 K8S 中最小的调度单位，故 K8S 直接管理 Pod 而不是容器。 Pod 相当于一个逻辑主机，其中的容器共享存储、网络和配置。 每个 Po">
 <meta property="og:type" content="article">
-<meta property="og:title" content="云安全Day4">
-<meta property="og:url" content="http://example.com/2025/05/29/%E4%BA%91%E5%AE%89%E5%85%A8Day4/index.html">
+<meta property="og:title" content="K8s理论基础">
+<meta property="og:url" content="http://example.com/2025/06/01/K8s%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="XCDH">
-<meta property="og:description" content="Kubernetes(k8s)介绍：​		Kubernetes是一个谷歌开源的，通俗来讲就是用来管理多台主机上的docker容器的一个开源平台应用。 1231.Master节点（控制端）2.Node节点 （主机）3.Pod （容器）  https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_34101364&#x2F;article&#x2F;details&#x2F;122506768   如何判断在K8s里面：扫目标端口来判断">
+<meta property="og:description" content="Kubernetes 介绍：Kubernetes 是一个容器编排工具，自动地执行容器化应用程序的管理，主要用于自动部署、扩展和管理容器。 Pod：Pod 是包含一个或多个容器的容器组，是 Kubernetes 中创建和管理的最小对象。 特点：  Pod 是 K8S 中最小的调度单位，故 K8S 直接管理 Pod 而不是容器。 Pod 相当于一个逻辑主机，其中的容器共享存储、网络和配置。 每个 Po">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-31_12-13-47.png">
-<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-31_12-15-13.png">
-<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-30_20-29-55.png">
-<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-30_22-01-54.png">
-<meta property="article:published_time" content="2025-05-29T11:42:41.000Z">
-<meta property="article:modified_time" content="2025-05-31T08:16:41.638Z">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-01_16-04-37.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-01_19-56-31.png">
+<meta property="article:published_time" content="2025-06-01T08:02:14.000Z">
+<meta property="article:modified_time" content="2025-06-01T12:25:12.879Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="笔记">
-<meta property="article:tag" content="云服务篇">
+<meta property="article:tag" content="K8s">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/Snipaste_2025-05-31_12-13-47.png">
+<meta name="twitter:image" content="http://example.com/img/Snipaste_2025-06-01_16-04-37.png">
   
   
   
-  <title>云安全Day4 - XCDH</title>
+  <title>K8s理论基础 - XCDH</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -206,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="云安全Day4"></span>
+            <span id="subtitle" data-typed-text="K8s理论基础"></span>
           
         </div>
 
@@ -217,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-05-29 19:42" pubdate>
-          2025年5月29日 晚上
+        <time datetime="2025-06-01 16:02" pubdate>
+          2025年6月1日 下午
         </time>
       </span>
     
@@ -229,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          372 字
+          224 字
         
       </span>
     
@@ -240,7 +238,7 @@
         
         
         
-          4 分钟
+          2 分钟
         
       </span>
     
@@ -281,34 +279,32 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">云安全Day4</h1>
+            <h1 id="seo-header">K8s理论基础</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="Kubernetes-k8s-介绍："><a href="#Kubernetes-k8s-介绍：" class="headerlink" title="Kubernetes(k8s)介绍："></a>Kubernetes(k8s)介绍：</h2><p>​		Kubernetes是一个谷歌开源的，通俗来讲就是用来管理多台主机上的docker容器的一个开源平台应用。</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-number">1</span>.<span class="hljs-literal">Master</span>节点（控制端）<br><span class="hljs-number">2</span>.Node节点 （主机）<br><span class="hljs-number">3</span>.Pod （容器）<br></code></pre></td></tr></table></figure>
+                <h2 id="Kubernetes-介绍："><a href="#Kubernetes-介绍：" class="headerlink" title="Kubernetes 介绍："></a>Kubernetes 介绍：</h2><p>Kubernetes 是一个容器编排工具，自动地执行容器化应用程序的管理，主要用于自动部署、扩展和管理容器。</p>
+<h2 id="Pod："><a href="#Pod：" class="headerlink" title="Pod："></a>Pod：</h2><p>Pod 是包含一个或多个容器的容器组，是 Kubernetes 中创建和管理的最小对象。</p>
+<p>特点：</p>
+<ol>
+<li>Pod 是 K8S 中最小的调度单位，故 K8S 直接管理 Pod 而不是容器。</li>
+<li>Pod 相当于一个逻辑主机，其中的容器共享存储、网络和配置。</li>
+<li>每个 Pod 有唯一的 IP 地址，一个 Pod 内，所有容器共享一个 IP 地址和端口，Pod 内的容器可以使用localhost 地址互相通信。</li>
+</ol>
+<p><img src="/./img/Snipaste_2025-06-01_16-04-37.png" srcset="/img/loading.gif" lazyload></p>
+<p>实验：</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs nix"><span class="hljs-params">kind:</span> Cluster<br><span class="hljs-params">apiVersion:</span> kind.x-k8s.io<span class="hljs-symbol">/v1alpha4</span><br><span class="hljs-params">name:</span> demo<br><span class="hljs-params">nodes:</span><br><span class="hljs-operator">-</span> <span class="hljs-params">role:</span> control-plane<br><span class="hljs-operator">-</span> <span class="hljs-params">role:</span> worker<br><span class="hljs-operator">-</span> <span class="hljs-params">role:</span> worker<br></code></pre></td></tr></table></figure>
 
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34101364/article/details/122506768">https://blog.csdn.net/qq_34101364/article/details/122506768</a></p>
-<p><img src="/./img/Snipaste_2025-05-31_12-13-47.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/./img/Snipaste_2025-05-31_12-15-13.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="如何判断在K8s里面："><a href="#如何判断在K8s里面：" class="headerlink" title="如何判断在K8s里面："></a>如何判断在K8s里面：</h2><p>扫目标端口来判断</p>
-<p><img src="/./img/Snipaste_2025-05-30_20-29-55.png" srcset="/img/loading.gif" lazyload></p>
-<p>攻击方向：</p>
-<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs clean">随着越来越多企业开始上云的步伐，在攻防演练中常常碰到云相关的场景，例：公有云、私有云、混合云、虚拟化集群等。<br>以往渗透路径「外网突破-&gt;提权-&gt;权限维持-&gt;信息收集-&gt;横向移动-&gt;循环收集信息」，直到获得重要目标系统。但随着业务上云以及虚拟化技术的引入改变了这种格局，也打开了新的入侵路径，例如：<br><span class="hljs-number">1</span>、通过攻击云管理平台(K8S-Master节点)，利用管理平台控制所有机器<br><span class="hljs-number">2</span>、通过docker容器进行逃逸，从而控制宿主机以及横向渗透到K8s Master节点控制所有容器<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>docker pull kindest&#x2F;node:v1.23.4</p>
+<p>kind create cluster –config config.yaml –image kindest&#x2F;node:v1.23.4</p>
+</blockquote>
+<p><img src="/./img/Snipaste_2025-06-01_19-56-31.png" srcset="/img/loading.gif" lazyload></p>
+<p>还需要创建Pod的配置文件，取名为nginx.yaml文件中</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Pod</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">nginx-pod</span><br><span class="hljs-attr">spec:</span><br>  <span class="hljs-attr">containers:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">nginx-container</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">docker.io/library/nginx:latest</span><br>    <span class="hljs-attr">imagePullPolicy:</span> <span class="hljs-string">IfNotPresent</span><br></code></pre></td></tr></table></figure>
 
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/yQoqozJgP8F-ad24xgzIPw">【云攻防系列】从攻击者视角聊聊K8S集群安全（上）</a></p>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/QEuQa0KVwykrMzOPdgEHMQ">【云攻防系列】从攻击者视角聊聊K8S集群安全（下）</a></p>
-<p><img src="/./img/Snipaste_2025-05-30_22-01-54.png" srcset="/img/loading.gif" lazyload></p>
-<p>etcd未授权访问（2379）：</p>
-<p>Dashboard未授权访问（）：</p>
-<p>Configfile 鉴权文件泄露：</p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/loveqixin/p/18649887">https://www.cnblogs.com/loveqixin/p/18649887</a></p>
-<p>公有云：</p>
-<p>存储桶，云服务器，云数据库</p>
-<p>私有云：</p>
-<p>虚拟机这些技术的</p>
-<h2 id="堡垒机（安全审计系统）："><a href="#堡垒机（安全审计系统）：" class="headerlink" title="堡垒机（安全审计系统）："></a>堡垒机（安全审计系统）：</h2>
+
                 
               </div>
             
@@ -326,7 +322,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" class="category-chain-item">云原生</a>
+  <a href="/categories/%E4%BA%91%E5%AE%89%E5%85%A8/" class="category-chain-item">云安全</a>
   
   
 
@@ -343,7 +339,7 @@
       
         <a href="/tags/%E7%AC%94%E8%AE%B0/" class="print-no-link">#笔记</a>
       
-        <a href="/tags/%E4%BA%91%E6%9C%8D%E5%8A%A1%E7%AF%87/" class="print-no-link">#云服务篇</a>
+        <a href="/tags/K8s/" class="print-no-link">#K8s</a>
       
     </div>
   
@@ -355,8 +351,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>云安全Day4</div>
-      <div>http://example.com/2025/05/29/云安全Day4/</div>
+      <div>K8s理论基础</div>
+      <div>http://example.com/2025/06/01/K8s理论基础/</div>
     </div>
     <div class="license-meta">
       
@@ -368,7 +364,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年5月29日</div>
+          <div>2025年6月1日</div>
         </div>
       
       

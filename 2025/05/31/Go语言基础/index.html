@@ -19,28 +19,23 @@
   <meta name="author" content="XCDH">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Kubernetes(k8s)介绍：​		Kubernetes是一个谷歌开源的，通俗来讲就是用来管理多台主机上的docker容器的一个开源平台应用。 1231.Master节点（控制端）2.Node节点 （主机）3.Pod （容器）  https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_34101364&#x2F;article&#x2F;details&#x2F;122506768   如何判断在K8s里面：扫目标端口来判断">
+    <meta name="description" content="init  初始化本实验：理解 Go 中的初始化过程，包括 init() 函数的使用和程序启动时的顺序。 在 Go 语言中，Init 函数会在包初始化时运行，也就是在所有程序代码运行之前运行并只运行一次，init()  函数的执行顺序与导入顺序有关。在 main 包中引入了 a 和 b 包，导致它们的 init() 函数先被调用，又因 为 a 包中又引入了 b 包，故 b 包的 init() 函数">
 <meta property="og:type" content="article">
-<meta property="og:title" content="云安全Day4">
-<meta property="og:url" content="http://example.com/2025/05/29/%E4%BA%91%E5%AE%89%E5%85%A8Day4/index.html">
+<meta property="og:title" content="Go语言基础">
+<meta property="og:url" content="http://example.com/2025/05/31/Go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="XCDH">
-<meta property="og:description" content="Kubernetes(k8s)介绍：​		Kubernetes是一个谷歌开源的，通俗来讲就是用来管理多台主机上的docker容器的一个开源平台应用。 1231.Master节点（控制端）2.Node节点 （主机）3.Pod （容器）  https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_34101364&#x2F;article&#x2F;details&#x2F;122506768   如何判断在K8s里面：扫目标端口来判断">
+<meta property="og:description" content="init  初始化本实验：理解 Go 中的初始化过程，包括 init() 函数的使用和程序启动时的顺序。 在 Go 语言中，Init 函数会在包初始化时运行，也就是在所有程序代码运行之前运行并只运行一次，init()  函数的执行顺序与导入顺序有关。在 main 包中引入了 a 和 b 包，导致它们的 init() 函数先被调用，又因 为 a 包中又引入了 b 包，故 b 包的 init() 函数">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-31_12-13-47.png">
-<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-31_12-15-13.png">
-<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-30_20-29-55.png">
-<meta property="og:image" content="http://example.com/img/Snipaste_2025-05-30_22-01-54.png">
-<meta property="article:published_time" content="2025-05-29T11:42:41.000Z">
-<meta property="article:modified_time" content="2025-05-31T08:16:41.638Z">
+<meta property="article:published_time" content="2025-05-31T08:16:21.000Z">
+<meta property="article:modified_time" content="2025-05-31T10:32:43.525Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="笔记">
-<meta property="article:tag" content="云服务篇">
+<meta property="article:tag" content="Go基础">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/Snipaste_2025-05-31_12-13-47.png">
   
   
   
-  <title>云安全Day4 - XCDH</title>
+  <title>Go语言基础 - XCDH</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -206,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="云安全Day4"></span>
+            <span id="subtitle" data-typed-text="Go语言基础"></span>
           
         </div>
 
@@ -217,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-05-29 19:42" pubdate>
-          2025年5月29日 晚上
+        <time datetime="2025-05-31 16:16" pubdate>
+          2025年5月31日 下午
         </time>
       </span>
     
@@ -229,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          372 字
+          925 字
         
       </span>
     
@@ -240,7 +235,7 @@
         
         
         
-          4 分钟
+          8 分钟
         
       </span>
     
@@ -281,34 +276,42 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">云安全Day4</h1>
+            <h1 id="seo-header">Go语言基础</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="Kubernetes-k8s-介绍："><a href="#Kubernetes-k8s-介绍：" class="headerlink" title="Kubernetes(k8s)介绍："></a>Kubernetes(k8s)介绍：</h2><p>​		Kubernetes是一个谷歌开源的，通俗来讲就是用来管理多台主机上的docker容器的一个开源平台应用。</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-number">1</span>.<span class="hljs-literal">Master</span>节点（控制端）<br><span class="hljs-number">2</span>.Node节点 （主机）<br><span class="hljs-number">3</span>.Pod （容器）<br></code></pre></td></tr></table></figure>
+                <h2 id="init-初始化"><a href="#init-初始化" class="headerlink" title="init  初始化"></a>init  初始化</h2><p>本实验：理解 Go 中的初始化过程，包括 init() 函数的使用和程序启动时的顺序。</p>
+<p>在 Go 语言中，Init 函数会在包初始化时运行，也就是在所有程序代码运行之前运行并只运行一次，init() </p>
+<p>函数的执行顺序与导入顺序有关。在 main 包中引入了 a 和 b 包，导致它们的 init() 函数先被调用，又因</p>
+<p>为 a 包中又引入了 b 包，故 b 包的 init() 函数昀先执行，其次是 a 包的，昀后是 main 包中的。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go">普通方式变量申明：<br><span class="hljs-keyword">var</span> num3 = <span class="hljs-string">&quot;adas&quot;</span>   <br>高级方式：<br>省略<span class="hljs-keyword">var</span>，注意是 := 不能写为 =<br>string1 := <span class="hljs-string">&quot;helloworld&quot;</span>  <span class="hljs-comment">//初始化并赋值</span><br></code></pre></td></tr></table></figure>
 
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34101364/article/details/122506768">https://blog.csdn.net/qq_34101364/article/details/122506768</a></p>
-<p><img src="/./img/Snipaste_2025-05-31_12-13-47.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/./img/Snipaste_2025-05-31_12-15-13.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="如何判断在K8s里面："><a href="#如何判断在K8s里面：" class="headerlink" title="如何判断在K8s里面："></a>如何判断在K8s里面：</h2><p>扫目标端口来判断</p>
-<p><img src="/./img/Snipaste_2025-05-30_20-29-55.png" srcset="/img/loading.gif" lazyload></p>
-<p>攻击方向：</p>
-<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs clean">随着越来越多企业开始上云的步伐，在攻防演练中常常碰到云相关的场景，例：公有云、私有云、混合云、虚拟化集群等。<br>以往渗透路径「外网突破-&gt;提权-&gt;权限维持-&gt;信息收集-&gt;横向移动-&gt;循环收集信息」，直到获得重要目标系统。但随着业务上云以及虚拟化技术的引入改变了这种格局，也打开了新的入侵路径，例如：<br><span class="hljs-number">1</span>、通过攻击云管理平台(K8S-Master节点)，利用管理平台控制所有机器<br><span class="hljs-number">2</span>、通过docker容器进行逃逸，从而控制宿主机以及横向渗透到K8s Master节点控制所有容器<br></code></pre></td></tr></table></figure>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs haml">占位符	描述<br><span class="hljs-tag">%<span class="hljs-selector-tag">v</span></span>	默认格式，结构体输出 &#123;值1 值2&#125;。<br><span class="hljs-tag">%</span>+v	带字段名的格式，结构体输出 &#123;字段1:值1 字段2:值2&#125;。<br><span class="hljs-tag">%<span class="hljs-selector-id">#v</span></span>	带类型信息的 Go 语法格式，输出 main.Person&#123;Name:&quot;Alice&quot;, Age:30&#125;。<br><span class="hljs-tag">%<span class="hljs-selector-tag">T</span></span>	仅输出类型，不包含值，例如 main.Person。<br></code></pre></td></tr></table></figure>
 
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/yQoqozJgP8F-ad24xgzIPw">【云攻防系列】从攻击者视角聊聊K8S集群安全（上）</a></p>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/QEuQa0KVwykrMzOPdgEHMQ">【云攻防系列】从攻击者视角聊聊K8S集群安全（下）</a></p>
-<p><img src="/./img/Snipaste_2025-05-30_22-01-54.png" srcset="/img/loading.gif" lazyload></p>
-<p>etcd未授权访问（2379）：</p>
-<p>Dashboard未授权访问（）：</p>
-<p>Configfile 鉴权文件泄露：</p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/loveqixin/p/18649887">https://www.cnblogs.com/loveqixin/p/18649887</a></p>
-<p>公有云：</p>
-<p>存储桶，云服务器，云数据库</p>
-<p>私有云：</p>
-<p>虚拟机这些技术的</p>
-<h2 id="堡垒机（安全审计系统）："><a href="#堡垒机（安全审计系统）：" class="headerlink" title="堡垒机（安全审计系统）："></a>堡垒机（安全审计系统）：</h2>
+
+
+<h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++ &#123;<br>		fmt.Println(i)<br>	&#125;<br>	fmt.Println(<span class="hljs-string">&quot;-------------------------&quot;</span>)<br>	string1 := <span class="hljs-string">&quot;hello&quot;</span> <br>	<span class="hljs-keyword">for</span> i, c := <span class="hljs-keyword">range</span> string1 &#123;    <br>	<span class="hljs-comment">//range关键字对字符串string1进行遍历</span><br>	<span class="hljs-comment">//i：代表字符在字符串里的字节索引位置。</span><br>	<span class="hljs-comment">//c：其类型为rune（也就是int32），它存储的是字符的 Unicode 码点（code point）</span><br>	<span class="hljs-comment">//string(c)：把rune类型的c转换为字符串类型，这样就能正确显示出对应的字符了。</span><br>		fmt.Println(i, <span class="hljs-type">string</span>(c))<br>	&#125;<br>&#125;<br><span class="hljs-comment">//结果</span><br><span class="hljs-number">0</span><br><span class="hljs-number">1</span><br><span class="hljs-number">2</span><br>-------------------------<br><span class="hljs-number">0</span> h<br><span class="hljs-number">1</span> e<br><span class="hljs-number">2</span> l<br><span class="hljs-number">3</span> l<br><span class="hljs-number">4</span> o<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;encoding/json&quot;</span><br>	<span class="hljs-string">&quot;fmt&quot;</span><br>)<br><span class="hljs-keyword">type</span> MyType <span class="hljs-keyword">struct</span> &#123;<br>	Name <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;name&quot;`</span> <span class="hljs-comment">//加上标签</span><br>	Address<br>&#125;<br><span class="hljs-keyword">type</span> Address <span class="hljs-keyword">struct</span> &#123;<br>	City <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;city&quot;`</span><br>&#125;<br><span class="hljs-keyword">type</span> Teacher <span class="hljs-keyword">struct</span> &#123;<br>	Name   <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;Name&quot;`</span><br>	Age    <span class="hljs-type">int</span>    <span class="hljs-string">`json:&quot;Age&quot;`</span><br>	School <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;School&quot;`</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	mt := MyType&#123;Name: <span class="hljs-string">&quot;张三&quot;</span>, Address: Address&#123;City: <span class="hljs-string">&quot;北京&quot;</span>&#125;&#125;<br>	b, _ := json.Marshal(&amp;mt)    <span class="hljs-comment">//_ 它会返回一个字节切片（包含序列化后的 JSON 数据）和一个 错误值</span><br>	fmt.Println(<span class="hljs-type">string</span>(b))<br>	<span class="hljs-keyword">var</span> t Teacher = Teacher&#123;<span class="hljs-string">&quot;小明&quot;</span>, <span class="hljs-number">31</span>, <span class="hljs-string">&quot;北大&quot;</span>&#125;<br>	c, _ := json.Marshal(&amp;t)<br>	fmt.Println(<span class="hljs-type">string</span>(c))<br>&#125;<br><span class="hljs-comment">//</span><br>&#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;张三&quot;</span>,<span class="hljs-string">&quot;city&quot;</span>:<span class="hljs-string">&quot;北京&quot;</span>&#125;<br>&#123;<span class="hljs-string">&quot;Name&quot;</span>:<span class="hljs-string">&quot;小明&quot;</span>,<span class="hljs-string">&quot;Age&quot;</span>:<span class="hljs-number">31</span>,<span class="hljs-string">&quot;School&quot;</span>:<span class="hljs-string">&quot;北大&quot;</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;encoding/json&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br>)<br><span class="hljs-keyword">type</span> Name <span class="hljs-keyword">struct</span> &#123;<br>    Name <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;Name&quot;`</span><br>&#125;<br><span class="hljs-keyword">type</span> Age <span class="hljs-keyword">struct</span> &#123;<br>    Age <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;Age&quot;`</span><br>&#125;<br><span class="hljs-keyword">type</span> School <span class="hljs-keyword">struct</span> &#123;<br>    School <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;School&quot;`</span><br>&#125;<br><span class="hljs-keyword">type</span> All <span class="hljs-keyword">struct</span> &#123;<br>    Name<br>    Age<br>    School<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    sy := All&#123;<br>       Name:   Name&#123;Name: <span class="hljs-string">&quot;张三&quot;</span>&#125;,<br>       Age:    Age&#123;Age: <span class="hljs-string">&quot;13&quot;</span>&#125;,<br>       School: School&#123;School: <span class="hljs-string">&quot;北大&quot;</span>&#125;,<br>    &#125;<br>    b, _ := json.Marshal(sy)<br>    fmt.Println(<span class="hljs-type">string</span>(b))<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="指针："><a href="#指针：" class="headerlink" title="指针："></a>指针：</h2><p>理解指针的概念和用法，在 Go 中如何使用指针操作数据。</p>
+<p>指针和值传递的区别。通过指针传递，可以直接修改变量的值，而通过值传递，会创建一个变量的副本，对副本的修改不会影响原始变量。</p>
+<h2 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h2><p>学习切片 (slice)，Go 中灵活且强大的数据结构之一，用于处理序列数据。</p>
+<p>下面是一个数组例子，数组是一个相同类型且长度固定连续内存片段，以编号访问每个元素，编号是不能越界的。</p>
+<blockquote>
+<p>myArray :&#x3D; [5]int{1, 2, 3, 4, 5}</p>
+</blockquote>
+<p>切片则是对数组一个连续片段的引用，数组定义中不指定长度即为切片，切片在未初始化之前默认为nil（无）， 长度为0。切片可以灵活的添加元素或者删除元素。</p>
+<p>makenew：通过 make 或者 new 构造一个切片，New 返回指针地址，Make 返回第一个元素，可预设内存空间，避免未来的内存拷贝。</p>
+<p>forrange：修改切片的值常出现的BUG，核心原因是GO全都是值传递。</p>
+
                 
               </div>
             
@@ -326,7 +329,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" class="category-chain-item">云原生</a>
+  <a href="/categories/Go/" class="category-chain-item">Go</a>
   
   
 
@@ -343,7 +346,7 @@
       
         <a href="/tags/%E7%AC%94%E8%AE%B0/" class="print-no-link">#笔记</a>
       
-        <a href="/tags/%E4%BA%91%E6%9C%8D%E5%8A%A1%E7%AF%87/" class="print-no-link">#云服务篇</a>
+        <a href="/tags/Go%E5%9F%BA%E7%A1%80/" class="print-no-link">#Go基础</a>
       
     </div>
   
@@ -355,8 +358,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>云安全Day4</div>
-      <div>http://example.com/2025/05/29/云安全Day4/</div>
+      <div>Go语言基础</div>
+      <div>http://example.com/2025/05/31/Go语言基础/</div>
     </div>
     <div class="license-meta">
       
@@ -368,7 +371,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年5月29日</div>
+          <div>2025年5月31日</div>
         </div>
       
       
