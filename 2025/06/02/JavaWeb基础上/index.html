@@ -21,8 +21,8 @@
   
     <meta name="description" content="一. Java Web技术架构的演变 Java Web，是用 Java 技术来解决相关 WEB 互联网领域的技术栈。 WEB 包括：WEB 服务端和 WEB 客户端两部分。Java 在客户端的应用有 Java Applet，不过使用得很少。 Java在服务器端的应用非常的丰富，比如 Servlet，JSP、SpringBoot 等等。 JavaWeb 架构演变过程大致分为以下几个阶段：  二. S">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JavaWeb基础">
-<meta property="og:url" content="http://example.com/2025/06/02/JavaWeb%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:title" content="JavaWeb基础上">
+<meta property="og:url" content="http://example.com/2025/06/02/JavaWeb%E5%9F%BA%E7%A1%80%E4%B8%8A/index.html">
 <meta property="og:site_name" content="XCDH">
 <meta property="og:description" content="一. Java Web技术架构的演变 Java Web，是用 Java 技术来解决相关 WEB 互联网领域的技术栈。 WEB 包括：WEB 服务端和 WEB 客户端两部分。Java 在客户端的应用有 Java Applet，不过使用得很少。 Java在服务器端的应用非常的丰富，比如 Servlet，JSP、SpringBoot 等等。 JavaWeb 架构演变过程大致分为以下几个阶段：  二. S">
 <meta property="og:locale" content="zh_CN">
@@ -31,15 +31,17 @@
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-02_11-43-14.png">
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-02_11-42-54.png">
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-02_12-10-36.png">
-<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-02_12-14-02.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-02_16-12-49.png">
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-02_12-25-59.png">
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-02_12-27-50.png">
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-02_12-36-44.png">
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-02_12-50-16.png">
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-02_12-52-45.png">
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-02_12-46-26.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-02_16-07-13.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-02_16-09-52.png">
 <meta property="article:published_time" content="2025-06-02T03:31:50.000Z">
-<meta property="article:modified_time" content="2025-06-02T07:33:07.123Z">
+<meta property="article:modified_time" content="2025-06-02T08:13:40.566Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="JavaWeb">
@@ -48,7 +50,7 @@
   
   
   
-  <title>JavaWeb基础 - XCDH</title>
+  <title>JavaWeb基础上 - XCDH</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +216,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="JavaWeb基础"></span>
+            <span id="subtitle" data-typed-text="JavaWeb基础上"></span>
           
         </div>
 
@@ -237,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.9k 字
+          2.3k 字
         
       </span>
     
@@ -248,7 +250,7 @@
         
         
         
-          17 分钟
+          20 分钟
         
       </span>
     
@@ -289,7 +291,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">JavaWeb基础</h1>
+            <h1 id="seo-header">JavaWeb基础上</h1>
             
             
               <div class="markdown-body">
@@ -313,12 +315,12 @@
 <li>destroy()：销毁阶段，该方法只会被调用一次，即在 Servlet 生命期结束时被调用。一般都是在关闭系统时执行。</li>
 </ol>
 <p><img src="/./img/Snipaste_2025-06-02_11-42-54.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="1-3-实验："><a href="#1-3-实验：" class="headerlink" title="1.3 实验："></a>1.3 实验：</h4><p>1.创建项目，稍等片刻，自行会自行加载相关依赖，如果有报错请尝试退出重进</p>
+<h4 id="1-3-实验："><a href="#1-3-实验：" class="headerlink" title="1.3 实验："></a>1.3 实验：</h4><p>1.创建项目，稍等片刻，自行会自行加载相关依赖，如果有报错请尝试退出重进,注意Archetype的内容要一直</p>
 <p><img src="/./img/Snipaste_2025-06-02_12-10-36.png" srcset="/img/loading.gif" lazyload></p>
 <p>2.在 pom.xml 中引入 servlet 依赖，写在 <dependencies> 标签内，然后可以点击右上角 加载文件改动的按钮（也就是重新加载安装依赖）</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>javax.servlet<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>javax.servlet-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.1.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>compile<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
-<p><img src="/./img/Snipaste_2025-06-02_12-14-02.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/./img/Snipaste_2025-06-02_16-12-49.png" srcset="/img/loading.gif" lazyload></p>
 <ol start="3">
 <li>配置tomcat服务器</li>
 </ol>
@@ -442,6 +444,16 @@
 <td>表示JSP页面所发生的异常，在错误页中才起作用</td>
 </tr>
 </tbody></table>
+<h4 id="实验："><a href="#实验：" class="headerlink" title="实验："></a>实验：</h4><p>在原来的基础上加上两个界面：</p>
+<p><img src="/./img/Snipaste_2025-06-02_16-07-13.png" srcset="/img/loading.gif" lazyload></p>
+<p>login.jsp代码如下所示：（红色波浪不用管）</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs jsp">&lt;%@ page language=<span class="hljs-string">&quot;java&quot;</span> contentType=<span class="hljs-string">&quot;text/html; charset=utf-8&quot;</span><br>            pageEncoding=<span class="hljs-string">&quot;utf-8&quot;</span>%&gt;<br>&lt;!DOCTYPE html PUBLIC <span class="hljs-string">&quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;</span><br><span class="hljs-string">&quot;http://www.w3.org/TR/html4/loose.dtd&quot;</span>&gt;<br>&lt;html&gt;<br>&lt;head&gt;<br>     &lt;meta http-equiv=<span class="hljs-string">&quot;Content-Type&quot;</span> content=<span class="hljs-string">&quot;text/html; charset=utf-8&quot;</span>&gt;<br>     &lt;title&gt;User to Register Page!&lt;/title&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br>&lt;hr&gt;&lt;br&gt;登录页面&lt;br&gt;<br>&lt;form action=<span class="hljs-string">&quot;do_login.jsp&quot;</span> method=<span class="hljs-string">&quot;get&quot;</span>&gt;<br>     &lt;br&gt;<br>     &lt;h1&gt;Please input your message:&lt;/h1&gt;&lt;br&gt;<br>     Name:&lt;input type=<span class="hljs-string">&quot;text&quot;</span> name=<span class="hljs-string">&quot;username&quot;</span>&gt;&lt;br&gt;<br>     Pswd:&lt;input type=<span class="hljs-string">&quot;password&quot;</span> name=<span class="hljs-string">&quot;password&quot;</span>&gt;&lt;br&gt;<br>     &lt;br&gt;&lt;br&gt;&lt;br&gt;<br>     &lt;input type=<span class="hljs-string">&quot;submit&quot;</span>&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;input type=<span class="hljs-string">&quot;reset&quot;</span>&gt;&lt;br&gt;<br>&lt;/body&gt;<br>&lt;/html&gt;<br></code></pre></td></tr></table></figure>
+
+<p>do_login.jsp</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs jsp">&lt;%@ page language=<span class="hljs-string">&quot;java&quot;</span> contentType=<span class="hljs-string">&quot;text/html; charset=utf-8&quot;</span><br>            pageEncoding=<span class="hljs-string">&quot;utf-8&quot;</span>%&gt;<br>&lt;%@ page <span class="hljs-keyword">import</span>=<span class="hljs-string">&quot;java.sql.*&quot;</span> %&gt;<br>&lt;!DOCTYPE html PUBLIC <span class="hljs-string">&quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;</span><br><span class="hljs-string">&quot;http://www.w3.org/TR/html4/loose.dtd&quot;</span>&gt;<br>&lt;html&gt;<br>&lt;head&gt;<br>     &lt;meta http-equiv=<span class="hljs-string">&quot;Content-Type&quot;</span> content=<span class="hljs-string">&quot;text/html; charset=utf-8&quot;</span>&gt;<br>     &lt;title&gt;Server to <span class="hljs-keyword">do</span> the register page!&lt;/title&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br>&lt;%<br>     String username=request.getParameter(<span class="hljs-string">&quot;username&quot;</span>);<br>     String password=request.getParameter(<span class="hljs-string">&quot;password&quot;</span>);<br>%&gt;<br>&lt;%<br>     <span class="hljs-comment">//模拟登录成功与否</span><br>     <span class="hljs-keyword">if</span>(username.equals(<span class="hljs-string">&quot;admin&quot;</span>) &amp;&amp; password.equals(<span class="hljs-string">&quot;password&quot;</span>))&#123;<br>       response.getWriter().write(<span class="hljs-string">&quot;Success!&quot;</span>);<br>     &#125;<span class="hljs-keyword">else</span> &#123;<br>       response.getWriter().write(<span class="hljs-string">&quot;Error!&quot;</span>);<br>     &#125;<br>%&gt;<br>&lt;/body&gt;<br>&lt;/html&gt;<br></code></pre></td></tr></table></figure>
+
+<p>重启tomcat即可：</p>
+<p><img src="/./img/Snipaste_2025-06-02_16-09-52.png" srcset="/img/loading.gif" lazyload></p>
 
                 
               </div>
@@ -489,8 +501,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>JavaWeb基础</div>
-      <div>http://example.com/2025/06/02/JavaWeb基础/</div>
+      <div>JavaWeb基础上</div>
+      <div>http://example.com/2025/06/02/JavaWeb基础上/</div>
     </div>
     <div class="license-meta">
       
@@ -533,6 +545,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2025/06/02/JavaWeb%E5%9F%BA%E7%A1%80%E4%B8%8B/" title="JavaWeb基础下">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">JavaWeb基础下</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
