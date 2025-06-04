@@ -1,0 +1,726 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="https://kcide.asia/PicGo/20250521164813069.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCDH">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在 Java 中可用于执行系统命令的方式有三种，分别是java.lang.Runtime，java.lang.ProcessBuilder以及java.lang.UNIXProcess&#x2F;ProcessImpl。这三种方式都是 JDK 原生提供的，并不需要再额外引入 一. java.lang.Runtime 执行命令 是 java.lang 中的一个类，主要是与操作系统交互执行操作命令。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java命令执行操作">
+<meta property="og:url" content="http://example.com/2025/06/04/Java%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="XCDH">
+<meta property="og:description" content="在 Java 中可用于执行系统命令的方式有三种，分别是java.lang.Runtime，java.lang.ProcessBuilder以及java.lang.UNIXProcess&#x2F;ProcessImpl。这三种方式都是 JDK 原生提供的，并不需要再额外引入 一. java.lang.Runtime 执行命令 是 java.lang 中的一个类，主要是与操作系统交互执行操作命令。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-04_09-32-14.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-04_09-49-40.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-04_09-53-15.png">
+<meta property="article:published_time" content="2025-06-04T00:29:57.000Z">
+<meta property="article:modified_time" content="2025-06-04T02:25:19.225Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/Snipaste_2025-06-04_09-32-14.png">
+  
+  
+  
+  <title>Java命令执行操作 - XCDH</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCDH</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://kcide.asia/PicGo/20250521153237608.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Java命令执行操作"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-06-04 08:29" pubdate>
+          2025年6月4日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Java命令执行操作</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>在 Java 中可用于执行系统命令的方式有三种，分别是<strong>java.lang.Runtime</strong>，<strong>java.lang.ProcessBuilder</strong>以及<strong>java.lang.UNIXProcess&#x2F;ProcessImpl</strong>。这三种方式都是 JDK 原生提供的，并不需要再额外引入</p>
+<h2 id="一-java-lang-Runtime-执行命令"><a href="#一-java-lang-Runtime-执行命令" class="headerlink" title="一. java.lang.Runtime 执行命令"></a>一. <strong>java.lang.Runtime</strong> 执行命令</h2><p> 是 java.lang 中的一个类，主要是与操作系统交互执行操作命令。</p>
+<p>而在 java.lang.Runtime 中我们主要关注 exec() 方法，使用该方法执行具体的命令，而执行 <strong>exec()</strong> 方法有以下六种重载形式，可以传入不同的数据类型的参数</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th><strong>中文释义（非标准）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>exec(String[] cmdarray)</td>
+<td>在单独的进程中执行 指定的命令和参数。</td>
+</tr>
+<tr>
+<td>exec(String command)</td>
+<td>在单独的进程中执行 指定的<strong>字符串</strong>命令</td>
+</tr>
+<tr>
+<td>exec(String command, String[] envp, File dir)</td>
+<td>在具有指定环境和工作目录的单独进程中执行指定的字符串命令。</td>
+</tr>
+<tr>
+<td>exec(String command, String[] envp)</td>
+<td>在具有指定环境的单独进程中执行指定的字符串命令</td>
+</tr>
+<tr>
+<td>exec(String[] cmdarray, String[] envp)</td>
+<td>在具有指定环境的单 独进程中执行指定的命令和参数。</td>
+</tr>
+<tr>
+<td>exec(String[] cmdarray, String[] envp, File dir)</td>
+<td>在具有指定环境和工作目录的单独进程中执行指定的命令和参数。</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.io.*;<br><span class="hljs-keyword">import</span> java.nio.charset.Charset;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ExecRuntime</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">command1</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;cmd /c whoami&quot;</span>;<br>        <span class="hljs-comment">//windows环境下执行</span><br>        String[] command2 = &#123;<span class="hljs-string">&quot;powershell&quot;</span>,<span class="hljs-string">&quot;/c&quot;</span>,<span class="hljs-string">&quot;ping www.baidu.com&quot;</span>&#125;;<br>        <span class="hljs-comment">//String[] command2 = &#123;&quot;cmd&quot;,&quot;/c&quot;, &quot;py&quot;,&quot;-3&quot;, &quot;C:\\Users\\powerful\\Desktop\\dirsearch-0.4.2\\dirsearch.py&quot;, &quot;-u&quot;, &quot;https://www.baidu.com&quot;, &quot;-e *&quot;&#125;;</span><br>        <span class="hljs-comment">//Linux环境下执行，也可以是bash，</span><br>        <span class="hljs-comment">//String[] command3 = &#123;&quot;/bin/sh&quot;, &quot;/root/xxx.sh&quot;, &quot;xxx.sh所需的参数&quot;&#125;;</span><br>        <span class="hljs-comment">//exec执行字符串命令</span><br>        cmdstring(command1);<br>        <span class="hljs-comment">//exec以数组方式接受多个参数并执行</span><br>        cmdarray(command2);<br>    &#125;<br>    <span class="hljs-comment">//exec执行 字符串 命令</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">cmdstring</span><span class="hljs-params">(String command)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">line</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">Process</span> <span class="hljs-variable">process</span> <span class="hljs-operator">=</span> Runtime.getRuntime().exec(command);<br>        <span class="hljs-comment">//使用BufferedReader设置编码解决执行命令响应中文乱码问题</span><br>        <span class="hljs-type">BufferedReader</span> <span class="hljs-variable">bufferedReader</span> <span class="hljs-operator">=</span><br>                    <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedReader</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">InputStreamReader</span>(process.getInputStream(), Charset.forName(<span class="hljs-string">&quot;GBK&quot;</span>)));<br>        <span class="hljs-keyword">while</span> ((line = bufferedReader.readLine()) != <span class="hljs-literal">null</span>) &#123;<br>            System.out.println(line);<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//exec以 数组方式 接受多个参数并执行</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">cmdarray</span><span class="hljs-params">(String[] command)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">line</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">Process</span> <span class="hljs-variable">process</span> <span class="hljs-operator">=</span> Runtime.getRuntime().exec(command);<br>        <span class="hljs-comment">//使用BufferedReader设置编码解决执行命令响应中文乱码问题</span><br>        <span class="hljs-type">BufferedReader</span> <span class="hljs-variable">bufferedReader</span> <span class="hljs-operator">=</span><br>                <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedReader</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">InputStreamReader</span>(process.getInputStream(), Charset.forName(<span class="hljs-string">&quot;GBK&quot;</span>)));<br>        <span class="hljs-keyword">while</span> ((line = bufferedReader.readLine()) != <span class="hljs-literal">null</span>) &#123;<br>            System.out.println(line);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>本质上调用的是 ProcessBuilder 方法：<br><img src="/./img/Snipaste_2025-06-04_09-32-14.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="二-java-lang-ProcessBuilder-执行命令"><a href="#二-java-lang-ProcessBuilder-执行命令" class="headerlink" title="二.  java.lang.ProcessBuilder 执行命令"></a>二.  <strong>java.lang.ProcessBuilder</strong> 执行命令</h2><p>在上面介绍了java.lang。java.lang.Runtime是其中的一个API。而 java.lang.ProcessBuilder 也是java.lang中的一个API。该类主要用于<strong>创建操作系统进程</strong>。</p>
+<p>2.1 <strong>command()</strong> 方法</p>
+<p>command() 方法主要用于<strong>设置要执行的命令</strong>。</p>
+<p>command() 方法传参有两种方式，一种是可变的字符串（简单说就是可以传入普通字符串，或者字符串数组），另一种是字符串列表</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abnf">//简易示例代码<br>ProcessBuilder p <span class="hljs-operator">=</span> new ProcessBuilder()<span class="hljs-comment">;</span><br>p.command(<span class="hljs-string">&quot;calc&quot;</span>)<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-2-start-方法"><a href="#2-2-start-方法" class="headerlink" title="2.2 start() 方法"></a>2.2 <strong>start()</strong> 方法</h4><p>使用 start() 方法可以创建一个新的具有命令，或环境，或工作目录，或输入来源，或标准输出和标准错误输出的目标，或 redirectErrorStream 属性的进程。</p>
+<p>新进程中调用的命令和参数有 command() 方法设置，工作目录将由 directory() 方法设置，进程环境将由 environment() 设置。</p>
+<p>在使用 command() 方法设置执行命令参数后，然后由 start() 方法创建一个新的进程进而在系统中执行了我们设置的命令。</p>
+<p>这么看来 java.lang.ProcessBuilder#start() 和 Runtime.exec(String[] cmdarray, String[] envp, File dir) 有些相似。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//简易示例代码</span><br><span class="hljs-type">Process</span> <span class="hljs-variable">cmd</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ProcessBuilder</span>(command).start();<br></code></pre></td></tr></table></figure>
+
+<p>代码展示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.io.BufferedReader;<br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.io.InputStreamReader;<br><span class="hljs-keyword">import</span> java.nio.charset.Charset;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ExecProcessBuilder</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-type">ProcessBuilder</span> <span class="hljs-variable">processBuilder</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ProcessBuilder</span>();<br>        <span class="hljs-comment">//ProcessBuilder processBuilder = new ProcessBuilder((&quot;whoami&quot;));</span><br>        <span class="hljs-comment">// 在Windows上运行这个命令，cmd， /c 参数是在运行后终止</span><br>        processBuilder.command(<span class="hljs-string">&quot;cmd.exe&quot;</span>, <span class="hljs-string">&quot;/c&quot;</span>, <span class="hljs-string">&quot;ping www.baidu.com&quot;</span>);<br>        <span class="hljs-comment">// 在Linux上运行</span><br>        <span class="hljs-comment">//processBuilder.command(&quot;bash&quot;, &quot;-c&quot;, &quot;ping  baidu.com&quot;);</span><br>        <span class="hljs-type">Process</span> <span class="hljs-variable">process</span> <span class="hljs-operator">=</span> processBuilder.start();<br>        <span class="hljs-type">BufferedReader</span> <span class="hljs-variable">bufferedReader</span> <span class="hljs-operator">=</span><br>                <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedReader</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">InputStreamReader</span>(process.getInputStream(), Charset.forName(<span class="hljs-string">&quot;GBK&quot;</span>)));<br>        String line;<br>        <span class="hljs-keyword">while</span> ((line = bufferedReader.readLine()) != <span class="hljs-literal">null</span>) &#123;<br>            System.out.println(line);<br>        &#125;<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>补充：</p>
+<p>ProcessBuilder在实例化的时候也可以直接执行系统命令，但是没有command方法灵活</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">ProcessBuilder processBuilder <span class="hljs-operator">=</span> new ProcessBuilder((<span class="hljs-string">&quot;whoami&quot;</span>))<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<p>start方法实际调用的是 Process start 方法</p>
+<p><img src="/./img/Snipaste_2025-06-04_09-49-40.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/./img/Snipaste_2025-06-04_09-53-15.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="三-java-lang-UNIXProcess-ProcessImpl-执行命令"><a href="#三-java-lang-UNIXProcess-ProcessImpl-执行命令" class="headerlink" title="三.  java.lang.UNIXProcess&#x2F;ProcessImpl 执行命令"></a>三.  <strong>java.lang.UNIXProcess&#x2F;ProcessImpl</strong> 执行命令</h2><p>首先对于 UNIXProcess 和 ProcessImpl 可以理解本就是一个东西，因为在 JDK9 的时候把UNIXProcess 合并到了 ProcessImpl 当中了。</p>
+<p>UNIXProcess 和 ProcessImpl 最终都是调用 native 执行系统命令的类，这个类提供了一个叫 forkAndExec 的native方法，如方法名所述主要是通过 fork&amp;exec 来执行本地系统命令。</p>
+<p>UNIXProcess类是*nix系统在 java 程序中的体现，可以使用该类创建新进程，实现与    fork 类似的功能（对于Windows系统，使用的是java.lang.ProcessImpl类）</p>
+<p>ProcessImpl 是更为底层的实现，<strong>Runtime和ProcessBuilder执行命令实际上也是调用了ProcessImpl这个类</strong>。</p>
+<p>对于 ProcessImpl 类，我们不能直接调用需要配合使用反射。因为 java.lang.ProcessImpl 代码都被private 封装起来了。并没有设置公共的 API 接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.io.BufferedReader;<br><span class="hljs-keyword">import</span> java.io.InputStreamReader;<br><span class="hljs-keyword">import</span> java.lang.reflect.Method;<br><span class="hljs-keyword">import</span> java.nio.charset.Charset;<br><span class="hljs-keyword">import</span> java.util.Map;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ExecProcessImpl</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        String[] cmds = <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]&#123;<span class="hljs-string">&quot;whoami&quot;</span>&#125;;<br>        <span class="hljs-type">Class</span> <span class="hljs-variable">clazz</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;java.lang.ProcessImpl&quot;</span>);<br>        <span class="hljs-type">Method</span> <span class="hljs-variable">method</span> <span class="hljs-operator">=</span> clazz.getDeclaredMethod(<span class="hljs-string">&quot;start&quot;</span>, String[].class, Map.class, String.class, ProcessBuilder.Redirect[].class, <span class="hljs-type">boolean</span>.class);<br>        method.setAccessible(<span class="hljs-literal">true</span>);<br>        <span class="hljs-type">Process</span> <span class="hljs-variable">process</span> <span class="hljs-operator">=</span> (Process) method.invoke(<span class="hljs-literal">null</span>, cmds, <span class="hljs-literal">null</span>, <span class="hljs-string">&quot;.&quot;</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">true</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">line</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">BufferedReader</span> <span class="hljs-variable">bufferedReader</span> <span class="hljs-operator">=</span><br>                <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedReader</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">InputStreamReader</span>(process.getInputStream(), Charset.forName(<span class="hljs-string">&quot;GBK&quot;</span>)));<br>        <span class="hljs-keyword">while</span> ((line = bufferedReader.readLine()) != <span class="hljs-literal">null</span>) &#123;<br>            System.out.println(line);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>invoke()</code>方法: 用于动态调用对象的方法</p>
+<h2 id="四-命令执行总结："><a href="#四-命令执行总结：" class="headerlink" title="四. 命令执行总结："></a>四. 命令执行总结：</h2><p>执行命令的类有 Runtime 、ProcessBuilder  和  ProcessImpl，其中Runtime 的 exec方法， ProcessBuilder  的 command方法 和 start方法  ，但 ProcessImpl 这个类是没有办法直接使用的 需要进行反射，调用 ProcessImpl 下面的 start 方法去执行命令</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java%E5%AE%89%E5%85%A8/" class="category-chain-item">Java安全</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java/" class="print-no-link">#Java</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Java命令执行操作</div>
+      <div>http://example.com/2025/06/04/Java命令执行操作/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCDH</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年6月4日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/06/04/Java%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C/" title="Java数据库操作">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java数据库操作</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/06/03/Java%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%B1%BB/" title="Java文件操作系类">
+                        <span class="hidden-mobile">Java文件操作系类</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>XCDH</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
