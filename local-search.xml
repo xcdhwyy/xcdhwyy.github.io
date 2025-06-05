@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Java_RMI与JNDI</title>
+    <link href="/2025/06/05/Java-RMI%E4%B8%8EJNDI/"/>
+    <url>/2025/06/05/Java-RMI%E4%B8%8EJNDI/</url>
+    
+    <content type="html"><![CDATA[<h2 id="一-RMI-基础"><a href="#一-RMI-基础" class="headerlink" title="一. RMI 基础"></a>一. <strong>RMI</strong> <strong>基础</strong></h2><p>RMI 是 Java 中的一种技术，全称为远程方法调用（Remote Method Invocation）。它的作用是允许你在不同的 Java 虚拟机（JVM）之间进行通信，就像在同一个 JVM 中调用方法一样，调用远程方法。这些虚拟机可以在不同的主机上、也可以在同一个主机上。</p><p>RMI 是 Java 的一组拥护开发分布式应用程序的 API。RMI 使用 Java 语言接口定义了远程对象，它集合了Java 序列化和 Java远程方法协议(Java Remote Method Protocol)。</p><p>简单地说，原先的程序仅能在同一操作系统的方法调用，通过 RMI 可以变成在不同操作系统之间对程序中方法的调用。</p><p>RMI 依赖的<strong>通信协议</strong>是 <strong>JRMP</strong>。JRMP： Java 远程方法协议（Java Remote Method Protocol，<em>JRMP</em>），是特定于 Java 技术的通信协议，主要是用于查找和引用远程对象的协议。</p><p>RMI 对象是通过序列化方式进行传输的。</p><p>Java RMI 的出现可以是客户端运行的程序调用远程服务器上的方法，对于调用的这个过程，我们只需关注对象方法的本身，而不用在关注网络协议的各种问题。</p><blockquote><p>假设A公司是某个行业的翘楚，开发了一系列行业上领先的软件。B公司想利用A公司的行业优势进行一些数据上的交换和处理。但A公司不可能把其全部软件都部署到B公司，也不能给B公司全部数据的访问权限。于是A公司在现有的软件结构体系不变的前提下开发了一些RMI方法。B公司调用A公司的RMI方法来实现对A公司数据的访问和操作，而所有数据和权限都在A公司的控制范围内，不用担心B公司窃取其数据或者商业机密。</p><p>对于开发者来说，远程方法调用就像我们本地调用一个对象的方法一样，他们很多时候不需要关心内部如何实现，只关心传递相应的参数并获取结果就行了。但是对于攻击者来说，要执行攻击还是需要了解一些细节的。</p></blockquote><h3 id="1-1-RMI-中的三个角色"><a href="#1-1-RMI-中的三个角色" class="headerlink" title="1.1 RMI 中的三个角色"></a>1.1 RMI 中的三个角色</h3><p>RMI中涉及到三个角色，它们分别为服务端（Server），注册中心（Registry）和客户端（Client），下面是他们的作用。</p><ol><li>服务端（Server）：负责将远程对象绑定至注册中心。</li><li>注册中心（Registry）：服务端会将远程对象绑定至此。客户端会向注册中心查询绑定的远程对象。</li><li>客户端（Client）：与注册中心和服务端交互。</li><li>骨架(Skeleton)：<ul><li>服务端侧的代理，用于读取 stub 传递的方法参数，调用服务器方的实际对象方法， 并接收方法执行后的返回值。</li></ul></li><li>存根&#x2F;桩(Stub)：<ul><li>客户端侧的代理，每个远程对象都包含一个代理对象stub，当运行在本地 Java 虚拟机上的程序调用运行在远程 Java 虚拟机上的对象方法时，它首先在本地创建该对象的代理对象 stub, 然后调用代理对象上匹配的方法。</li></ul></li></ol><p><img src="/./img/Snipaste_2025-06-05_22-18-04.png"></p><p>RMI 代码编写步骤如下：</p><ol><li>创建远程接口及声明远程方法（SayHello.java） [进货的方式]</li><li>实现远程接口及远程方法（继承UnicastRemoteObject(内置了很多实现RMI的方法)）(SayHelloImpl.java)  [需要出售的商品]</li><li>启动 RMI 注册服务，并注册远程对象（RmiServer.java）[云端小卖部]</li><li>客户端查找远程对象，并调用远程方法（RmiClient.java）[客户]</li><li>执行程序：启动服务端RmiServer；运行客户端RmiClient进行调用</li></ol><p><img src="/./img/Snipaste_2025-06-05_22-39-03.png"></p><h2 id="二-JNDI介绍"><a href="#二-JNDI介绍" class="headerlink" title="二. JNDI介绍"></a>二. JNDI介绍</h2><p>JNDI（Java Naming and Directory Interface，Java命名和目录接口）是一个Java API，允许 Java 应用程序与命名和目录服务进行交互。这些服务可以是本地的，也可以是分布式的，可以基于各种协议，如LDAP（轻量级目录访问协议）、DNS（域名系统）、NIS（网络信息服务）等。</p><p>JNDI 的主要目的是为了统一不同命名和目录服务的访问方式，使得Java应用程序能够以一种统一的方式来访问这些服务，而不必关心底层的实现细节。通过 JNDI，开发人员可以编写与特定命名服务提供者无关的代码，从而实现应用程序的可移植性和灵活性。</p><p>JNDI 可以访问的目录及服务，比如：DNS、LDAP、CORBA对象服务、RMI等等。</p><p>JNDI 可以访问的目录及服务，比如：DNS、LDAP、CORBA对象服务、RMI等等。</p><h3 id="2-1-命名服务-Naming-Service"><a href="#2-1-命名服务-Naming-Service" class="headerlink" title="2.1 命名服务  Naming Service"></a>2.1 <strong>命名服务</strong>  Naming Service</h3><p>​命名服务提供了将名称与对象关联映射的机制。在 Java 中，这些对象通常是网络资源、Java对象、文件、服务等。命名服务允许开发人员使用简单的名称来访问这些对象，而不需要知道其底层的物理位置或其他详细信息。例如，一个Web应用程序可能需要连接到一个数据库，而不需要知道数据库的确切位置。通过命名服务，开发人员可以为数据库分配一个简单的名称，并在需要时通过该名称访问它。</p><h3 id="2-2-目录服务-Directory-Service"><a href="#2-2-目录服务-Directory-Service" class="headerlink" title="2.2 目录服务 Directory Service"></a>2.2 <strong>目录服务</strong> Directory Service</h3><p>​目录服务扩展了命名服务的概念，提供了一种更加结构化和查询友好的方式来组织和管理对象。目录服务通常被用来存储和检索关于用户、组织、网络资源等信息的数据。与命名服务类似，目录服务也使用名称来引用对象，但它们提供了更丰富的查询功能，使得可以根据各种属性进行搜索和过滤</p><p>2.3 <strong>JNDI</strong> 的五个包</p><ol><li>javax.naming</li><li>javax.naming.directory</li><li>javax.naming.ldap</li><li>javax.naming.event</li><li>javax.naming.spi</li></ol><p>（通过命名和目录服务，让资源的访问更灵活、更易维护）</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Java安全</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Java</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Java序列化和反序列化基础</title>
     <link href="/2025/06/05/Java%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80/"/>
     <url>/2025/06/05/Java%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80/</url>
