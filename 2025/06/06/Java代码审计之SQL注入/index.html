@@ -1,0 +1,709 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="https://kcide.asia/PicGo/20250521164813069.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCDH">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="准备： 创建数据库： 12345678910111213CREATE DATABASE sqlidemo;use sqlidemo;CREATE TABLE IF NOT EXISTS &#96;users&#96;(         &#96;id&#96; INT UNSIGNED AUTO_INCREMENT,         &#96;username&#96; VARCHAR(255) NOT NULL,         &#96;passw">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java代码审计之SQL注入">
+<meta property="og:url" content="http://example.com/2025/06/06/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BSQL%E6%B3%A8%E5%85%A5/index.html">
+<meta property="og:site_name" content="XCDH">
+<meta property="og:description" content="准备： 创建数据库： 12345678910111213CREATE DATABASE sqlidemo;use sqlidemo;CREATE TABLE IF NOT EXISTS &#96;users&#96;(         &#96;id&#96; INT UNSIGNED AUTO_INCREMENT,         &#96;username&#96; VARCHAR(255) NOT NULL,         &#96;passw">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-06_13-36-47.png">
+<meta property="article:published_time" content="2025-06-06T00:22:06.000Z">
+<meta property="article:modified_time" content="2025-06-07T02:11:07.534Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/Snipaste_2025-06-06_13-36-47.png">
+  
+  
+  
+  <title>Java代码审计之SQL注入 - XCDH</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCDH</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://kcide.asia/PicGo/20250521153237608.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Java代码审计之SQL注入"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-06-06 08:22" pubdate>
+          2025年6月6日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Java代码审计之SQL注入</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>准备：</p>
+<p>创建数据库：</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">DATABASE</span> sqlidemo;<br>use sqlidemo;<br><br><span class="hljs-keyword">CREATE</span> TABLE <span class="hljs-keyword">IF</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> <span class="hljs-symbol">`users`</span>(<br>         <span class="hljs-symbol">`id`</span> INT UNSIGNED AUTO_INCREMENT,<br>         <span class="hljs-symbol">`username`</span> VARCHAR(<span class="hljs-number">255</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,<br>         <span class="hljs-symbol">`password`</span> VARCHAR(<span class="hljs-number">255</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,<br>         <span class="hljs-keyword">PRIMARY</span> <span class="hljs-keyword">KEY</span> (<span class="hljs-symbol">`id`</span>)<br>        )ENGINE=InnoDB DEFAULT CHARSET=utf8;<br>        <br> <br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-symbol">`users`</span> <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;admin&#x27;</span>, <span class="hljs-string">&#x27;admin&#x27;</span>);<br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-symbol">`users`</span> <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">2</span>, <span class="hljs-string">&#x27;power7089&#x27;</span>, <span class="hljs-string">&#x27;power7089&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="一、-Jdbc-中-SQL-注入"><a href="#一、-Jdbc-中-SQL-注入" class="headerlink" title="**一、**Jdbc  中 SQL 注入"></a>**一、**Jdbc  <strong>中</strong> <strong>SQL</strong> <strong>注入</strong></h2><h3 id="1-1-、动态拼接"><a href="#1-1-、动态拼接" class="headerlink" title="1.1 、动态拼接"></a>1.1 、动态拼接</h3><p>SQL语句动态拼接导致的SQL注入漏洞是先前最为常见的场景</p>
+<p>其主要原因是后端代码将前端获取的参数动态直接拼接到SQL语句中使用 java.sql.Statement 执行SQL语句从而导致SQL注入漏洞的出现。</p>
+<p>在这里关键点有两个：</p>
+<ol>
+<li>动态拼接参数。</li>
+<li>使用 java.sql.Statement 执行SQL语句。</li>
+</ol>
+<h4 id="1-1-1-java-sql-Statement"><a href="#1-1-1-java-sql-Statement" class="headerlink" title="1.1.1  java.sql.Statement"></a>1.1.1  java.sql.Statement</h4><p>Statement 对象用于执行一条静态的 SQL 语句并获取它的结果。</p>
+<p>createStatement() ：创建一个 Statement 对象，之后可使用 exec uteQuery() 方法执行SQL语句。</p>
+<blockquote>
+<p>有漏洞：executeQuery() 方法 + 动态拼接</p>
+</blockquote>
+<p>executeQuery(String sql) 方法：执行指定的 SQL 语句，返回单个 ResultSet 对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> String <span class="hljs-title function_">jdbcDynamic</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam(&quot;id&quot;)</span> String id)</span> <span class="hljs-keyword">throws</span>    ClassNotFoundException, SQLException &#123;    <span class="hljs-comment">//id是String类型可以SQL注入</span><br>        <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>();<br>        <span class="hljs-comment">// 注册驱动</span><br>        Class.forName(driver);<br>        <span class="hljs-comment">// 获取连接</span><br><span class="hljs-type">Connection</span> <span class="hljs-variable">conn</span> <span class="hljs-operator">=</span> DriverManager.getConnection(url, user, password);<br>        <span class="hljs-type">Statement</span> <span class="hljs-variable">statement</span> <span class="hljs-operator">=</span> conn.createStatement();<br>        <span class="hljs-comment">//动态拼接字符串</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;select * from users where id = &#x27;&quot;</span> + id + <span class="hljs-string">&quot;&#x27;&quot;</span>;<br>        <span class="hljs-type">ResultSet</span> <span class="hljs-variable">rs</span> <span class="hljs-operator">=</span> statement.executeQuery(sql);<br></code></pre></td></tr></table></figure>
+
+<p>  暂时没有漏洞：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> String <span class="hljs-title function_">jdbcDynamicc</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam(&quot;id&quot;)</span> <span class="hljs-type">int</span> id)</span> <span class="hljs-keyword">throws</span> ClassNotFoundException, SQLException &#123;   <span class="hljs-comment">//id是int类型不可以SQL注入</span><br><br>        <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>();<br>        <span class="hljs-comment">// 注册驱动</span><br>        Class.forName(driver);<br>        <span class="hljs-comment">// 获取连接</span><br>        <span class="hljs-type">Connection</span> <span class="hljs-variable">conn</span> <span class="hljs-operator">=</span> DriverManager.getConnection(url, user, password);<br>        <span class="hljs-type">Statement</span> <span class="hljs-variable">statement</span> <span class="hljs-operator">=</span> conn.createStatement();<br>        <span class="hljs-comment">//动态拼接字符串</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;select * from users where id = &#x27;&quot;</span> + id + <span class="hljs-string">&quot;&#x27;&quot;</span>;<br>        <span class="hljs-type">ResultSet</span> <span class="hljs-variable">rs</span> <span class="hljs-operator">=</span> statement.executeQuery(sql);<br></code></pre></td></tr></table></figure>
+
+<p><img src="/./img/Snipaste_2025-06-06_13-36-47.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="1-1-2-预编译：-java-sql-PreparedStatement"><a href="#1-1-2-预编译：-java-sql-PreparedStatement" class="headerlink" title="1.1.2 预编译：(java.sql.PreparedStatement)"></a>1.1.2 预编译：(<strong>java.sql.PreparedStatement</strong>)</h4><p>提前编译sql语句执行模板，后续将参数（视为普通字符串，非数据库的语句）填入到模板中，避免了sql注入</p>
+<p>PreparedStatement 是继承 Statement 的子接口。</p>
+<p>PreparedStatement 会对SQL语句进行预编译，不论输入什么，经过预编译后全都以字符串来执行SQL语句。</p>
+<p>PreparedStatement 会先使用 ? 作为占位符将 SQL 语句进行预编译，确定语句结构，再传入参数进行执行查询。</p>
+<p>没有sql注入：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"> <span class="hljs-comment">// 安全代码</span><br><span class="hljs-type">String</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;select * from users where username = ?&quot;</span>;<br><span class="hljs-type">PreparedStatement</span> <span class="hljs-variable">preparestatement</span> <span class="hljs-operator">=</span> conn.prepareStatement(sql);<br>preparestatement. (<span class="hljs-number">1</span>, username);   <span class="hljs-comment">//1：第一个问号</span><br></code></pre></td></tr></table></figure>
+
+<p>有SQL注入：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//没有正确使用预编译方式，SQL语句还是进行了动态拼接</span><br>      <span class="hljs-type">String</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;select * from users where username = &#x27;&quot;</span> + username + <span class="hljs-string">&quot;&#x27;&quot;</span>;<br>      <span class="hljs-type">PreparedStatement</span> <span class="hljs-variable">preparestatement</span> <span class="hljs-operator">=</span> conn.prepareStatement(sql);<br>      <span class="hljs-comment">//也少了预编译的操作</span><br></code></pre></td></tr></table></figure>
+
+<p>预编译就像 “填空题模板”，它能安全地填入<strong>参数值</strong>，但不能动态改变<strong>SQL 结构</strong>（如列名、表名）。<code>ORDER BY</code>后面接的列名属于 SQL 结构，所以必须手动校验，不能直接用预编译的<code>?</code>。</p>
+<p>不能使用预编译的语句Order by</p>
+<h4 id="1-1-3-order-by-注入"><a href="#1-1-3-order-by-注入" class="headerlink" title="1.1.3 order by 注入"></a>1.1.3 <strong>order by</strong> 注入</h4><p>(order by 对结果进行排序)</p>
+<p>在SQL语句中， order by 语句用于对结果集进行排序。 order by 语句后面需要是字段名或者字段位置。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 错误的预编译用法（无法生效）</span><br><span class="hljs-type">String</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;SELECT * FROM products ORDER BY ?&quot;</span>; <span class="hljs-comment">// 错误 ?不能代替列名</span><br><span class="hljs-type">PreparedStatement</span> <span class="hljs-variable">pstmt</span> <span class="hljs-operator">=</span> conn.prepareStatement(sql);<br>pstmt.setString(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;price DESC&quot;</span>); <span class="hljs-comment">// 无效，会被当作字符串参数</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">执行的<span class="hljs-keyword">sql</span>语句为：<br><span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> products <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;price DESC&#x27;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="二、Mybatis"><a href="#二、Mybatis" class="headerlink" title="二、Mybatis"></a>二、Mybatis</h2><p>MyBatis 是一款优秀的持久层框架，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。</p>
+<h4 id="1、-Mybatis-中-和-区别"><a href="#1、-Mybatis-中-和-区别" class="headerlink" title="1、 Mybatis  中  #{}  和  ${}  区别"></a>1、 Mybatis  中  #{}  和  ${}  区别</h4><p>在Mybatis中拼接SQL语句有两种方式：一种是占位符 #{} ，另一种是拼接符 ${} 。</p>
+<p><strong>占位符 #{}</strong> ：对传入的参数进行预编译转义处理。类似 JDBC 中的PreparedStatement 。</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">比如： <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span> <span class="hljs-keyword">where</span> id = #&#123;<span class="hljs-keyword">number</span>&#125; ，如果传入数值为<span class="hljs-number">1</span>，最终会被解析成 <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span> <span class="hljs-keyword">where</span> id = <span class="hljs-string">&quot;1&quot;</span> 。<br></code></pre></td></tr></table></figure>
+
+<p><strong>拼接符 ${}</strong> ：对传入的参数不做处理，直接拼接，进而<strong>会造成SQL注入漏洞</strong></p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">比如：比如： <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span> <span class="hljs-keyword">where</span> id = $&#123;<span class="hljs-keyword">number</span>&#125; ，如果传入数值为<span class="hljs-number">1</span>，最终会被解析成<br><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> <span class="hljs-keyword">user</span> <span class="hljs-keyword">where</span> id = <span class="hljs-number">1</span> <br></code></pre></td></tr></table></figure>
+
+<p>#{} 可以有效防止SQL注入漏洞。 ${} 则无法防止SQL注入漏洞。</p>
+<p>因此在对 JavaWeb 整合 Mybatis系统 进行代码审计时，应着重审计SQL语句拼接的地方。除非开发人员的粗心对拼接语句使用了 ${} 方式造成的SQL注入漏洞。</p>
+<p>在Mybatis中有几种场景是不能使用预编译方式的，比如： order by 、 in ， like </p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java%E5%AE%89%E5%85%A8/" class="category-chain-item">Java安全</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java/" class="print-no-link">#Java</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Java代码审计之SQL注入</div>
+      <div>http://example.com/2025/06/06/Java代码审计之SQL注入/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCDH</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年6月6日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/06/06/%E5%85%8D%E6%9D%80%E4%B9%8BCS%E5%9F%BA%E7%A1%80/" title="免杀之CS基础">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">免杀之CS基础</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/06/05/Java-RMI%E4%B8%8EJNDI/" title="Java_RMI与JNDI">
+                        <span class="hidden-mobile">Java_RMI与JNDI</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>XCDH</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

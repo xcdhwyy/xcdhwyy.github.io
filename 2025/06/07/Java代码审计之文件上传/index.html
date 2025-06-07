@@ -19,25 +19,25 @@
   <meta name="author" content="XCDH">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一. RMI 基础RMI 是 Java 中的一种技术，全称为远程方法调用（Remote Method Invocation）。它的作用是允许你在不同的 Java 虚拟机（JVM）之间进行通信，就像在同一个 JVM 中调用方法一样，调用远程方法。这些	虚拟机可以在不同的主机上、也可以在同一个主机上。 RMI 是 Java 的一组拥护开发分布式应用程序的 API。RMI 使用 Java 语言接口定义了">
+    <meta name="description" content="一、任意文件上传漏洞​		任意文件上传漏洞常发生在文件上传功能中，由于后端代码中没有严格限制用户上传的文件，导致攻击者可以上传带有恶意攻击代码的JSP 脚本到目标服务器，进而执行脚本，以达到控制操纵目标服务器等目的。 1.1 SpringBoot  对 JSP 的限制现在大多数项目都是基于SpringBoot架构进行的开发，官方不建议 SpringBoot 使用 JSP，并且做了一些限制。（Spr">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java_RMI与JNDI">
-<meta property="og:url" content="http://example.com/2025/06/05/Java-RMI%E4%B8%8EJNDI/index.html">
+<meta property="og:title" content="Java代码审计之文件上传">
+<meta property="og:url" content="http://example.com/2025/06/07/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8B%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/index.html">
 <meta property="og:site_name" content="XCDH">
-<meta property="og:description" content="一. RMI 基础RMI 是 Java 中的一种技术，全称为远程方法调用（Remote Method Invocation）。它的作用是允许你在不同的 Java 虚拟机（JVM）之间进行通信，就像在同一个 JVM 中调用方法一样，调用远程方法。这些	虚拟机可以在不同的主机上、也可以在同一个主机上。 RMI 是 Java 的一组拥护开发分布式应用程序的 API。RMI 使用 Java 语言接口定义了">
+<meta property="og:description" content="一、任意文件上传漏洞​		任意文件上传漏洞常发生在文件上传功能中，由于后端代码中没有严格限制用户上传的文件，导致攻击者可以上传带有恶意攻击代码的JSP 脚本到目标服务器，进而执行脚本，以达到控制操纵目标服务器等目的。 1.1 SpringBoot  对 JSP 的限制现在大多数项目都是基于SpringBoot架构进行的开发，官方不建议 SpringBoot 使用 JSP，并且做了一些限制。（Spr">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-05_22-18-04.png">
-<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-05_22-39-03.png">
-<meta property="article:published_time" content="2025-06-05T12:49:33.000Z">
-<meta property="article:modified_time" content="2025-06-05T15:39:35.657Z">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_12-57-53.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_13-00-10.png">
+<meta property="article:published_time" content="2025-06-07T02:10:58.000Z">
+<meta property="article:modified_time" content="2025-06-07T05:02:35.124Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/Snipaste_2025-06-05_22-18-04.png">
+<meta name="twitter:image" content="http://example.com/img/Snipaste_2025-06-07_12-57-53.png">
   
   
   
-  <title>Java_RMI与JNDI - XCDH</title>
+  <title>Java代码审计之文件上传 - XCDH</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Java_RMI与JNDI"></span>
+            <span id="subtitle" data-typed-text="Java代码审计之文件上传"></span>
           
         </div>
 
@@ -214,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-06-05 20:49" pubdate>
-          2025年6月5日 晚上
+        <time datetime="2025-06-07 10:10" pubdate>
+          2025年6月7日 上午
         </time>
       </span>
     
@@ -278,60 +278,53 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Java_RMI与JNDI</h1>
+            <h1 id="seo-header">Java代码审计之文件上传</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="一-RMI-基础"><a href="#一-RMI-基础" class="headerlink" title="一. RMI 基础"></a>一. <strong>RMI</strong> <strong>基础</strong></h2><p>RMI 是 Java 中的一种技术，全称为远程方法调用（Remote Method Invocation）。它的作用是允许你在不同的 Java 虚拟机（JVM）之间进行通信，就像在同一个 JVM 中调用方法一样，调用远程方法。这些	虚拟机可以在不同的主机上、也可以在同一个主机上。</p>
-<p>RMI 是 Java 的一组拥护开发分布式应用程序的 API。RMI 使用 Java 语言接口定义了远程对象，它集合了Java 序列化和 Java远程方法协议(Java Remote Method Protocol)。</p>
-<p>简单地说，原先的程序仅能在同一操作系统的方法调用，通过 RMI 可以变成在不同操作系统之间对程序中方法的调用。</p>
-<p>RMI 依赖的<strong>通信协议</strong>是 <strong>JRMP</strong>。JRMP： Java 远程方法协议（Java Remote Method Protocol，<em>JRMP</em>），是特定于 Java 技术的通信协议，主要是用于查找和引用远程对象的协议。</p>
-<p>RMI 对象是通过序列化方式进行传输的。</p>
-<p>Java RMI 的出现可以是客户端运行的程序调用远程服务器上的方法，对于调用的这个过程，我们只需关注对象方法的本身，而不用在关注网络协议的各种问题。</p>
-<blockquote>
-<p>假设A公司是某个行业的翘楚，开发了一系列行业上领先的软件。B公司想利用A公司的行业优势进行一些数据上的交换和处理。但A公司不可能把其全部软件都部署到B公司，也不能给B公司全部数据的访问权限。于是A公司在现有的软件结构体系不变的前提下开发了一些RMI方法。B公司调用A公司的RMI方法来实现对A公司数据的访问和操作，而所有数据和权限都在A公司的控制范围内，不用担心B公司窃取其数据或者商业机密。</p>
-<p>对于开发者来说，远程方法调用就像我们本地调用一个对象的方法一样，他们很多时候不需要关心内部如何实现，只关心传递相应的参数并获取结果就行了。但是对于攻击者来说，要执行攻击还是需要了解一些细节的。</p>
-</blockquote>
-<h3 id="1-1-RMI-中的三个角色"><a href="#1-1-RMI-中的三个角色" class="headerlink" title="1.1 RMI 中的三个角色"></a>1.1 RMI 中的三个角色</h3><p>RMI中涉及到三个角色，它们分别为服务端（Server），注册中心（Registry）和客户端（Client），下面是他们的作用。</p>
-<ol>
-<li>服务端（Server）：负责将远程对象绑定至注册中心。</li>
-<li>注册中心（Registry）：服务端会将远程对象绑定至此。客户端会向注册中心查询绑定的远程对象。</li>
-<li>客户端（Client）：与注册中心和服务端交互。</li>
-<li>骨架(Skeleton)：<ul>
-<li>服务端侧的代理，用于读取 stub 传递的方法参数，调用服务器方的实际对象方法， 并接收方法执行后的返回值。</li>
-</ul>
-</li>
-<li>存根&#x2F;桩(Stub)：			<ul>
-<li>客户端侧的代理，每个远程对象都包含一个代理对象stub，当运行在本地 Java 虚拟机上的程序调用运行在远程 Java 虚拟机上的对象方法时，它首先在本地创建该对象的代理对象 stub, 然后调用代理对象上匹配的方法。</li>
-</ul>
-</li>
-</ol>
-<p><img src="/./img/Snipaste_2025-06-05_22-18-04.png" srcset="/img/loading.gif" lazyload></p>
-<p>RMI 代码编写步骤如下：</p>
-<ol>
-<li>创建远程接口及声明远程方法（SayHello.java） [进货的方式]</li>
-<li>实现远程接口及远程方法（继承UnicastRemoteObject(内置了很多实现RMI的方法)）(SayHelloImpl.java)  [需要出售的商品]</li>
-<li>启动 RMI 注册服务，并注册远程对象（RmiServer.java）[云端小卖部]</li>
-<li>客户端查找远程对象，并调用远程方法（RmiClient.java）[客户]</li>
-<li>执行程序：启动服务端RmiServer；运行客户端RmiClient进行调用</li>
-</ol>
-<p><img src="/./img/Snipaste_2025-06-05_22-39-03.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="二-JNDI介绍"><a href="#二-JNDI介绍" class="headerlink" title="二. JNDI介绍"></a>二. JNDI介绍</h2><p>JNDI（Java Naming and Directory Interface，Java命名和目录接口）是一个Java API，允许 Java 应用程序与命名和目录服务进行交互。这些服务可以是本地的，也可以是分布式的，可以基于各种协议，如LDAP（轻量级目录访问协议）、DNS（域名系统）、NIS（网络信息服务）等。</p>
-<p>JNDI 的主要目的是为了统一不同命名和目录服务的访问方式，使得Java应用程序能够以一种统一的方式来访问这些服务，而不必关心底层的实现细节。通过 JNDI，开发人员可以编写与特定命名服务提供者无关的代码，从而实现应用程序的可移植性和灵活性。</p>
-<p>JNDI 可以访问的目录及服务，比如：DNS、LDAP、CORBA对象服务、RMI等等。</p>
-<p>JNDI 可以访问的目录及服务，比如：DNS、LDAP、CORBA对象服务、RMI等等。</p>
-<h3 id="2-1-命名服务-Naming-Service"><a href="#2-1-命名服务-Naming-Service" class="headerlink" title="2.1 命名服务  Naming Service"></a>2.1 <strong>命名服务</strong>  Naming Service</h3><p>​		命名服务提供了将名称与对象关联映射的机制。在 Java 中，这些对象通常是网络资源、Java对象、文件、服务等。命名服务允许开发人员使用简单的名称来访问这些对象，而不需要知道其底层的物理位置或其他详细信息。例如，一个Web应用程序可能需要连接到一个数据库，而不需要知道数据库的确切位置。通过命名服务，开发人员可以为数据库分配一个简单的名称，并在需要时通过该名称访问它。</p>
-<h3 id="2-2-目录服务-Directory-Service"><a href="#2-2-目录服务-Directory-Service" class="headerlink" title="2.2 目录服务 Directory Service"></a>2.2 <strong>目录服务</strong> Directory Service</h3><p>​		目录服务扩展了命名服务的概念，提供了一种更加结构化和查询友好的方式来组织和管理对象。目录服务通常被用来存储和检索关于用户、组织、网络资源等信息的数据。与命名服务类似，目录服务也使用名称来引用对象，但它们提供了更丰富的查询功能，使得可以根据各种属性进行搜索和过滤</p>
-<p>2.3 <strong>JNDI</strong> 的五个包</p>
-<ol>
-<li>javax.naming</li>
-<li>javax.naming.directory</li>
-<li>javax.naming.ldap</li>
-<li>javax.naming.event</li>
-<li>javax.naming.spi</li>
-</ol>
-<p>（通过命名和目录服务，让资源的访问更灵活、更易维护）</p>
+                <h2 id="一、任意文件上传漏洞"><a href="#一、任意文件上传漏洞" class="headerlink" title="一、任意文件上传漏洞"></a><strong>一、任意文件上传漏洞</strong></h2><p>​		任意文件上传漏洞常发生在文件上传功能中，由于后端代码中没有严格限制用户上传的文件，导致攻击者可以上传带有恶意攻击代码的JSP 脚本到目标服务器，进而执行脚本，以达到控制操纵目标服务器等目的。</p>
+<h3 id="1-1-SpringBoot-对-JSP-的限制"><a href="#1-1-SpringBoot-对-JSP-的限制" class="headerlink" title="1.1 SpringBoot  对 JSP 的限制"></a>1.1 SpringBoot  <strong>对</strong> <strong>JSP</strong> 的限制</h3><p>现在大多数项目都是基于SpringBoot架构进行的开发，官方不建议 SpringBoot 使用 JSP，并且做了一些限制。（SpringBoot 默认不解析JSP文件）</p>
+<p>如果想要使用JSP也可以，需要引入相关依赖，自建WEB-INF,web.xml等操作，这样一通操作下来失去了 SpringBoot的一些特性。当然这也仅是一部分原因。</p>
+<p>我们在对SpringBoot项目审计时如果想要查看是否对JSP完全解析，可以从熟悉的 pom.xml 文件下手，查看是否引入了相关依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--用于编译jsp--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.tomcat.embed<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>tomcat-embed-jasper<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>provided<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="二-校验文件类型"><a href="#二-校验文件类型" class="headerlink" title="二. 校验文件类型"></a>二. <strong>校验文件类型</strong></h2><h3 id="2-1-文件后缀名校验"><a href="#2-1-文件后缀名校验" class="headerlink" title="2.1 文件后缀名校验"></a>2.1 <strong>文件后缀名校验</strong></h3><p>这里我们主要关注后端是否对上传的文件后缀名进行了检查判断。如果在后端对后缀名没有限制。那么就极有可能存在任意文件上传漏洞。很多项目是通过前端限制文件上传类型。但我们都知道，不论前端怎么限制，我们都可以通过抓包的方式修改后缀为敏感文件，以达到上传Webshell的目的。</p>
+<h3 id="2-2、文件后缀名校验黑白名单"><a href="#2-2、文件后缀名校验黑白名单" class="headerlink" title="2.2、文件后缀名校验黑白名单"></a><strong>2.2</strong>、文件后缀名校验黑白名单</h3><p>如果后端使用了黑白名单限制后缀名已经初步起到了一定的防护作用。但具体还需要根据实际情况分析。如果是黑名单是否存在遗漏的情况。我会使用模糊字典Fuzz后缀名，看看是否能绕过。</p>
+<h3 id="2-3、MIME-type-检测"><a href="#2-3、MIME-type-检测" class="headerlink" title="2.3、MIME type  检测"></a><strong>2.3</strong>、MIME type  检测</h3><p>校验文件类型还有一种方式检测MIME Type。也就是我们在请求中常见的 Content-Type 字段。如果项目中使用MIME type黑白名单检测文件类型，可以分析黑白名单中是否有遗漏的敏感文件类型。</p>
+<h2 id="2-4-文件名操作"><a href="#2-4-文件名操作" class="headerlink" title="2.4  文件名操作"></a>2.4  <strong>文件名操作</strong></h2><p>在这里我们关注上传的文件名是否有所改动。</p>
+<p>常见的情况是后端直接接受保存我们上传的文件名。</p>
+<p>但也常后端自定义不可预测的文件名，比如使用 。比如以下代码</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-built_in">String</span> originalFileName = file.getOriginalFilename();<br><span class="hljs-built_in">String</span> <span class="hljs-keyword">extension</span> = originalFileName.substring(originalFileName.lastIndexOf(<span class="hljs-string">&#x27;.&#x27;</span>));<br><span class="hljs-built_in">String</span> fileName = UUID.randomUUID() + <span class="hljs-keyword">extension</span>;<br><span class="hljs-comment">//UUID.randomUUID() 随机值</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-5-保存路径"><a href="#2-5-保存路径" class="headerlink" title="2.5 保存路径"></a>2.5 <strong>保存路径</strong></h3><p>在这里我们关注是否保存在本地，保存文件路径是否是在非解析路径，保存路径是否可控。</p>
+<h3 id="2-6-是否保存在本地"><a href="#2-6-是否保存在本地" class="headerlink" title="2.6 是否保存在本地"></a>2.6 <strong>是否保存在本地</strong></h3><p>现在很多项目可以说是都在向云服务器迁移，并且对数据，文件做了隔离。不同的的场景应用不同的存储服务器。</p>
+<p>后端在对上传文件保存时无非要么是保存在服务器本地，要么保存在相关云存储服务器。比如：七牛云OSS，阿里OSS等等。如果保存在了OSS上，尽管上传了敏感Webshell脚本，也是无法执行的。</p>
+<h3 id="2-7-是否解析路径"><a href="#2-7-是否解析路径" class="headerlink" title="2.7 是否解析路径"></a>2.7 <strong>是否解析路径</strong></h3><p>判断目录是否可以解析 JSP 文件，进而造成了任意文件上传漏洞。</p>
+<h3 id="2-8-路径是否可控"><a href="#2-8-路径是否可控" class="headerlink" title="2.8 路径是否可控"></a>2.8 <strong>路径是否可控</strong></h3><p>在获取文件名后，大多会进行路径拼接操作。</p>
+<p>在这里我们可以检查拼接路径是有相关防护，如果没有限制 ..&#x2F; 那么极有可能存在目录穿越漏洞。如果保存图片的地址是非解析目录，我们可以配合目录穿越漏洞操作WebShell存储到其他地方，尝试执行。</p>
+<p>FileUploadDemo项目中路径使用了直接拼接的方式，并且没有任何防护，代码如下：</p>
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sas">String <span class="hljs-keyword">fileName</span> = <span class="hljs-keyword">file</span>.getOriginal<span class="hljs-meta">Filename</span>();<br>String filePath = path + <span class="hljs-keyword">fileName</span>;<br></code></pre></td></tr></table></figure>
+
+<p>可以启动运行该项目自行调试，将上传的文件名改为 ..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;test.txt 后观察结果。</p>
+<h2 id="三-文件上传关键字"><a href="#三-文件上传关键字" class="headerlink" title="三. 文件上传关键字"></a>三. 文件上传关键字</h2><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">File<br>FileUpload<br>FileUploadBase<br>FileItemIteratorImpl<br>FileItemStreamImpl<br>FileUtils<br>UploadHandleServlet<br>FileLoadServlet<br>FileOutputStream<br><span class="hljs-keyword">DiskFileItemFactory</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">MultipartRequestEntity</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">MultipartFile</span><br><span class="hljs-keyword"></span>com.<span class="hljs-keyword">oreilly.servlet.MultipartRequest</span><br><span class="hljs-keyword"></span>......<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-1-JSP木马"><a href="#3-1-JSP木马" class="headerlink" title="3.1 JSP木马"></a>3.1 JSP木马</h3><p>JSP木马也叫作Java WebShell，代码使用JSP（Java Server Pages）编写，只不过是在代码中加入了一些操作文件，访问系统等功能，也就成为了我们口中的JSP木马</p>
+<h2 id="四-任意文件上传漏洞修复"><a href="#四-任意文件上传漏洞修复" class="headerlink" title="四. 任意文件上传漏洞修复"></a>四. <strong>任意文件上传漏洞修复</strong></h2><figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs coq">列出允许的扩展。只允许业务功能的安全和关键扩展<br>确保在验证扩展名之前应用输入验证。<br>验证文件类型，不要相信Content-<span class="hljs-keyword">Type</span>头，因为它可以被欺骗。<br>将文件名改为由应用程序生成的文件名<br>设置一个文件名的长度限制。如果可能的话，限制允许的字符<br>设置一个文件大小限制<br>只允许授权用户上传文件<br>将文件存储在不同的服务器上。如果不可能，就把它们存放在webroot之外。<br>在公众访问文件的情况下，使用一个处理程序，在应用程序中被映射到文件名（someid -&gt; file.ext）。<br>通过杀毒软件或沙盒（如果有的话）运行文件，以验证它不包含恶意数据。<br>确保任何使用的库都是安全配置的，并保持最新。<br>保护文件上传免受CSRF攻击<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="五-补充："><a href="#五-补充：" class="headerlink" title="五.补充："></a>五.补充：</h2><p>如果本地代码无法执行某项特定的功能（比如在登陆后才能进行代码的审计，可以使用远程调用API的方法）</p>
+<p><img src="/./img/Snipaste_2025-06-07_12-57-53.png" srcset="/img/loading.gif" lazyload></p>
+<p>1.远程代码    (action：明确了表单数据的发送目的地)</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs abnf">&lt;form action<span class="hljs-operator">=</span><span class="hljs-string">&quot;http://localhost:8080/video/uploadvideo&quot;</span>  enctype<span class="hljs-operator">=</span><span class="hljs-string">&quot;multipart/form-data&quot;</span> id<span class="hljs-operator">=</span><span class="hljs-string">&quot;frmUpload&quot;</span> method<span class="hljs-operator">=</span><span class="hljs-string">&quot;post&quot;</span>&gt;<br>&lt;input name<span class="hljs-operator">=</span><span class="hljs-string">&quot;uploadfile&quot;</span> type<span class="hljs-operator">=</span><span class="hljs-string">&quot;file&quot;</span>&gt;<br>&lt;input type <span class="hljs-operator">=</span><span class="hljs-string">&quot;text&quot;</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&quot;fileType&quot;</span> value<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span>&gt;<br>&lt;input id<span class="hljs-operator">=</span><span class="hljs-string">&quot;btnUpload&quot;</span> type<span class="hljs-operator">=</span><span class="hljs-string">&quot;submit&quot;</span> value<span class="hljs-operator">=</span><span class="hljs-string">&quot;上传&quot;</span>&gt;<br>&lt;/form&gt;<br></code></pre></td></tr></table></figure>
+
+<p>2.部署在apache服务里面，进行上传文件</p>
+<p><img src="/./img/Snipaste_2025-06-07_13-00-10.png" srcset="/img/loading.gif" lazyload></p>
 
                 
               </div>
@@ -377,8 +370,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Java_RMI与JNDI</div>
-      <div>http://example.com/2025/06/05/Java-RMI与JNDI/</div>
+      <div>Java代码审计之文件上传</div>
+      <div>http://example.com/2025/06/07/Java代码审计之文件上传/</div>
     </div>
     <div class="license-meta">
       
@@ -390,7 +383,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年6月5日</div>
+          <div>2025年6月7日</div>
         </div>
       
       
@@ -422,18 +415,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/06/06/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8BSQL%E6%B3%A8%E5%85%A5/" title="Java代码审计之SQL注入">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Java代码审计之SQL注入</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/06/05/Java%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80/" title="Java序列化和反序列化基础">
-                        <span class="hidden-mobile">Java序列化和反序列化基础</span>
+                      <a href="/2025/06/06/%E5%85%8D%E6%9D%80%E4%B9%8BCS%E5%9F%BA%E7%A1%80/" title="免杀之CS基础">
+                        <span class="hidden-mobile">免杀之CS基础</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
