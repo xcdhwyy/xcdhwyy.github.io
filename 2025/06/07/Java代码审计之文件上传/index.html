@@ -28,8 +28,11 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_12-57-53.png">
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_13-00-10.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-13_08-28-33.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-13_08-29-38.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-13_08-41-41.png">
 <meta property="article:published_time" content="2025-06-07T02:10:58.000Z">
-<meta property="article:modified_time" content="2025-06-07T05:02:35.124Z">
+<meta property="article:modified_time" content="2025-06-13T00:43:47.573Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
@@ -226,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          1.8k 字
         
       </span>
     
@@ -237,7 +240,7 @@
         
         
         
-          13 分钟
+          15 分钟
         
       </span>
     
@@ -309,7 +312,7 @@
 <figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sas">String <span class="hljs-keyword">fileName</span> = <span class="hljs-keyword">file</span>.getOriginal<span class="hljs-meta">Filename</span>();<br>String filePath = path + <span class="hljs-keyword">fileName</span>;<br></code></pre></td></tr></table></figure>
 
 <p>可以启动运行该项目自行调试，将上传的文件名改为 ..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;test.txt 后观察结果。</p>
-<h2 id="三-文件上传关键字"><a href="#三-文件上传关键字" class="headerlink" title="三. 文件上传关键字"></a>三. 文件上传关键字</h2><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">File<br>FileUpload<br>FileUploadBase<br>FileItemIteratorImpl<br>FileItemStreamImpl<br>FileUtils<br>UploadHandleServlet<br>FileLoadServlet<br>FileOutputStream<br><span class="hljs-keyword">DiskFileItemFactory</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">MultipartRequestEntity</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">MultipartFile</span><br><span class="hljs-keyword"></span>com.<span class="hljs-keyword">oreilly.servlet.MultipartRequest</span><br><span class="hljs-keyword"></span>......<br></code></pre></td></tr></table></figure>
+<h2 id="三-文件上传关键字"><a href="#三-文件上传关键字" class="headerlink" title="三. 文件上传关键字"></a>三. 文件上传关键字</h2><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">File<br><span class="hljs-keyword">MultipartFile</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">MultipartRequestEntity</span><br><span class="hljs-keyword"></span>FileUpload<br>FileUploadBase<br>FileItemIteratorImpl<br>FileItemStreamImpl<br>FileUtils<br>UploadHandleServlet<br>FileLoadServlet<br>FileOutputStream<br><span class="hljs-keyword">DiskFileItemFactory</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">MultipartRequestEntity</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">MultipartFile</span><br><span class="hljs-keyword"></span>com.<span class="hljs-keyword">oreilly.servlet.MultipartRequest</span><br><span class="hljs-keyword"></span>......<br></code></pre></td></tr></table></figure>
 
 <h3 id="3-1-JSP木马"><a href="#3-1-JSP木马" class="headerlink" title="3.1 JSP木马"></a>3.1 JSP木马</h3><p>JSP木马也叫作Java WebShell，代码使用JSP（Java Server Pages）编写，只不过是在代码中加入了一些操作文件，访问系统等功能，也就成为了我们口中的JSP木马</p>
 <h2 id="四-任意文件上传漏洞修复"><a href="#四-任意文件上传漏洞修复" class="headerlink" title="四. 任意文件上传漏洞修复"></a>四. <strong>任意文件上传漏洞修复</strong></h2><figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs coq">列出允许的扩展。只允许业务功能的安全和关键扩展<br>确保在验证扩展名之前应用输入验证。<br>验证文件类型，不要相信Content-<span class="hljs-keyword">Type</span>头，因为它可以被欺骗。<br>将文件名改为由应用程序生成的文件名<br>设置一个文件名的长度限制。如果可能的话，限制允许的字符<br>设置一个文件大小限制<br>只允许授权用户上传文件<br>将文件存储在不同的服务器上。如果不可能，就把它们存放在webroot之外。<br>在公众访问文件的情况下，使用一个处理程序，在应用程序中被映射到文件名（someid -&gt; file.ext）。<br>通过杀毒软件或沙盒（如果有的话）运行文件，以验证它不包含恶意数据。<br>确保任何使用的库都是安全配置的，并保持最新。<br>保护文件上传免受CSRF攻击<br></code></pre></td></tr></table></figure>
@@ -325,6 +328,20 @@
 
 <p>2.部署在apache服务里面，进行上传文件</p>
 <p><img src="/./img/Snipaste_2025-06-07_13-00-10.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="六-实战："><a href="#六-实战：" class="headerlink" title="六. 实战："></a>六. 实战：</h2><p>对于 SpingBoot项目 来说，想要SpringBoot内嵌的Tomcat对JSP解析，一定要引入相关依赖。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- Jsp compatible--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>javax.servlet<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jstl<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.tomcat.embed<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>tomcat-embed-jasper<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>provided<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.taglibs<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>taglibs-standard-impl<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.2.5<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>对于很多SpringBoot项目来说，是无需引入解析JSP依赖的。那么对于任意文件上传漏洞来说，上传JSP，木马肯定是没有办法解析的。对于任意文件上传漏洞利用，只能通过内存马等方式进行攻击了。</p>
+<p>补充：UUID+extension 方式（是随机命名文件）</p>
+<p>方式一：没有做任何的过滤，上传jsp文件</p>
+<p>（修改成符合要求的后缀名，在通过bp进行改包）</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">1</span>.<span class="hljs-number">1</span> 改filename后縀名为 .jsp<br><span class="hljs-attribute">1</span>.<span class="hljs-number">2</span> Content-Type: text/plain<br></code></pre></td></tr></table></figure>
+
+<p><img src="/./img/Snipaste_2025-06-13_08-28-33.png" srcset="/img/loading.gif" lazyload></p>
+<p>获取文件路径：</p>
+<p><img src="/./img/Snipaste_2025-06-13_08-29-38.png" srcset="/img/loading.gif" lazyload></p>
+<p>getshell:</p>
+<p><img src="/./img/Snipaste_2025-06-13_08-41-41.png" srcset="/img/loading.gif" lazyload></p>
 
                 
               </div>
@@ -414,6 +431,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2025/06/08/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8B%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96-%E4%B8%8B%E8%BD%BD/" title="Java代码审计之任意文件读取/下载">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java代码审计之任意文件读取/下载</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

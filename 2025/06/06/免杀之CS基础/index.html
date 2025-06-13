@@ -29,6 +29,7 @@
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-06_22-23-54.png">
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-06_22-25-00.png">
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_14-04-12.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_16-41-00.png">
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_15-10-31.png">
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_15-11-40.png">
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_15-16-32.png">
@@ -37,7 +38,7 @@
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_16-05-34.png">
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-07_16-35-11.png">
 <meta property="article:published_time" content="2025-06-06T13:11:01.000Z">
-<meta property="article:modified_time" content="2025-06-07T08:36:03.897Z">
+<meta property="article:modified_time" content="2025-06-07T08:48:39.229Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="免杀">
 <meta name="twitter:card" content="summary_large_image">
@@ -245,7 +246,7 @@
         
         
         
-          35 分钟
+          36 分钟
         
       </span>
     
@@ -368,18 +369,19 @@
 <h2 id="四-CS配置Linux上线"><a href="#四-CS配置Linux上线" class="headerlink" title="四. CS配置Linux上线"></a>四. CS配置Linux上线</h2><h3 id="下载-CrossC2（只支持https协议）"><a href="#下载-CrossC2（只支持https协议）" class="headerlink" title="下载 CrossC2（只支持https协议）"></a><strong>下载 CrossC2</strong>（只支持https协议）</h3><p>1.cs默认是不支持上线linux主机的 , 但是可以通过安装CrossC2插件实现</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/gloxec/</span>CrossC2/releases<br></code></pre></td></tr></table></figure>
 
-<p>推荐放到 script目录下</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs swift">menubar(<span class="hljs-string">&quot;CrossC2&quot;</span>, <span class="hljs-string">&quot;generator&quot;</span>, <span class="hljs-number">2</span>);<br><br><span class="hljs-variable">$CC2_PATH</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;D:<span class="hljs-subst">\\</span>CS_linux<span class="hljs-subst">\\</span>coablt_strike_4.5_jx<span class="hljs-subst">\\</span>scripts<span class="hljs-subst">\\</span>&quot;</span>; # <span class="hljs-operator">&lt;--------</span> fix    <span class="hljs-comment">//注意：需要CrossC2的路径（不能有中文，且最后一行需要加上\\）</span><br><span class="hljs-variable">$CC2_BIN</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;genCrossC2.exe&quot;</span>;  <span class="hljs-comment">//使用windows的客户端的版本文件名</span><br></code></pre></td></tr></table></figure>
+<p><img src="/./img/Snipaste_2025-06-07_16-41-00.png" srcset="/img/loading.gif" lazyload></p>
+<p>推荐放到 script目录下（cs目录里），编辑 CrossC2-GithubBot-2023-11-20.cna 文件</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs swift">menubar(<span class="hljs-string">&quot;CrossC2&quot;</span>, <span class="hljs-string">&quot;generator&quot;</span>, <span class="hljs-number">2</span>);<br><br><span class="hljs-variable">$CC2_PATH</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;D:<span class="hljs-subst">\\</span>CS_linux<span class="hljs-subst">\\</span>coablt_strike_4.5_jx<span class="hljs-subst">\\</span>scripts<span class="hljs-subst">\\</span>&quot;</span>; # <span class="hljs-operator">&lt;--------</span> fix    <span class="hljs-comment">//注意：需要CrossC2的绝对路径（不能有中文，且最后一行需要加上\\）</span><br><span class="hljs-variable">$CC2_BIN</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;<span class="hljs-subst">\\</span>genCrossC2.Win<span class="hljs-subst">\\</span>genCrossC2.exe&quot;</span>;  <span class="hljs-comment">//使用windows的客户端的版本路径（相对路径在CC2_PATH的路径下）</span><br></code></pre></td></tr></table></figure>
 
 <p><img src="/./img/Snipaste_2025-06-07_15-10-31.png" srcset="/img/loading.gif" lazyload></p>
 <p>菜单栏就会多出一个：<br><img src="/./img/Snipaste_2025-06-07_15-11-40.png" srcset="/img/loading.gif" lazyload></p>
 <p>2.复制linux服务端的 .cobaltstrike.beacon_keys 文件放到 cobaltstrike.jar 目录（windows 客户机）下, 覆盖原来的cobaltstrike.beacon_keys</p>
 <p><img src="/./img/Snipaste_2025-06-07_15-16-32.png" srcset="/img/loading.gif" lazyload></p>
-<p>使用cs进行创建监听器，注意需要使用https协议</p>
+<p>使用cs进行创建监听器（linux是我的监听器名），注意需要使用https协议</p>
 <p>第一步：</p>
 <p><img src="/./img/Snipaste_2025-06-07_15-19-56.png" srcset="/img/loading.gif" lazyload></p>
 <p><img src="/./img/Snipaste_2025-06-07_15-22-45.png" srcset="/img/loading.gif" lazyload></p>
-<p>完成：(注意不要使用 openjdk 我之前用的就生成不了，服务器端也必须要加上profile文件)</p>
+<p>完成：(注意不要使用 openjdk 我之前用的就生成不了，服务器端也必须要加上profile文件运行，如果上线不了，可以重启一下客户端)</p>
 <p><img src="/./img/Snipaste_2025-06-07_16-05-34.png" srcset="/img/loading.gif" lazyload></p>
 <p><img src="/./img/Snipaste_2025-06-07_16-35-11.png" srcset="/img/loading.gif" lazyload></p>
 
