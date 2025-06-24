@@ -1,0 +1,687 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="https://kcide.asia/PicGo/20250521164813069.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCDH">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一. 工具地址：1https:&#x2F;&#x2F;github.com&#x2F;wikiZ&#x2F;RedGuard&#x2F;  二. 工具介绍： 三. 工具的使用：3.1 运行服务端的cs12──(root㉿kali)└─# .&#x2F;teamserver 192.168.144.128  admin123 jquery-c2.4.5-jx.profile  3.2 RedGuard_64 运行反向代理服务器上, 也就是RedGuard运行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="免杀之CS前置隐匿">
+<meta property="og:url" content="http://example.com/2025/06/21/%E5%85%8D%E6%9D%80%E4%B9%8BCS%E5%89%8D%E7%BD%AE%E9%9A%90%E5%8C%BF/index.html">
+<meta property="og:site_name" content="XCDH">
+<meta property="og:description" content="一. 工具地址：1https:&#x2F;&#x2F;github.com&#x2F;wikiZ&#x2F;RedGuard&#x2F;  二. 工具介绍： 三. 工具的使用：3.1 运行服务端的cs12──(root㉿kali)└─# .&#x2F;teamserver 192.168.144.128  admin123 jquery-c2.4.5-jx.profile  3.2 RedGuard_64 运行反向代理服务器上, 也就是RedGuard运行">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-21_21-10-48.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-22_11-06-48.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-22_11-23-00.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-22_11-25-18.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-22_11-28-26.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-22_11-30-32.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-22_11-33-24.png">
+<meta property="article:published_time" content="2025-06-21T13:05:32.000Z">
+<meta property="article:modified_time" content="2025-06-22T03:44:12.864Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="免杀">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/Snipaste_2025-06-21_21-10-48.png">
+  
+  
+  
+  <title>免杀之CS前置隐匿 - XCDH</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCDH</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://kcide.asia/PicGo/20250521153237608.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="免杀之CS前置隐匿"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-06-21 21:05" pubdate>
+          2025年6月21日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          634 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          6 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">免杀之CS前置隐匿</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一-工具地址："><a href="#一-工具地址：" class="headerlink" title="一. 工具地址："></a>一. 工具地址：</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/wikiZ/</span>RedGuard/<br></code></pre></td></tr></table></figure>
+
+<h2 id="二-工具介绍："><a href="#二-工具介绍：" class="headerlink" title="二. 工具介绍："></a>二. 工具介绍：</h2><p><img src="/./img/Snipaste_2025-06-21_21-10-48.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="三-工具的使用："><a href="#三-工具的使用：" class="headerlink" title="三. 工具的使用："></a>三. 工具的使用：</h2><h4 id="3-1-运行服务端的cs"><a href="#3-1-运行服务端的cs" class="headerlink" title="3.1 运行服务端的cs"></a>3.1 运行服务端的cs</h4><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs 1c">──<span class="hljs-punctuation">(</span>root㉿kali<span class="hljs-punctuation">)</span><br>└─<span class="hljs-meta"># ./teamserver 192.168.144.128  admin123 jquery-c2.4.5-jx.profile</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="3-2-RedGuard-64-运行"><a href="#3-2-RedGuard-64-运行" class="headerlink" title="3.2 RedGuard_64 运行"></a>3.2 RedGuard_64 运行</h4><p>反向代理服务器上, 也就是RedGuard运行的机器, 运行RedGuard（第一次运行会生成配置文件， 再次运行RedGuard_64）</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript">root@derian-pc:~/demo<span class="hljs-comment"># chmod +x RedGuard_64</span><br>root@derian-pc:~/demo<span class="hljs-comment"># ./RedGuard_64 </span><br>	<br>██████╗ ███████╗██████╗    ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗ <br>██╔══██╗██╔════╝██╔══██╗  ██╔════╝ ██║   ██║██╔══██╗██╔══██╗██╔══██╗<br>██████╔╝█████╗  ██║  ██║  ██║  ███╗██║   ██║███████║██████╔╝██║  ██║<br>██╔══██╗██╔══╝  ██║  ██║  ██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║<br>██║  ██║███████╗██████╔╝  ╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝  -V <span class="hljs-number">23.08</span><span class="hljs-number">.21</span> Alpha<br>╚═╝  ╚═╝╚══════╝╚═════╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ <br><br>Github:https://github.com/wikiZ/RedGuard<br><br>RedGuard <span class="hljs-keyword">is</span> a C2 front flow control tool,Can avoid Blue Teams,AVs,EDRs check.<br><br>[<span class="hljs-number">2025</span><span class="hljs-number">-06</span><span class="hljs-number">-22</span> <span class="hljs-number">10</span>:<span class="hljs-number">55</span>:<span class="hljs-number">08</span>] HostTarget: &#123;<span class="hljs-string">&quot;360.net&quot;</span>:<span class="hljs-string">&quot;http://127.0.0.1:8080&quot;</span>,<span class="hljs-string">&quot;360.com&quot;</span>:<span class="hljs-string">&quot;https://127.0.0.1:4433&quot;</span>&#125;<br>[<span class="hljs-number">2025</span><span class="hljs-number">-06</span><span class="hljs-number">-22</span> <span class="hljs-number">10</span>:<span class="hljs-number">55</span>:<span class="hljs-number">08</span>] <span class="hljs-built_in">Proxy</span> Listen Port :<span class="hljs-number">80</span> (HTTP)<br>[<span class="hljs-number">2025</span><span class="hljs-number">-06</span><span class="hljs-number">-22</span> <span class="hljs-number">10</span>:<span class="hljs-number">55</span>:<span class="hljs-number">08</span>] <span class="hljs-built_in">Proxy</span> Listen Port :<span class="hljs-number">443</span> (HTTPS)<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-3-打开客户端创建监听器-HTTPS-和-HTTP是一样的"><a href="#3-3-打开客户端创建监听器-HTTPS-和-HTTP是一样的" class="headerlink" title="3.3 打开客户端创建监听器 (HTTPS 和 HTTP是一样的)"></a>3.3 打开客户端创建监听器 (HTTPS 和 HTTP是一样的)</h4><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">HTTP</span> 地址和HTTP 地址（Stager）都填写反向代理服务器的<span class="hljs-built_in">ip</span>(RedGuard_64)<br><span class="hljs-symbol">HTTP</span>端口（上线）填写反向代理服务监听的端口<br><span class="hljs-symbol">HTTP</span>端口（监听）填写Beacons与<span class="hljs-built_in">C2</span>服务器通信的端口<br><span class="hljs-symbol">HTTP</span> Host头 填写反向代理中设置的host头<br></code></pre></td></tr></table></figure>
+
+<p><img src="/./img/Snipaste_2025-06-22_11-06-48.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="3-4-然后保存监听器"><a href="#3-4-然后保存监听器" class="headerlink" title="3.4 然后保存监听器"></a>3.4 然后保存监听器</h4><p>修改配置文件 .RedGuard_CobaltStrike.ini   (热加载，修改及生效！)</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">HostTarget</span> = &#123;<span class="hljs-string">&quot;360.net&quot;</span>:<span class="hljs-string">&quot;http://192.168.144.189:80&quot;</span>,<span class="hljs-string">&quot;360.com&quot;</span>:<span class="hljs-string">&quot;https://192.168.144.189:4433&quot;</span>&#125;<br><span class="hljs-comment"># http://192.168.144.189:80 为beacon的通信地址, cs服务端监听的地址</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/./img/Snipaste_2025-06-22_11-23-00.png" srcset="/img/loading.gif" lazyload></p>
+<p>成功上线：</p>
+<p><img src="/./img/Snipaste_2025-06-22_11-25-18.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="流量走向："><a href="#流量走向：" class="headerlink" title="流量走向："></a>流量走向：</h2><p>当受害者机器运行样本之后, 访问反向代理服务器的地址 <a target="_blank" rel="noopener" href="http://192.168.144.189/">http://192.168.144.189:80</a>, 然后反向代理服务器根据配置文件转发到<a target="_blank" rel="noopener" href="http://192.168.144.128:8080/">http://192.168.144.128:8080</a> cs服务端和beacon的通信地址, 然后上线cs</p>
+<p><img src="/./img/Snipaste_2025-06-22_11-28-26.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="这样有什么好处"><a href="#这样有什么好处" class="headerlink" title="这样有什么好处?"></a>这样有什么好处?</h4><p>隐藏真正cs服务端的真实ip地址, 样本所在机器的通信流量只有反向代理服务器的</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stata">netstat -<span class="hljs-keyword">ano</span>|findstr 192.168.144.128    <span class="hljs-comment">//查不到cs服务器的IP</span><br>netstat -<span class="hljs-keyword">ano</span>|findstr 192.168.144.189    <span class="hljs-comment">//只能查到CS代理的IP</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/./img/Snipaste_2025-06-22_11-30-32.png" srcset="/img/loading.gif" lazyload></p>
+<p>在加上我们配置了host头, 直接访问, 会跳转到360官网，溯源就不好进行了</p>
+<p><img src="/./img/Snipaste_2025-06-22_11-33-24.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="补充："><a href="#补充：" class="headerlink" title="补充："></a>补充：</h2><p>公网的话需要进行安全组的释放！！！</p>
+<p>关于更多RedGuard用法：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/wikiZ/RedGuard/blob/main/doc/README_CN.md">https://github.com/wikiZ/RedGuard/blob/main/doc/README_CN.md</a></p>
+<p>省份（可以限制cs服务器只能连接国内的机器）</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">黑龙江,吉林,辽宁,河北,山西,陕西,甘肃,四川,贵州,云南,浙江,江苏,山东,安徽,江西,福建,河南,湖北,湖南,广<br>东,海南,台湾,青海,内蒙古,广西,西藏,宁夏,新疆维吾尔,北京,上海,天津,重庆,香港,澳门<br></code></pre></td></tr></table></figure>
+
+
+
+<p>总结：通过RedGuard工具，可以达到CS服务器的地址隐藏的效果。难以进行溯源</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%85%8D%E6%9D%80%E7%B3%BB%E5%88%97/" class="category-chain-item">免杀系列</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%85%8D%E6%9D%80/" class="print-no-link">#免杀</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>免杀之CS前置隐匿</div>
+      <div>http://example.com/2025/06/21/免杀之CS前置隐匿/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCDH</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年6月21日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/06/18/%E6%9F%90%E9%87%91%E8%9E%8D%E7%A8%8B%E5%BA%8F%E9%9D%B6%E5%9C%BA%E6%B5%8B%E8%AF%95%E7%9A%84%E9%A1%B9%E7%9B%AE/" title="某金融程序靶场测试的项目">
+                        <span class="hidden-mobile">某金融程序靶场测试的项目</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>XCDH</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

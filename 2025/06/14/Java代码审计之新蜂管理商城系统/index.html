@@ -1,0 +1,749 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="https://kcide.asia/PicGo/20250521164813069.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCDH">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. 第三方组件漏洞审计maven看pom.xml，整理出来第三方组件以及版本号，并说明存在漏洞组件 2. 组件漏洞代码审计经过分析新蜂商城系统的 pom.xml，发现实际引入第三方依赖并不多。虽然有些依赖存在漏洞，但没发现实质性危害，并且也没有什么有趣的地方，故组件漏洞代码审计部分省略。 3. 单点漏洞代码审计下面进入单点漏洞代码审计部分，所谓的单点漏洞是指的代码中存在特定的漏洞点。通过该漏洞点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java代码审计之新蜂管理商城系统">
+<meta property="og:url" content="http://example.com/2025/06/14/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8B%E6%96%B0%E8%9C%82%E7%AE%A1%E7%90%86%E5%95%86%E5%9F%8E%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="XCDH">
+<meta property="og:description" content="1. 第三方组件漏洞审计maven看pom.xml，整理出来第三方组件以及版本号，并说明存在漏洞组件 2. 组件漏洞代码审计经过分析新蜂商城系统的 pom.xml，发现实际引入第三方依赖并不多。虽然有些依赖存在漏洞，但没发现实质性危害，并且也没有什么有趣的地方，故组件漏洞代码审计部分省略。 3. 单点漏洞代码审计下面进入单点漏洞代码审计部分，所谓的单点漏洞是指的代码中存在特定的漏洞点。通过该漏洞点">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_21-09-13.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_21-11-54.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_21-28-04.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_21-25-41.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_21-40-22.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_21-45-11.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_22-09-00.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_22-11-25.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_22-10-21.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_22-13-40.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_22-17-32.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_22-51-52.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_22-52-58.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_23-19-40.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_23-27-43.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_23-29-00.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_23-29-50.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_23-30-27.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-14_23-31-54.png">
+<meta property="article:published_time" content="2025-06-14T12:35:35.000Z">
+<meta property="article:modified_time" content="2025-06-14T15:40:33.232Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="项目练习">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/Snipaste_2025-06-14_21-09-13.png">
+  
+  
+  
+  <title>Java代码审计之新蜂管理商城系统 - XCDH</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCDH</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://kcide.asia/PicGo/20250521153237608.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Java代码审计之新蜂管理商城系统"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-06-14 20:35" pubdate>
+          2025年6月14日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Java代码审计之新蜂管理商城系统</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="1-第三方组件漏洞审计"><a href="#1-第三方组件漏洞审计" class="headerlink" title="1. 第三方组件漏洞审计"></a>1. 第三方组件漏洞审计</h2><p>maven看pom.xml，整理出来第三方组件以及版本号，并说明存在漏洞组件</p>
+<h2 id="2-组件漏洞代码审计"><a href="#2-组件漏洞代码审计" class="headerlink" title="2. 组件漏洞代码审计"></a>2. 组件漏洞代码审计</h2><p>经过分析新蜂商城系统的 pom.xml，发现实际引入第三方依赖并不多。虽然有些依赖存在漏洞，但没发现实质性危害，并且也没有什么有趣的地方，故组件漏洞代码审计部分省略。</p>
+<h2 id="3-单点漏洞代码审计"><a href="#3-单点漏洞代码审计" class="headerlink" title="3. 单点漏洞代码审计"></a>3. 单点漏洞代码审计</h2><p>下面进入单点漏洞代码审计部分，所谓的单点漏洞是指的代码中存在特定的漏洞点。通过该漏洞点可以实现一些渗透攻击，进而对系统造成不同程度的危害</p>
+<h3 id="3-1-后台-SQL-注入漏洞代码审计"><a href="#3-1-后台-SQL-注入漏洞代码审计" class="headerlink" title="3.1 后台 SQL 注入漏洞代码审计"></a>3.1 后台 SQL 注入漏洞代码审计</h3><p>前台也有个sql注入，比后台的还要简单就不写了</p>
+<p>在pom.xml文件中发现该系统使用了Mybatis持久层框架（第三方依赖）</p>
+<p>在 Mybatis 中有两种常用的拼接 SQL 语句的符号，即 $ 和 # </p>
+<blockquote>
+<p>方式一：<br>            #{} ：告诉 MyBatis 创建一个预编译语句（PreparedStatement）参数，在 JDBC 中，这样的一个参数在SQL 中会由一个“?”来标识，并被传递到一个新的预处理语句中<br>            但order by&#x2F;group by、like模糊查询、in等是不能使用#{}进行sql语句的使用<br>方式二：<br>            ${}： 仅仅是纯粹的 string 替换，在动态 SQL 解析阶段将会进行变量替换，直接替换字符串，会导致SQL注入产生。<br>    因此，我们在代码审计阶段进行SQL注入漏洞挖掘，应关注 xxxxMapper.xml 中使用 ${} 拼接SQL的地方，全局搜索关键字符。</p>
+</blockquote>
+<h4 id="3-1-1-分析-NewBeeMallGoodsMapper-xml-映射文件"><a href="#3-1-1-分析-NewBeeMallGoodsMapper-xml-映射文件" class="headerlink" title="3.1.1 分析 NewBeeMallGoodsMapper.xml 映射文件"></a>3.1.1 分析 NewBeeMallGoodsMapper.xml 映射文件</h4><p><img src="/./img/Snipaste_2025-06-14_21-09-13.png" srcset="/img/loading.gif" lazyload></p>
+<p>发现了有四处使用了${ } 拼接sql语句的地方。</p>
+<p>从第一个开始看，双击进去，发现漏洞点</p>
+<p><img src="/./img/Snipaste_2025-06-14_21-11-54.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">&lt;<span class="hljs-keyword">if</span> test=&quot;goodsName!=null and goodsName!=&#x27;&#x27;&quot;&gt;<br>条件判断:仅当 goodsName 既不为 <span class="hljs-keyword">null</span> 也不为空字符串时，才会在 <span class="hljs-keyword">SQL</span> 中添加该条件<br><br><span class="hljs-keyword">and</span> goods_name <span class="hljs-keyword">like</span> CONCAT(<span class="hljs-string">&#x27;%&#x27;</span>,<span class="hljs-string">&#x27;$&#123;goodsName&#125;&#x27;</span>,<span class="hljs-string">&#x27;%&#x27;</span>)<br>使用 <span class="hljs-keyword">SQL</span> 的 CONCAT 函数拼接通配符 %，实现模糊匹配。例如：<br>若 goodsName 为 &quot;手机&quot;，则拼接后的条件为 <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;%手机%&#x27;</span>，可匹配包含 &quot;手机&quot; 的任意字符串<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-1-2-逆向追踪到映射接口"><a href="#3-1-2-逆向追踪到映射接口" class="headerlink" title="3.1.2 逆向追踪到映射接口"></a>3.1.2 逆向追踪到映射接口</h4><p>可以使用Free Mybatis plugin插件（点击左侧箭头），也可以全局搜索对应的ID值，这里使用的市插件的形式。</p>
+<p><img src="/./img/Snipaste_2025-06-14_21-28-04.png" srcset="/img/loading.gif" lazyload></p>
+<p>在 Mybatis 中 XXXMapper.xml 和 XXXMapper.java 的作用:</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">XXXMapper.xml:<br>	这是映射器（Mapper）文件，用于定义 SQL 查询语句和映射关系。它包含了各种 SQL 语句和对应的参数映射、结果映射等配置信息。 xxxmapper.<span class="hljs-keyword">xml</span> <span class="hljs-title">文件中的 SQL</span> 语句可以通过命名空间和标识符来唯一标识，并与 Java 代码中的对应映射器接口关联起来。这个文件通常是使用 <span class="hljs-keyword">XML</span> <span class="hljs-title">格式编写的。</span><br><span class="hljs-title"></span><br><span class="hljs-title">XXXMapper</span>.java:<br>	这是映射器接口，用于定义数据访问的方法。映射器接口中的方法通常对应于xxxmapper.<span class="hljs-keyword">xml</span> <span class="hljs-title">文件中定义的 SQL</span> 查询语句。通过映射器接口，Java 代码可以调用数据库操作，而不需要直接编写和管理 SQL 查询语句。MyBatis 会在运行时自动实现这些接口的具体实现。映射器接口通常使用 Java 接口的形式编写。<br></code></pre></td></tr></table></figure>
+
+<p>进入 NewBeeMallGoodsService 文件中</p>
+<h4 id="3-1-3-继续逆向追踪-，查看谁调用了-getNewBeeMallGoodsPage-方法："><a href="#3-1-3-继续逆向追踪-，查看谁调用了-getNewBeeMallGoodsPage-方法：" class="headerlink" title="3.1.3 继续逆向追踪 ，查看谁调用了  getNewBeeMallGoodsPage 方法："></a>3.1.3 继续逆向追踪 ，查看谁调用了  getNewBeeMallGoodsPage 方法：</h4><p><img src="/./img/Snipaste_2025-06-14_21-25-41.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="3-1-4-分析-NewBeeMallGoodsController-中list的代码"><a href="#3-1-4-分析-NewBeeMallGoodsController-中list的代码" class="headerlink" title="3.1.4 分析 NewBeeMallGoodsController 中list的代码"></a>3.1.4 分析 NewBeeMallGoodsController 中list的代码</h4><p>首先，点击第 134 行中 pageUtil，该参数来自第 133 行，通过 PageQueryUtil 类创建一个 pageUtil 对象，传入 params 作为参数。PageQueryUtil 是作者自定义的工具类，是用于处理分页相关的操作。</p>
+<p>然后，点击 133 行中 params，可以看到该参数来自第 129 行，是一个 Map 对象，可以简单理解为它需要从请求中获取参数。</p>
+<p>最后，整理代码信息可以的到接口路径为 &#x2F;goods&#x2F;list ，请求为 GET 方法，是个列表功能，根据代码路径来看应该是后台功能，这么看来我们找到了漏洞前端功能点。</p>
+<p>有时 SQL 注入防范代码会在过滤器和拦截器中体现，但查看该项目时，并没有发现相关防护代码</p>
+<h4 id="3-1-5-漏洞验证："><a href="#3-1-5-漏洞验证：" class="headerlink" title="3.1.5 漏洞验证："></a>3.1.5 漏洞验证：</h4><p><img src="/./img/Snipaste_2025-06-14_21-40-22.png" srcset="/img/loading.gif" lazyload></p>
+<p>把抓取到的请求包放到demo文件中，使用sqlmap的-r参数进行验证</p>
+<p><img src="/./img/Snipaste_2025-06-14_21-45-11.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="3-2-前台越权漏洞验证"><a href="#3-2-前台越权漏洞验证" class="headerlink" title="3.2 前台越权漏洞验证"></a>3.2 前台越权漏洞验证</h3><p>注册两个用户</p>
+<p>A用户：先进行修改，并进行抓包，发现userId是9</p>
+<p><img src="/./img/Snipaste_2025-06-14_22-09-00.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/./img/Snipaste_2025-06-14_22-11-25.png" srcset="/img/loading.gif" lazyload></p>
+<p>B用户：在进行修改，抓包时发现userId是12 ，进行改包改为userId&#x3D;9 ，且地址改为天津<br><img src="/./img/Snipaste_2025-06-14_22-10-21.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/./img/Snipaste_2025-06-14_22-13-40.png" srcset="/img/loading.gif" lazyload></p>
+<p>在登录到A用户时，发现数据被更改成功了</p>
+<p>在代码中全局搜索接口 &#x2F;personal&#x2F;updateInfo （请求包中的路径）</p>
+<p><img src="/./img/Snipaste_2025-06-14_22-17-32.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java">    <span class="hljs-meta">@PostMapping(&quot;/personal/updateInfo&quot;)</span><br>    <span class="hljs-meta">@ResponseBody</span><br>    <span class="hljs-keyword">public</span> Result <span class="hljs-title function_">updateInfo</span><span class="hljs-params">(<span class="hljs-meta">@RequestBody</span> MallUser mallUser, HttpSession httpSession)</span> &#123;<br>        <span class="hljs-type">NewBeeMallUserVO</span> <span class="hljs-variable">mallUserTemp</span> <span class="hljs-operator">=</span> newBeeMallUserService.updateUserInfo(mallUser,httpSession);<br>        <span class="hljs-keyword">if</span> (mallUserTemp == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-type">Result</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> ResultGenerator.genFailResult(<span class="hljs-string">&quot;修改失败&quot;</span>);<br>            <span class="hljs-keyword">return</span> result;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">//返回成功</span><br>            <span class="hljs-type">Result</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> ResultGenerator.genSuccessResult();<br>            <span class="hljs-keyword">return</span> result;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>**第一步：**分析第 116 行，通过方法名也可以看出这是更新用户信息的方法，其中传入了 mallUser 和 httpSession 参数，而这两个参数来自用户， MallUser mallUser 表示要更新的用户对象，也就是接受用户信息的实体类， HttpSession httpSession 表示当前会话的 HttpSession 对象。</p>
+<p>跟进 MallUser 查看，主要定义了以下内容，其中有个 userId</p>
+<p><img src="/./img/Snipaste_2025-06-14_22-51-52.png" srcset="/img/loading.gif" lazyload></p>
+<p>**第二步：**返回到 PersonalController 层，Ctrl 加鼠标左键点击第 116 行的updateUserInfo 跟进该方法，最终跳转到了 NewBeeMallUserService 层</p>
+<p><img src="/./img/Snipaste_2025-06-14_22-52-58.png" srcset="/img/loading.gif" lazyload></p>
+<p>击左侧按钮，进行跟进到 NewBeeMallUserServiceImpl 层，updateUserInfo 方法具体代码如下：</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs pf">@Override<br>public NewBeeM<span class="hljs-literal">all</span>UserVO updateUserInfo(M<span class="hljs-literal">all</span>User mallUser, HttpSession httpSession) &#123;<br>    M<span class="hljs-literal">all</span>User <span class="hljs-keyword">user</span> = mallUserMapper.selectByPrimaryKey(mallUser.getUserId());<br>    if (<span class="hljs-keyword">user</span> != null) &#123;<br>        <span class="hljs-keyword">user</span>.<span class="hljs-built_in">set</span>NickName(mallUser.getNickName());<br>        <span class="hljs-keyword">user</span>.<span class="hljs-built_in">set</span>Address(mallUser.getAddress());<br>        <span class="hljs-keyword">user</span>.<span class="hljs-built_in">set</span>IntroduceSign(mallUser.getIntroduceSign());<br>        if (mallUserMapper.updateByPrimaryKeySelective(<span class="hljs-keyword">user</span>) &gt; <span class="hljs-number">0</span>) &#123;<br>            NewBeeM<span class="hljs-literal">all</span>UserVO newBeeM<span class="hljs-literal">all</span>UserVO = new NewBeeM<span class="hljs-literal">all</span>UserVO();<br>            <span class="hljs-keyword">user</span> = mallUserMapper.selectByPrimaryKey(mallUser.getUserId());<br>            BeanUtil.copyProperties(<span class="hljs-keyword">user</span>, newBeeM<span class="hljs-literal">all</span>UserVO);<br>            httpSession.<span class="hljs-built_in">set</span>Attribute(Constants.MALL_USER_SESSION_KEY, newBeeM<span class="hljs-literal">all</span>UserVO);<br>            return newBeeM<span class="hljs-literal">all</span>UserVO;<br>        &#125;<br>    &#125;<br>    return null;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>**第三步：**分析实现层代码具体做了什么操作</p>
+<p>第73 行，根据根据用户 ID 主键查询用户信息，跟进 selectByPrimaryKey 通过 MallUserMapper.java 接口跳转到 MallUserMapper.xml 映射器代码中。可以看到，通过限制 userId 在tb_newbee_mall_user 表中查询用户信息。也就是说，我的 userId 是 10，则最终查询语句如下，代码如下图所示：</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> refid=<span class="hljs-string">&quot;Base_Column_List&quot;</span>(在上面定义了具体是哪些列) <span class="hljs-keyword">from</span> tb_newbee_mall_user <span class="hljs-keyword">where</span> user_id = <span class="hljs-number">10</span>；<br></code></pre></td></tr></table></figure>
+
+<p>总结来说，第 73 行的作用是通过 ID 查询用户信息并赋值给 user。</p>
+<p>第 74 ~ 77 行，如果 user 不为 null，进行了三个 set 操作，其中传入的参数是来自 mallUser。也就是说，将查询到的用户信息中的内容设置成了用户输入的内容了</p>
+<p>78 行是关键，通过调用 mallUserMapper.updateByPrimaryKeySelective(user) 方法，将更新后的用户信息保存到数据库。如果更新操作影响的行数大于 0，则执行下面的代码块。我们跟进该方法，通过 MallUserMapper.java 接口跳转到 MallUserMapper.xml 映射器代码中。在这里面我们主要更新了nick_name，address 以及 introduce_sign 这三个是我们传入的参数，不为 null</p>
+<p>第 79 ~ 83 行，是上面代码判断操作是否大于 0，符合该条件则进入这几行代码，我们更新个人信息是否符合这个条件的。这几行代码大致意思是，获取更新的用户信息，然后返回更新成功的响应。</p>
+<p>**第四步：**整个流程我们追踪完了，总得来说，就是通过传入的 userId 获取用户信息后进行信息更新操作。整个流程没有任何权限校验，没有判断 userId 所属关系，进而造成了越权漏洞。</p>
+<h4 id="3-3后台权限绕过漏洞代码审计"><a href="#3-3后台权限绕过漏洞代码审计" class="headerlink" title="3.3后台权限绕过漏洞代码审计"></a>3.3后台权限绕过漏洞代码审计</h4><p>发现后台系统身份验证拦截器 AdminLoginInterceptor.java 存在权限绕过漏洞</p>
+<p>洞代码位于： src&#x2F;main&#x2F;java&#x2F;ltd&#x2F;newbee&#x2F;mall&#x2F;interceptor&#x2F;AdminLoginInterceptor.java</p>
+<p><img src="/./img/Snipaste_2025-06-14_23-19-40.png" srcset="/img/loading.gif" lazyload></p>
+<p>漏洞主要发生于第 23 行和第 24 行，下面我们分析下漏洞成因。</p>
+<p>首**先，**关键点是第 23 行，使用了 request.getRequestURI() 方法获取路径。如果使用该方法获取的路径进行权限判断是极易出现权限绕过漏洞的。简单来说， getRequestURI 方法返回的路径是未经过服务器端处理的原始路径，可能包含特殊字符或路径跳转，从而绕过服务器端的安全控制。</p>
+<p>**其次，**第 24 行使用了 uri.startsWith(“&#x2F;admin”) 判断 Uri 路径中是否以 &#x2F;admin 开头，以及获取并判断Session 中的 loginUser 属性是否为 null，两个条件 &amp;&amp; 在一起结果为 True 的话进入条件代码，提示需要登录并跳转到后台登录页面中。</p>
+<p>既然这样，我们知道 a &amp;&amp; b 需要两者都为 True 整体则为 True 才会进入条件判断代码中，如果另其中一个条件为 False 则整体就为 False，就不会进入条件判断中去了。这两个条件中，Session 部分我们是没办法操纵的。但 uri.startsWith(“&#x2F;admin”) 这个条件我们可以搞点小破坏，前面提到了 uri 是使用的 getRequestURI 方法获取的原始路径，那么我们可以找一些特殊字符绕过路径判断，并且不影响整体接口，比如：分号 ; ，正斜杠 &#x2F; 等等。</p>
+<p>**最终，**构造结构路径为 &#x2F;;&#x2F;admin&#x2F;test 或 &#x2F;&#x2F;&#x2F;admin&#x2F;test ，这样路径就不是以 &#x2F;admin 开头了，并且该路径不会影响结构访问，实现了权限绕过</p>
+<h5 id="绕过技巧："><a href="#绕过技巧：" class="headerlink" title="绕过技巧："></a>绕过技巧：</h5><p>分号绕过  多&#x2F;绕过 编码绕过admi%6e 等</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/nice0e3/p/14801884.html">https://www.cnblogs.com/nice0e3/p/14801884.html</a></p>
+<h6 id="复现步骤一："><a href="#复现步骤一：" class="headerlink" title="复现步骤一："></a>复现步骤一：</h6><p><img src="/./img/Snipaste_2025-06-14_23-27-43.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="复现步骤二："><a href="#复现步骤二：" class="headerlink" title="复现步骤二："></a>复现步骤二：</h6><p><img src="/./img/Snipaste_2025-06-14_23-29-00.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="复现步骤三："><a href="#复现步骤三：" class="headerlink" title="复现步骤三："></a>复现步骤三：</h6><p>绕过1：分号绕过</p>
+<p><img src="/./img/Snipaste_2025-06-14_23-29-50.png" srcset="/img/loading.gif" lazyload></p>
+<p>绕过2：多斜线绕过：</p>
+<p><img src="/./img/Snipaste_2025-06-14_23-30-27.png" srcset="/img/loading.gif" lazyload></p>
+<p>绕过3：编码绕过</p>
+<p><img src="/./img/Snipaste_2025-06-14_23-31-54.png" srcset="/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java%E5%AE%89%E5%85%A8/" class="category-chain-item">Java安全</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java/" class="print-no-link">#Java</a>
+      
+        <a href="/tags/%E9%A1%B9%E7%9B%AE%E7%BB%83%E4%B9%A0/" class="print-no-link">#项目练习</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Java代码审计之新蜂管理商城系统</div>
+      <div>http://example.com/2025/06/14/Java代码审计之新蜂管理商城系统/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCDH</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年6月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/06/17/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8Bhello%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/" title="Java代码审计之hello博客系统">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java代码审计之hello博客系统</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/06/11/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8B%E7%BB%84%E4%BB%B6%E5%AE%A1%E8%AE%A1/" title="Java代码审计之组件审计">
+                        <span class="hidden-mobile">Java代码审计之组件审计</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>XCDH</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

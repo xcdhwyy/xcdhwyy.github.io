@@ -27,7 +27,7 @@
 <meta property="og:description" content="FastJson:FastJson是阿里巴巴开发的JAva语言编写的高性能JSON库，用于将数据在JSON和Java相互转换两个主要的接口是JSON.toJSONString和JSON.parseObject&#x2F;JSON.parse,分别实现序列化和反序列化操作。 反序列化简述：Fastjson反序列化漏洞简单来说是出现在将JSON数据反序列化过程中出现的漏洞。 攻击者可以传入一个恶意构造">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-06-11T06:45:57.000Z">
-<meta property="article:modified_time" content="2025-06-13T00:05:28.858Z">
+<meta property="article:modified_time" content="2025-06-19T08:46:25.216Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          830 字
+          834 字
         
       </span>
     
@@ -284,7 +284,7 @@
 <h3 id="反序列化简述："><a href="#反序列化简述：" class="headerlink" title="反序列化简述："></a>反序列化简述：</h3><p>Fastjson反序列化漏洞简单来说是出现在将JSON数据反序列化过程中出现的漏洞。</p>
 <p>攻击者可以传入一个恶意构造的JSON内容，程序对其进行反序列化后得到恶意类并执行了恶意类中的恶意函数，进而导致代码执行</p>
 <h3 id="寻找漏洞点："><a href="#寻找漏洞点：" class="headerlink" title="寻找漏洞点："></a>寻找漏洞点：</h3><p>已确实Fastjson版本存在问题，进一步寻找触发Fastjson的漏洞点。我们关注两个函数</p>
-<p>JSON.parse() 和 JSON.parseObject() 全局搜索两个关键字，发现本项目在JSON.parseObject()</p>
+<p>JSON.parse() 和 JSON.parseObject() 全局搜索两个关键字或者JSONObject.parseObject() ，发现本项目在JSON.parseObject()</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- Json --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>fastjson<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.2.58<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>进行利用：</p>
@@ -307,7 +307,7 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs xml">  <span class="hljs-comment">&lt;!-- log4j2 --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.logging.log4j<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>log4j-core<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.10.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.logging.log4j<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>log4j-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.10.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>寻找漏洞点：</p>
-<p>搜索关键字logger，logger.info 和 logger.error（一般以这个为调试）</p>
+<p>搜索关键字logger，logger.info 和 logger.error（一般以 这个为调试）</p>
 <p>logger.info 一般用于记录程序运行的一般信息，如进程启动、操作成功等；logger.error 则用于记录错误和异常信息，如未处理的异常、数据库连接失败等，以便进行问题排查和处理。info 打印正常状态信息，warn 表示轻微不合理但不影响运行，error 表示系统错误和异常。</p>
 
                 
@@ -398,6 +398,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2025/06/14/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E4%B9%8B%E6%96%B0%E8%9C%82%E7%AE%A1%E7%90%86%E5%95%86%E5%9F%8E%E7%B3%BB%E7%BB%9F/" title="Java代码审计之新蜂管理商城系统">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java代码审计之新蜂管理商城系统</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

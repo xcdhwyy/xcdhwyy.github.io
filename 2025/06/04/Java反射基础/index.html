@@ -19,16 +19,16 @@
   <meta name="author" content="XCDH">
   <meta name="keywords" content="">
   
-    <meta name="description" content="**一、**Java  反射基础Java 的反射（reflection）机制是指在程序运行中，可以构造任意一个类的对象，可以了解任意一个对象所属的类，可以了解任意一个类的成员变量和方法，可以调用任意一个对象的属性和方法。 这种动态获取程序信息以及动态调用对象的功能称为 Java语言的反射机制 。 反射机制允许我们在 Java程序运行时检查，操作或者说获取任何类、接口、构造函数、方法和字段。还可以动">
+    <meta name="description" content="一、Java  反射基础Java 的反射（reflection）机制是指在程序运行中，可以构造任意一个类的对象，可以了解任意一个对象所属的类，可以了解任意一个类的成员变量和方法，可以调用任意一个对象的属性和方法。 这种动态获取程序信息以及动态调用对象的功能称为 Java语言的反射机制 。 反射机制允许我们在 Java程序运行时检查，操作或者说获取任何类、接口、构造函数、方法和字段。还可以动态创建J">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java反射基础">
 <meta property="og:url" content="http://example.com/2025/06/04/Java%E5%8F%8D%E5%B0%84%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="XCDH">
-<meta property="og:description" content="**一、**Java  反射基础Java 的反射（reflection）机制是指在程序运行中，可以构造任意一个类的对象，可以了解任意一个对象所属的类，可以了解任意一个类的成员变量和方法，可以调用任意一个对象的属性和方法。 这种动态获取程序信息以及动态调用对象的功能称为 Java语言的反射机制 。 反射机制允许我们在 Java程序运行时检查，操作或者说获取任何类、接口、构造函数、方法和字段。还可以动">
+<meta property="og:description" content="一、Java  反射基础Java 的反射（reflection）机制是指在程序运行中，可以构造任意一个类的对象，可以了解任意一个对象所属的类，可以了解任意一个类的成员变量和方法，可以调用任意一个对象的属性和方法。 这种动态获取程序信息以及动态调用对象的功能称为 Java语言的反射机制 。 反射机制允许我们在 Java程序运行时检查，操作或者说获取任何类、接口、构造函数、方法和字段。还可以动态创建J">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/Snipaste_2025-06-05_13-45-52.png">
 <meta property="article:published_time" content="2025-06-04T11:55:19.000Z">
-<meta property="article:modified_time" content="2025-06-05T07:04:02.906Z">
+<meta property="article:modified_time" content="2025-06-13T12:52:34.432Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
@@ -282,7 +282,7 @@
             
               <div class="markdown-body">
                 
-                <h2 id="一、-Java-反射基础"><a href="#一、-Java-反射基础" class="headerlink" title="**一、**Java  反射基础"></a>**一、**Java  反射基础</h2><p>Java 的反射（reflection）机制是指在程序运行中，可以构造任意一个类的对象，可以了解任意一个对象所属的类，可以了解任意一个类的成员变量和方法，可以调用任意一个对象的属性和方法。 这种<strong>动态获</strong>取程序信息以及动态调用对象的功能称为 Java语言的反射机制 。</p>
+                <h2 id="一、Java-反射基础"><a href="#一、Java-反射基础" class="headerlink" title="一、Java  反射基础"></a>一、Java  反射基础</h2><p>Java 的反射（reflection）机制是指在程序运行中，可以构造任意一个类的对象，可以了解任意一个对象所属的类，可以了解任意一个类的成员变量和方法，可以调用任意一个对象的属性和方法。 这种<strong>动态获</strong>取程序信息以及动态调用对象的功能称为 Java语言的反射机制 。</p>
 <p>反射机制允许我们在 Java程序运行时检查，操作或者说获取任何类、接口、构造函数、方法和字段。还可以动态创建Java类实例、调用任意的类方法、修改任意的类成员变量值等操作。</p>
 <p> 在 Java代码审计中学习反射机制，我们目的是可以利用反射机制操作目标方法执行系统命令。比如我们想要反射调用 java.lang.runtime 去执行系统命令。</p>
 <h3 id="1-1-获取Class对象："><a href="#1-1-获取Class对象：" class="headerlink" title="1.1 获取Class对象："></a>1.1 获取Class对象：</h3><p>获取 Class 对象的方式有下面几种：</p>
